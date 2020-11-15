@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "531104622168",
-    "firebase_url": "https://dima-project-95c8f.firebaseio.com",
-    "project_id": "dima-project-95c8f",
-    "storage_bucket": "dima-project-95c8f.appspot.com"
+    "project_number": "310994817509",
+    "firebase_url": "https://dima-project-a5bc9.firebaseio.com",
+    "project_id": "dima-project-a5bc9",
+    "storage_bucket": "dima-project-a5bc9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:531104622168:android:6a721f3b67c1ab04308c2d",
+        "mobilesdk_app_id": "1:310994817509:android:be2f800c8eab007bb85f0c",
         "android_client_info": {
           "package_name": "com.courseproject.dima_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "531104622168-c6q71k6m9c82hjh46n7k9t023pi52go5.apps.googleusercontent.com",
+          "client_id": "310994817509-00846314qgrutm36jmeksbiua87r0eal.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC87GOyRTBIwCIeIMqKMEpQen8japkv0Xk"
+          "current_key": "AIzaSyDPkd7tITS7WhaK5zRHj0byUWN12_TwTFs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "531104622168-c6q71k6m9c82hjh46n7k9t023pi52go5.apps.googleusercontent.com",
+              "client_id": "310994817509-00846314qgrutm36jmeksbiua87r0eal.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,15 +1,16 @@
-import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:dima_project/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
 
   //piece of state to store value inserted into the form
+  String username = '';
   String email = '';
   String password = '';
 
@@ -20,13 +21,23 @@ class _SignInState extends State<SignIn> {
         appBar: AppBar(
           backgroundColor: Colors.orangeAccent[400],
           elevation: 0.0,
-          title: Text('Sign In to CookingTime'),
+          title: Text('Register to CookingTime'),
         ),
         body: Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
             child: Form(
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  //field for username
+                  TextFormField(
+                    //val represent whatever will be into the field
+                    onChanged: (val) {
+                      setState(() => username = val);
+                    },
+                  ),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -57,18 +68,15 @@ class _SignInState extends State<SignIn> {
                         borderRadius: BorderRadius.circular(15.0),
                         side: BorderSide(color: Colors.orangeAccent)),
                     child: Text(
-                      'Sign in',
+                      'Register',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
+                      print(username);
                       print(email);
                       print(password);
                     },
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Text('If do not have an account register here'),
+                  )
                 ],
               ),
             )));
