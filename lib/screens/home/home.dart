@@ -20,7 +20,7 @@ class HomeState extends State<Home> {
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
+
   static List<Widget> _widgetOptions = <Widget>[
     // Here we must insert the five widgets that characterize the app instead of the dummy Text widgets
     LatestRecipes(),
@@ -51,50 +51,50 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.orangeAccent[100],
-        appBar: AppBar(
-          backgroundColor: Colors.orangeAccent[400],
-          elevation: 0.0,
-          title: Text('Home'),
-          actions: [
-            FlatButton(
+      backgroundColor: Colors.orange[50],
+      appBar: AppBar(
+        backgroundColor: Colors.orange[400],
+        elevation: 0.0,
+        title: Text('Home'),
+        actions: [
+          FlatButton(
               onPressed: () {
                 _auth.signOut();
               },
               child: Text('Sign out'))
-          ],
-        ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_outlined),
-              label: 'Write',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_outline),
-              label: 'Saved',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'Account',
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-        ),
+        ],
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_outlined),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_outlined),
+            label: 'Write',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_outline),
+            label: 'Saved',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            label: 'Account',
+          ),
+        ],
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
     );
   }
 }
