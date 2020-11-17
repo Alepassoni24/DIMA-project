@@ -7,6 +7,19 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      //temporary in order to test functionalities
+      appBar: AppBar(
+        actions: [
+          FlatButton(
+              onPressed: () {
+                _auth.signOut();
+              },
+              child: Text('Sign out'))
+        ],
+      ),
+      backgroundColor: Colors.orangeAccent[100],
+      body: Text('Home'),
+    );
   }
 }
