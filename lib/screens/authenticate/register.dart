@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 20.0,
+                        height: 15.0,
                       ),
                       //field for username
                       TextFormField(
@@ -68,7 +68,7 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 15.0,
                       ),
                       //field for email
                       TextFormField(
@@ -83,7 +83,7 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 15.0,
                       ),
                       //field for password
                       TextFormField(
@@ -100,7 +100,7 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 15.0,
                       ),
                       RaisedButton(
                         color: Colors.orange[400],
@@ -109,7 +109,10 @@ class _RegisterState extends State<Register> {
                             side: BorderSide(color: Colors.orangeAccent)),
                         child: Text(
                           'Register',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
