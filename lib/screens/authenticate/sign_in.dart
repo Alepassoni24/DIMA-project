@@ -30,11 +30,6 @@ class _SignInState extends State<SignIn> {
         : SafeArea(
             child: Scaffold(
                 backgroundColor: Colors.orange[50],
-                //appBar: AppBar(
-                //  backgroundColor: Colors.orange[400],
-                //  elevation: 0.0,
-                //  title: Text('Sign In to CookingTime'),
-                //),
                 body: Center(
                   child: Container(
                       padding: EdgeInsets.symmetric(

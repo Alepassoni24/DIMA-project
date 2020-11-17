@@ -1,4 +1,5 @@
 import 'package:dima_project/model/user_obj.dart';
+import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -19,11 +20,14 @@ class AuthService {
   }
 
   //register by email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String username) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+      //create a new document for the user with th uid
+      await DatabaseService(uid: user.uid).updateUserData(username);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

@@ -118,7 +118,7 @@ class _RegisterState extends State<Register> {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
                             dynamic result = _auth.registerWithEmailAndPassword(
-                                email, password);
+                                email, password, username);
                             if (result == null) {
                               setState(() {
                                 loading = false;
