@@ -1,12 +1,10 @@
-import 'package:dima_project/screens/home/latestRecipes.dart';
+import 'package:dima_project/screens/recipes/latestRecipes.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
 class Home extends StatefulWidget {
   //value to manage the authentication particulr sign out phase, would be moved if sign out function is implemented somewhere else
-
-  Home({Key key}) : super(key: key);
 
   @override
   HomeState createState() => HomeState();
@@ -15,8 +13,30 @@ class Home extends StatefulWidget {
 // This is the private State class that goes with Home
 class HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-
   int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.orangeAccent[100],
+        appBar: AppBar(
+          backgroundColor: Colors.orangeAccent[400],
+          elevation: 0.0,
+          title: Text('Home'),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                _auth.signOut();
+              },
+              child: Text('Sign out'))
+          ],
+        ),
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: getBottomNavigationBarItem(),
+    );
+  }
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -48,53 +68,34 @@ class HomeState extends State<Home> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.orangeAccent[100],
-        appBar: AppBar(
-          backgroundColor: Colors.orangeAccent[400],
-          elevation: 0.0,
-          title: Text('Home'),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                _auth.signOut();
-              },
-              child: Text('Sign out'))
-          ],
+  BottomNavigationBar getBottomNavigationBarItem() {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_outlined),
+          label: 'Home',
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search_outlined),
+          label: 'Search',
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_outlined),
-              label: 'Write',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_outline),
-              label: 'Saved',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'Account',
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_outlined),
+          label: 'Write',
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bookmark_outline),
+          label: 'Saved',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle_outlined),
+          label: 'Account',
+        ),
+      ],
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: _onItemTapped,
     );
   }
 }
