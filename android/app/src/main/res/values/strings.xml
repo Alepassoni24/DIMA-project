@@ -1,0 +1,5 @@
+<resources>
+<string name="app_name">CookingTime</string>
+<string name="facebook_app_id">1043162609533116</string>
+<string name="fb_login_protocol_scheme">fb1043162609533116</string>
+</resources>

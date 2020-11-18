@@ -167,7 +167,9 @@ class _SignInState extends State<SignIn> {
                                     fontSize: 16.0,
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  dynamic result = _auth.signInWithFacebook();
+                                },
                               ),
                             ),
                             SizedBox(

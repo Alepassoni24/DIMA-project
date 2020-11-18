@@ -2,12 +2,14 @@ import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   //firebase instance for authentication
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final fb = FacebookLogin();
 
   //create user object based on firebase User
   UserObj _userFromFirebaseUser(User user) {
@@ -75,6 +77,36 @@ class AuthService {
       assert(user.uid == currentUser.uid);
 
       return _userFromFirebaseUser(user);
+    }
+
+    return null;
+  }
+
+  //sign in with facebook
+  Future signInWithFacebook() async {
+    final fbResult = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
+
+    switch (fbResult.status) {
+      case FacebookLoginStatus.Success:
+        //get the token
+        final FacebookAccessToken fbToken = fbResult.accessToken;
+        //convert to auth credential
+        final AuthCredential credential =
+            FacebookAuthProvider.credential(fbToken.token);
+        //user credential to sign in with firebase
+        UserCredential result = await _auth.signInWithCredential(credential);
+        User user = result.user;
+        return _userFromFirebaseUser(user);
+        break;
+      case FacebookLoginStatus.Cancel:
+        print('the user canceled the login');
+        break;
+      case FacebookLoginStatus.Error:
+        print('there was an error');
+        break;
     }
 
     return null;
