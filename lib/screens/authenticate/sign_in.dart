@@ -17,6 +17,7 @@ class _SignInState extends State<SignIn> {
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
+  bool googleSignIn = false;
 
   //piece of state to store value inserted into the form
   String email = '';
@@ -187,7 +188,12 @@ class _SignInState extends State<SignIn> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  dynamic result = _auth.signInWithGoogle();
+                                  if (result != null) {
+                                    setState(() => googleSignIn = true);
+                                  }
+                                },
                               ),
                             ),
                           ],

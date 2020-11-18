@@ -1,10 +1,13 @@
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   //firebase instance for authentication
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   //create user object based on firebase User
   UserObj _userFromFirebaseUser(User user) {
@@ -48,11 +51,50 @@ class AuthService {
     }
   }
 
-  //sign out
+  //sign in with google
+  Future signInWithGoogle() async {
+    await Firebase.initializeApp(); //TODO: verify if it is necessary
+
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    UserCredential result = await _auth.signInWithCredential(credential);
+    User user = result.user;
+
+    if (user != null) {
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final User currentUser = _auth.currentUser;
+      assert(user.uid == currentUser.uid);
+
+      return _userFromFirebaseUser(user);
+    }
+
+    return null;
+  }
+
+  //sign out by email and password
   Future signOut() async {
     try {
       return await _auth.signOut();
     } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  //sign out with google
+  Future signOutGoogle() async {
+    try {
+      return await googleSignIn.signOut();
+    } on Exception catch (e) {
       print(e.toString());
       return null;
     }
