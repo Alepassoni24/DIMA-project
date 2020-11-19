@@ -90,7 +90,7 @@ class _SignInState extends State<SignIn> {
                                 if (_formKey.currentState.validate()) {
                                   setState(() => loading = true);
                                   dynamic result =
-                                      _auth.signInWithEmailAndPassword(
+                                      await _auth.signInWithEmailAndPassword(
                                           email, password);
                                   //show error must be defined differently
                                   if (result == null) {
@@ -163,8 +163,9 @@ class _SignInState extends State<SignIn> {
                                     fontSize: 16.0,
                                   ),
                                 ),
-                                onPressed: () {
-                                  dynamic result = _auth.signInWithFacebook();
+                                onPressed: () async {
+                                  dynamic result =
+                                      await _auth.signInWithFacebook();
                                 },
                               ),
                             ),
@@ -186,8 +187,9 @@ class _SignInState extends State<SignIn> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                onPressed: () {
-                                  dynamic result = _auth.signInWithGoogle();
+                                onPressed: () async {
+                                  dynamic result =
+                                      await _auth.signInWithGoogle();
                                   if (result != null) {
                                     setState(() => googleSignIn = true);
                                   }

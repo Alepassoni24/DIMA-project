@@ -2,6 +2,7 @@ import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -47,8 +48,8 @@ class AuthService {
           email: email, password: password);
       User user = result.user;
       return _userFromFirebaseUser(user);
-    } catch (error) {
-      print(error.toString());
+    } catch (e) {
+      print(e.toString());
       return null;
     }
   }
