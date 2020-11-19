@@ -24,97 +24,102 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.orange[50],
-            appBar: AppBar(
-              backgroundColor: Colors.orange[400],
-              elevation: 0.0,
-              title: Text('Register to CookingTime'),
-            ),
-            body: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      //field for username
-                      TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                          hintText: 'username',
-                        ),
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter an username' : null,
-                        //val represent whatever will be into the field
-                        onChanged: (val) {
-                          setState(() => username = val);
-                        },
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      //field for email
-                      TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                          hintText: 'email',
-                        ),
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter an email' : null,
-                        //val represent whatever will be into the field
-                        onChanged: (val) {
-                          setState(() => email = val);
-                        },
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      //field for password
-                      TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                          hintText: 'password',
-                        ),
-                        validator: (val) => val.length < 8
-                            ? 'Enter a password of at least 8 characters'
-                            : null,
-                        obscureText: true,
-                        //val represent whatever will be into the field
-                        onChanged: (val) {
-                          setState(() => password = val);
-                        },
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      RaisedButton(
-                        color: Colors.orange[400],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            side: BorderSide(color: Colors.orangeAccent)),
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+        : SafeArea(
+            child: Scaffold(
+                backgroundColor: Colors.orange[50],
+                appBar: AppBar(
+                  backgroundColor: Colors.orange[400],
+                  elevation: 0.0,
+                  title: Text('Register to CookingTime'),
+                ),
+                body: Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            height: 15.0,
                           ),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() => loading = true);
-                            dynamic result = _auth.registerWithEmailAndPassword(
-                                email, password, username);
-                            if (result == null) {
-                              setState(() {
-                                loading = false;
-                                error = 'please supply a valid email';
-                              });
-                            }
-                          }
-                        },
+                          //field for username
+                          TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'username',
+                            ),
+                            validator: (val) =>
+                                val.isEmpty ? 'Enter an username' : null,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => username = val);
+                            },
+                          ),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          //field for email
+                          TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'email',
+                            ),
+                            validator: (val) =>
+                                val.isEmpty ? 'Enter an email' : null,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            },
+                          ),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          //field for password
+                          TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'password',
+                            ),
+                            validator: (val) => val.length < 8
+                                ? 'Enter a password of at least 8 characters'
+                                : null,
+                            obscureText: true,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
+                          ),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          RaisedButton(
+                            color: Colors.orange[400],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                side: BorderSide(color: Colors.orangeAccent)),
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                setState(() => loading = true);
+                                dynamic result =
+                                    _auth.registerWithEmailAndPassword(
+                                        email, password, username);
+                                if (result == null) {
+                                  setState(() {
+                                    loading = false;
+                                    error = 'please supply a valid email';
+                                  });
+                                }
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )));
+                    ))),
+          );
   }
 }
