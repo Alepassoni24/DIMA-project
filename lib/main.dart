@@ -1,4 +1,5 @@
 import 'package:dima_project/model/user_obj.dart';
+import 'package:dima_project/screens/authenticate/register.dart';
 import 'package:dima_project/screens/wrapper.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,14 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         return StreamProvider<UserObj>.value(
             value: AuthService().user,
-            child: MaterialApp(title: 'CookingTime', home: Wrapper()));
+            child: MaterialApp(
+              initialRoute: '/',
+              routes: {
+                '/': (context) => Wrapper(),
+                '/register': (context) => Register(),
+              },
+              title: 'CookingTime',
+            ));
       },
     );
   }

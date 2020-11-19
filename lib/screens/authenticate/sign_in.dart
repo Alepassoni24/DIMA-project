@@ -4,10 +4,6 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-  final Function toogleView;
-
-  SignIn({this.toogleView});
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -114,9 +110,9 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                               onPressed: () {
-                                widget.toogleView();
+                                Navigator.pushNamed(context, '/register');
                               },
-                            ), //put into a row with text and flatbutton
+                            ),
                             SizedBox(
                               height: 5.0,
                             ),

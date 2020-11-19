@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:dima_project/services/auth.dart';
 
 class Register extends StatefulWidget {
-  final Function toogleView;
-
-  Register({this.toogleView});
-
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -34,19 +30,6 @@ class _RegisterState extends State<Register> {
               backgroundColor: Colors.orange[400],
               elevation: 0.0,
               title: Text('Register to CookingTime'),
-              actions: [
-                FlatButton(
-                    onPressed: () {
-                      //we take the function from the widget
-                      widget.toogleView();
-                    },
-                    child: Text(
-                      'back',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    )),
-              ],
             ),
             body: Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -62,6 +45,8 @@ class _RegisterState extends State<Register> {
                         decoration: textInputDecoration.copyWith(
                           hintText: 'username',
                         ),
+                        validator: (val) =>
+                            val.isEmpty ? 'Enter an username' : null,
                         //val represent whatever will be into the field
                         onChanged: (val) {
                           setState(() => username = val);
