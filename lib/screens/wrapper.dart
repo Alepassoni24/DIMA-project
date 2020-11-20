@@ -10,12 +10,10 @@ class Wrapper extends StatelessWidget {
     //we are trying to receive a UserObj data and we pass the context
     //so we know what stream we are going to listen to
     final user = Provider.of<UserObj>(context);
-    print(user);
 
     //return either Home or Authenticate widget depending on the value of user
     //null means the user is not authenticated otherwise we have an instance of UserObj
     if (user == null) {
-      //TODO: if it works delete authenticate widget
       return SignIn();
     } else {
       return Home();

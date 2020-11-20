@@ -37,87 +37,92 @@ class _RegisterState extends State<Register> {
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
                     child: Form(
                       key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          //field for username
-                          TextFormField(
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'username',
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            FlutterLogo(
+                              size: 125,
                             ),
-                            validator: (val) =>
-                                val.isEmpty ? 'Enter an username' : null,
-                            //val represent whatever will be into the field
-                            onChanged: (val) {
-                              setState(() => username = val);
-                            },
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          //field for email
-                          TextFormField(
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'email',
+                            SizedBox(
+                              height: 20.0,
                             ),
-                            validator: (val) =>
-                                val.isEmpty ? 'Enter an email' : null,
-                            //val represent whatever will be into the field
-                            onChanged: (val) {
-                              setState(() => email = val);
-                            },
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          //field for password
-                          TextFormField(
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'password',
-                            ),
-                            validator: (val) => val.length < 8
-                                ? 'Enter a password of at least 8 characters'
-                                : null,
-                            obscureText: true,
-                            //val represent whatever will be into the field
-                            onChanged: (val) {
-                              setState(() => password = val);
-                            },
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          RaisedButton(
-                            color: Colors.orange[400],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                                side: BorderSide(color: Colors.orangeAccent)),
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
+                            //field for username
+                            TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'username',
                               ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter an username' : null,
+                              //val represent whatever will be into the field
+                              onChanged: (val) {
+                                setState(() => username = val);
+                              },
                             ),
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                setState(() => loading = true);
-                                dynamic result =
-                                    _auth.registerWithEmailAndPassword(
-                                        email, password, username);
-                                if (result == null) {
-                                  setState(() {
-                                    loading = false;
-                                    error = 'please supply a valid email';
-                                  });
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            //field for email
+                            TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'email',
+                              ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter an email' : null,
+                              //val represent whatever will be into the field
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            //field for password
+                            TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'password',
+                              ),
+                              validator: (val) => val.length < 8
+                                  ? 'Enter a password of at least 8 characters'
+                                  : null,
+                              obscureText: true,
+                              //val represent whatever will be into the field
+                              onChanged: (val) {
+                                setState(() => password = val);
+                              },
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            RaisedButton(
+                              color: Colors.orange[400],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  side: BorderSide(color: Colors.orangeAccent)),
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => loading = true);
+                                  dynamic result =
+                                      _auth.registerWithEmailAndPassword(
+                                          email, password, username);
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                      error = 'please supply a valid email';
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                          ),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ))),
           );

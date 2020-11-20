@@ -57,6 +57,7 @@ class AuthService {
   //sign in with google
   Future signInWithGoogle() async {
     await Firebase.initializeApp(); //TODO: verify if it is necessary
+    User user;
 
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -67,8 +68,13 @@ class AuthService {
       idToken: googleSignInAuthentication.idToken,
     );
 
-    UserCredential result = await _auth.signInWithCredential(credential);
-    User user = result.user;
+    try {
+      UserCredential result = await _auth.signInWithCredential(credential);
+      user = result.user;
+    } on Exception catch (e) {
+      print(e.toString());
+      return null;
+    }
 
     if (user != null) {
       assert(!user.isAnonymous);
@@ -77,6 +83,7 @@ class AuthService {
       final User currentUser = _auth.currentUser;
       assert(user.uid == currentUser.uid);
 
+      await DatabaseService(uid: user.uid).updateUserData(user.displayName);
       return _userFromFirebaseUser(user);
     }
 
@@ -100,6 +107,7 @@ class AuthService {
         //user credential to sign in with firebase
         UserCredential result = await _auth.signInWithCredential(credential);
         User user = result.user;
+        await DatabaseService(uid: user.uid).updateUserData(user.displayName);
         return _userFromFirebaseUser(user);
         break;
       case FacebookLoginStatus.Cancel:

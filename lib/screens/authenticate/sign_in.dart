@@ -35,168 +35,199 @@ class _SignInState extends State<SignIn> {
                       ),
                       child: Form(
                         key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            //field for email
-                            TextFormField(
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter an email' : null,
-                              decoration: textInputDecoration.copyWith(
-                                hintText: 'email',
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FlutterLogo(
+                                size: 125,
                               ),
-                              //val represent whatever will be into the field
-                              onChanged: (val) {
-                                setState(() => email = val);
-                              },
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            //field for password
-                            TextFormField(
-                              validator: (val) => val.length < 8
-                                  ? 'Enter a password of at least 8 characters'
-                                  : null,
-                              decoration: textInputDecoration.copyWith(
-                                hintText: 'password',
+                              SizedBox(
+                                height: 20.0,
                               ),
-                              obscureText: true,
-                              //val represent whatever will be into the field
-                              onChanged: (val) {
-                                setState(() => password = val);
-                              },
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            RaisedButton(
-                              color: Colors.orange[400],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  side: BorderSide(color: Colors.orange[400])),
-                              child: Text(
-                                'Sign in',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
+                              //field for email
+                              TextFormField(
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter an email' : null,
+                                decoration: textInputDecoration.copyWith(
+                                  hintText: 'email',
                                 ),
+                                //val represent whatever will be into the field
+                                onChanged: (val) {
+                                  setState(() => email = val);
+                                },
                               ),
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  setState(() => loading = true);
-                                  dynamic result =
-                                      await _auth.signInWithEmailAndPassword(
-                                          email, password);
-                                  //show error must be defined differently
-                                  if (result == null) {
-                                    setState(() {
-                                      //error = 'please supply valid credential';
-                                      loading = false;
-                                    });
-                                  }
-                                }
-                              },
-                            ),
-                            FlatButton(
-                              child: Text(
-                                'If do not have an account register here',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                ),
+                              SizedBox(
+                                height: 15.0,
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/register');
-                              },
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                        right: 20.0,
-                                      ),
-                                      child: Divider(
-                                        color: Colors.grey[900],
-                                        height: 36,
-                                      )),
+                              //field for password
+                              TextFormField(
+                                validator: (val) => val.length < 8
+                                    ? 'Enter a password of at least 8 characters'
+                                    : null,
+                                decoration: textInputDecoration.copyWith(
+                                  hintText: 'password',
                                 ),
-                                Text(
-                                  "or",
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                        left: 20.0,
-                                      ),
-                                      child: Divider(
-                                        color: Colors.grey[900],
-                                        height: 36,
-                                      )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            ButtonTheme(
-                              minWidth: 200.0,
-                              child: RaisedButton(
-                                color: Colors.blueAccent,
+                                obscureText: true,
+                                //val represent whatever will be into the field
+                                onChanged: (val) {
+                                  setState(() => password = val);
+                                },
+                              ),
+                              SizedBox(
+                                height: 15.0,
+                              ),
+                              RaisedButton(
+                                color: Colors.orange[400],
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(color: Colors.blueAccent)),
+                                    side:
+                                        BorderSide(color: Colors.orange[400])),
                                 child: Text(
-                                  'Sign in with Facebook',
+                                  'Sign in',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.0,
                                   ),
                                 ),
                                 onPressed: () async {
-                                  dynamic result =
-                                      await _auth.signInWithFacebook();
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            ButtonTheme(
-                              minWidth: 200.0,
-                              child: RaisedButton(
-                                color: Colors.redAccent[200],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
-                                        color: Colors.redAccent[200])),
-                                child: Text(
-                                  'Sign in with Google',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  dynamic result =
-                                      await _auth.signInWithGoogle();
-                                  if (result != null) {
-                                    setState(() => googleSignIn = true);
+                                  if (_formKey.currentState.validate()) {
+                                    setState(() => loading = true);
+                                    dynamic result =
+                                        await _auth.signInWithEmailAndPassword(
+                                            email, password);
+                                    //show error must be defined differently
+                                    if (result == null) {
+                                      setState(() {
+                                        //error = 'please supply valid credential';
+                                        loading = false;
+                                      });
+                                    }
                                   }
                                 },
                               ),
-                            ),
-                          ],
+                              FlatButton(
+                                child: Text(
+                                  'If do not have an account register here',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/register');
+                                },
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: new Container(
+                                        margin: const EdgeInsets.only(
+                                          right: 20.0,
+                                        ),
+                                        child: Divider(
+                                          color: Colors.grey[900],
+                                          height: 36,
+                                        )),
+                                  ),
+                                  Text(
+                                    "or",
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: new Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20.0,
+                                        ),
+                                        child: Divider(
+                                          color: Colors.grey[900],
+                                          height: 36,
+                                        )),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              ButtonTheme(
+                                minWidth: 200.0,
+                                child: RaisedButton(
+                                  color: Colors.blueAccent,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      side:
+                                          BorderSide(color: Colors.blueAccent)),
+                                  child: Text(
+                                    'Sign in with Facebook',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    setState(() => loading = true);
+                                    dynamic result =
+                                        await _auth.signInWithFacebook();
+                                    if (result == null) {
+                                      setState(() {
+                                        loading = false;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              ButtonTheme(
+                                minWidth: 200.0,
+                                child: RaisedButton(
+                                  color: Colors.red[300],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      side: BorderSide(color: Colors.red[300])),
+                                  child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/google_logo.png"),
+                                          height: 20.0,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10.0),
+                                          child: Text(
+                                            'Sign in with Google',
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                  onPressed: () async {
+                                    setState(() => loading = true);
+                                    dynamic result =
+                                        await _auth.signInWithGoogle();
+                                    if (result == null) {
+                                      setState(() {
+                                        loading = false;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       )),
                 )),
