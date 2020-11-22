@@ -15,7 +15,7 @@
 
 
 \section{Core features}
-	This section of the document is devoted to present the main functionalities provided by CookingTIme, to let the reader understand better these features, 
+	This section of the document is devoted to present the main functionalities provided by CookingTime, to let the reader understand better these features, 
 	they are divided by screen in which they are implemented.
 	
 	\subsection{Authentication Screen}
@@ -42,7 +42,9 @@
 			\item Allows the user to upload a picture representing the recipe.
 			
 			\item Allows the user to insert a description, category, difficulty and preparation time of the recipe.
-		\end{intem}
+			
+			\item Allows the user to add up to 10 steps for the preparation process of the recipe, each one including title, description and a photo.
+		\end{itemize}
 
 	\subsection{Search for Recipes Screen}
 		\begin{itemize}
@@ -61,11 +63,13 @@
 
 	\subsection{Account Settings Screen}
 		\begin{itemize}
-			\item Allows the user modify some personal information.
+			\item Allows the user modify his/her personal information.
 			
 			\item Allows the user to see all his/her posted recipes.
 			
 			\item Allows the user to see his/her personal statistics.
+			
+			\item Allows the user to sign out from his/her account.
 		\end{itemize}
 
 
@@ -88,23 +92,19 @@
 \section{Non-Functional Requirements}
 TODO introduction to this section
 \begin{itemize}
-	\item \textbf{Portability}: Using a cross-platform implementation allows to use the application run both in Android and IOS systems. The application could be run on different sized devices as well.
+	\item \textbf{Portability}: Using a cross-platform implementation allows the application to run both in Android and iOS systems. The application could be run on different sized devices as well.
 	
 	\item \textbf{Usability}: All the features of the application are quite easy to be found as the design of the interfaces are very user-friendly in order to provide the best user experience.
 	
-	\item \textbf{Stability}: TODO
+	\item \textbf{Availability and Reliability}: The application must be always working and be connected to the Firebase platform.
+	The downtime is strictly related to the one of Firebase, which is very low.
+	In case of any kind of failure the application must be restored to a correct state as soon as possible.
 	
-	\item \textbf{Availability}: The application must be always working and be connected to the Firebase platform. In case of any kind of failure it must be restored as soon as possible.
-	
-	\item \textbf{Reliability}: TODO ***do we need it? or how we have to implement it? i think it's not security stuff.***
-	
-	\item \textbf {Security}: As the user have different way to sign in the application and they are providing some personal data, the app must be implement some security actions. For this reason the connection between the application and the Firebase server are done using and encrypted comunication through SHA-1 keys.
-	
-	\item \textbf{Scalability}: TODO
+	\item \textbf {Security}: As the user have different way to sign in the application and they are providing some personal data, the app must be implement some security actions. For this reason the connection between the application and the Firebase server are done using and encrypted communication through SHA-1 keys.
 	
 	\item \textbf{Extensibility}: The application is developed for some basic feature which can be increased over the time.
 	
-	\item \textbf{Maintainability}: The application was developed with a clear coding style by commentig all the part in order to let the code be readable to anyone who wants to touch it.
+	\item \textbf{Maintainability}: The application was developed with a clear coding style by commenting all the part in order to let the code be readable to anyone who wants to touch it.
 	
 	\item \textbf{Nice User Interface}: It's important that user experience will be the best, for this reason the UI is very nice and simple.
 \end{itemize}
