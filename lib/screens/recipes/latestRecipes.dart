@@ -1,23 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/screens/recipes/recipeCard.dart';
+import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 
 class LatestRecipes extends StatelessWidget{
 
+  final DatabaseService databaseService = new DatabaseService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: getLatestRecipes(),
+      body: StreamBuilder(
+        stream: databaseService.getLastRecipes(10),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          return new ListView(
+            padding: const EdgeInsets.all(8),
+            children: snapshot.data.documents.map<Widget>(snapshotToRecipeCard).toList()
+          );
+        }
       )
     );
   }
-  
-  // Get latest (10?) recipes from the database
-  List<Widget> getLatestRecipes() {
-    return List<Widget>.generate(
-      10,
-      (i) => RecipeCard('Recipe title', 'Recipe subtitle', 'https://cdn.vega-direct.com/media/image/3d/ea/85/EMC-15167-schale-alessia_800x800.jpg'),
-    );
+
+  RecipeCard snapshotToRecipeCard(DocumentSnapshot document) {
+    return RecipeCard(document.data()['title'], document.data()['subtitle'], document.data()['imageURL']);
   }
 }

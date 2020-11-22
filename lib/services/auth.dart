@@ -2,7 +2,6 @@ import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -19,10 +18,7 @@ class AuthService {
 
   //authentication changes on user stream
   Stream<UserObj> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
-    //not working with the new function, probably map function must be explicit implemented
-    //TODO check if we can manage it
-    //return _auth.authStateChanges.map(_userFromFirebaseUser);
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
   //register by email and password

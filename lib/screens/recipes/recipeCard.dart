@@ -16,24 +16,39 @@ class RecipeCard extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            getTitle(),
-            getImage(),
-            getButtons(),
+            TitleListTile(cardTitle, cardSubtitle),
+            ImageContainer(cardImageURL),
+            ButtonRow(),
           ],
         ),
       ),
     );
   }
+}
 
-  ListTile getTitle() {
+class TitleListTile extends StatelessWidget {
+  final String cardTitle;
+  final String cardSubtitle;
+
+  TitleListTile(this.cardTitle, this.cardSubtitle);
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.food_bank_outlined),
       title: Text(cardTitle),
       subtitle: Text(cardSubtitle),
     );
   }
+}
 
-  Container getImage() {
+class ImageContainer extends StatelessWidget {
+  final String cardImageURL;
+
+  ImageContainer(this.cardImageURL);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 200,
       margin: const EdgeInsets.only(left: 5.0, right: 5.0),
@@ -47,8 +62,11 @@ class RecipeCard extends StatelessWidget{
       ),
     );
   }
+}
 
-  Row getButtons() {
+class ButtonRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
