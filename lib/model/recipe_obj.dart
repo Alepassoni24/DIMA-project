@@ -13,8 +13,8 @@ class RecipeData {
   final String subtitle;
   final String description;
   final String imageURL;
-  final int rating;
-  final int timeInMinutes;
+  final String rating;
+  final String timeInMinutes;
   final Timestamp submissionTime;
   
   RecipeData({this.recipeId, this.title, this.subtitle, this.description, this.imageURL, this.rating, this.submissionTime, this.timeInMinutes});

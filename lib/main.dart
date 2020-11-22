@@ -1,5 +1,6 @@
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/authenticate/register.dart';
+import 'package:dima_project/screens/recipes/recipeView.dart';
 import 'package:dima_project/screens/wrapper.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +21,17 @@ class MyApp extends StatelessWidget {
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         return StreamProvider<UserObj>.value(
-            value: AuthService().user,
-            child: MaterialApp(
-              initialRoute: '/',
-              routes: {
-                '/': (context) => Wrapper(),
-                '/register': (context) => Register(),
-              },
-              title: 'CookingTime',
-            ));
+          value: AuthService().user,
+          child: MaterialApp(
+            initialRoute: '/',
+            routes: {
+              '/': (context) => Wrapper(),
+              '/register': (context) => Register(),
+              '/recipeView': (context) => RecipeView(),
+            },
+            title: 'CookingTime',
+          )
+        );
       },
     );
   }

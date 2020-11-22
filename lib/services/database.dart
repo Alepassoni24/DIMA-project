@@ -45,13 +45,13 @@ class DatabaseService {
   RecipeData recipeDataFromSnapshot(DocumentSnapshot documentSnapshot) {
     return RecipeData(
       recipeId: documentSnapshot.id,
-      title: documentSnapshot['title'],
-      subtitle: documentSnapshot['subtitle'],
-      description: documentSnapshot['description'],
-      imageURL: documentSnapshot['imageURL'],
-      rating: documentSnapshot['rating'],
-      timeInMinutes: documentSnapshot['timeInMinutes'],
-      submissionTime: documentSnapshot['submissionTime'],
+      title: documentSnapshot.data()['title'],
+      subtitle: documentSnapshot.data()['subtitle'],
+      description: documentSnapshot.data()['description'],
+      imageURL: documentSnapshot.data()['imageURL'],
+      rating: documentSnapshot.data()['rating'].toString(),
+      timeInMinutes: documentSnapshot.data()['timeInMinutes'].toString(),
+      submissionTime: documentSnapshot.data()['submissionTime'],
     );
   }
 

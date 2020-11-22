@@ -1,5 +1,4 @@
 import 'package:dima_project/screens/recipes/latestRecipes.dart';
-import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
@@ -12,25 +11,12 @@ class Home extends StatefulWidget {
 
 // This is the private State class that goes with Home
 class HomeState extends State<Home> {
-  final AuthService _auth = AuthService();
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.orange[50],
-      appBar: AppBar(
-        backgroundColor: Colors.orange[400],
-        elevation: 0.0,
-        title: Text('Home'),
-        actions: [
-          FlatButton(
-              onPressed: () {
-                _auth.signOut();
-              },
-              child: Text('Sign out'))
-        ],
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -1,25 +1,31 @@
+import 'package:dima_project/model/recipe_obj.dart';
 import 'package:flutter/material.dart';
 
 //The recipe must be obtained from a query to the database
 class RecipeCard extends StatelessWidget{
-  final String cardTitle;
-  final String cardSubtitle;
-  final String cardImageURL;
+  final RecipeData recipeData;
   
-  RecipeCard(this.cardTitle, this.cardSubtitle, this.cardImageURL);
+  RecipeCard(this.recipeData);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Card(
         elevation: 5,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TitleListTile(cardTitle, cardSubtitle),
-            ImageContainer(cardImageURL),
-            ButtonRow(),
-          ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: InkWell(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TitleListTile(recipeData.title, recipeData.subtitle, recipeData.rating),
+              ImageContainer(recipeData.imageURL),
+            ],
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, '/recipeView', arguments: recipeData);
+          },
         ),
       ),
     );
@@ -29,15 +35,17 @@ class RecipeCard extends StatelessWidget{
 class TitleListTile extends StatelessWidget {
   final String cardTitle;
   final String cardSubtitle;
+  final String cardRating;
 
-  TitleListTile(this.cardTitle, this.cardSubtitle);
+  TitleListTile(this.cardTitle, this.cardSubtitle, this.cardRating);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.food_bank_outlined),
+      leading: Icon(Icons.account_circle_outlined),
       title: Text(cardTitle),
       subtitle: Text(cardSubtitle),
+      trailing: Column(children: [Text(cardRating), Icon(Icons.star_outline)]),
     );
   }
 }
@@ -51,9 +59,8 @@ class ImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      margin: const EdgeInsets.only(left: 5.0, right: 5.0),
       decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
         image: new DecorationImage(
           fit: BoxFit.fitWidth,
           alignment: Alignment.center,
@@ -64,6 +71,7 @@ class ImageContainer extends StatelessWidget {
   }
 }
 
+//TODO: Remove this if only one button is enough
 class ButtonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
