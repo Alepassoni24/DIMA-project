@@ -59,15 +59,18 @@ class AuthService {
     await Firebase.initializeApp(); //TODO: verify if it is necessary
     User user;
 
+    //authentication using google services
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
 
+    //retrieve token and credential by google authenticartion provider
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
 
+    //try authenticating on firebase user database
     try {
       UserCredential result = await _auth.signInWithCredential(credential);
       user = result.user;
@@ -76,6 +79,7 @@ class AuthService {
       return null;
     }
 
+    //assertion to verify the user provided by signin phase
     if (user != null) {
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
@@ -97,9 +101,10 @@ class AuthService {
       FacebookPermission.email,
     ]);
 
+    //handle all the possible outcome of the fb login process
     switch (fbResult.status) {
       case FacebookLoginStatus.Success:
-        //get the token
+        //get the token from facebook
         final FacebookAccessToken fbToken = fbResult.accessToken;
         //convert to auth credential
         final AuthCredential credential =
@@ -121,21 +126,11 @@ class AuthService {
     return null;
   }
 
-  //sign out by email and password
+  //sign out function
   Future signOut() async {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  //sign out with google
-  Future signOutGoogle() async {
-    try {
-      return await googleSignIn.signOut();
-    } on Exception catch (e) {
       print(e.toString());
       return null;
     }

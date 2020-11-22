@@ -13,7 +13,6 @@ class _SignInState extends State<SignIn> {
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  bool googleSignIn = false;
 
   //piece of state to store value inserted into the form
   String email = '';
