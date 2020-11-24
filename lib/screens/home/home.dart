@@ -1,9 +1,8 @@
-import 'package:dima_project/screens/recipes/latestRecipes.dart';
+import 'package:dima_project/screens/homeRecipes/latestRecipes.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
 class Home extends StatefulWidget {
-  //value to manage the authentication particulr sign out phase, would be moved if sign out function is implemented somewhere else
 
   @override
   HomeState createState() => HomeState();

@@ -50,18 +50,33 @@ class DatabaseService {
       description: documentSnapshot.data()['description'],
       imageURL: documentSnapshot.data()['imageURL'],
       rating: documentSnapshot.data()['rating'].toString(),
-      timeInMinutes: documentSnapshot.data()['timeInMinutes'].toString(),
+      timeInMinutes: documentSnapshot.data()['timeInMinutes'],
       submissionTime: documentSnapshot.data()['submissionTime'],
     );
   }
 
   //get recipe doc stream
   Stream<RecipeData> recipeData(String recipeId) {
-    return userCollection.doc(recipeId).snapshots().map(recipeDataFromSnapshot);
+    return recipeCollection.doc(recipeId).snapshots().map(recipeDataFromSnapshot);
   }
 
   //get stream of last num recipes
   Stream<QuerySnapshot> getLastRecipes(int num) {
     return recipeCollection.orderBy('submissionTime', descending: true).limit(num).snapshots();
+  }
+
+  //get ingredient stream from a recipe id
+  Stream<QuerySnapshot> getRecipeIngredients(String recipeId) {
+    return recipeCollection.doc(recipeId).collection('ingredient').snapshots();
+  }
+
+  //get ingredients data from snapshot
+  IngredientData ingredientsDataFromSnapshot(DocumentSnapshot documentSnapshot) {
+    return IngredientData(
+      id: documentSnapshot.id,
+      quantity: documentSnapshot.data()['quantity'].toString(),
+      unit: documentSnapshot.data()['unit'],
+      name: documentSnapshot.data()['name'],
+    );
   }
 }

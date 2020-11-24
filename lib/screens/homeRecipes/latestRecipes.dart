@@ -1,10 +1,11 @@
-import 'package:dima_project/screens/recipes/recipeCard.dart';
+import 'package:dima_project/screens/homeRecipes/recipeCard.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 
 class LatestRecipes extends StatelessWidget{
 
+  //value to manage the authentication particulr sign out phase, would be moved if sign out function is implemented somewhere else
   final AuthService _auth = AuthService();
   final DatabaseService databaseService = new DatabaseService();
 
