@@ -20,9 +20,13 @@ class IngredientsView extends StatelessWidget {
         
         return new Column(
           children: [
-            Text("Ingredients:", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text("Ingredients:", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))
+            ),
+            SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>
-            IngredientView(databaseService.ingredientsDataFromSnapshot(document))).toList()
+              IngredientView(databaseService.ingredientsDataFromSnapshot(document))).toList()
           ]
         );
       }
@@ -31,17 +35,22 @@ class IngredientsView extends StatelessWidget {
 }
 
 class IngredientView extends StatelessWidget {
-  final IngredientData ingredientsData;
+  final IngredientData ingredientData;
 
-  IngredientView(this.ingredientsData);
+  IngredientView(this.ingredientData);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Text(ingredientsData.quantity + " ", style: TextStyle(fontWeight: FontWeight.bold),),
-        Text(ingredientsData.unit + " ", style: TextStyle(fontWeight: FontWeight.bold),),
-        Text(ingredientsData.name),
+        Row(
+          children: [
+            Text(ingredientData.quantity + " ", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(ingredientData.unit + " ", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(ingredientData.name),
+          ]
+        ),
+        SizedBox(height: 5),
       ]
     );
   }

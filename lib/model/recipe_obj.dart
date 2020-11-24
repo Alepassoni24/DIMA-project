@@ -8,10 +8,10 @@ class RecipeData {
   final String description;
   final String imageURL;
   final String rating;
-  final String timeInMinutes;
+  final String time;
   final Timestamp submissionTime;
   
-  RecipeData({this.recipeId, this.title, this.subtitle, this.description, this.imageURL, this.rating, this.submissionTime, this.timeInMinutes});
+  RecipeData({this.recipeId, this.title, this.subtitle, this.description, this.imageURL, this.rating, this.submissionTime, this.time});
 }
 
 class IngredientData {
@@ -23,17 +23,11 @@ class IngredientData {
   IngredientData({this.id, this.quantity, this.unit, this.name});
 }
 
-class RecipesData {
-  final List<Step> steps;
-
-  RecipesData({this.steps});
-}
-
-class Step {
+class StepData {
   final String id;
   final String title;
   final String description;
   final String imageURL;
 
-  Step({this.id, this.title, this.description, this.imageURL});
+  StepData({this.id, this.title, this.description, this.imageURL});
 }
