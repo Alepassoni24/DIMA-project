@@ -154,19 +154,33 @@ class _SignInState extends State<SignIn> {
                                 height: 5.0,
                               ),
                               ButtonTheme(
-                                minWidth: 200.0,
+                                minWidth: 225.0,
                                 child: RaisedButton(
                                   color: Colors.blueAccent,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                       side:
                                           BorderSide(color: Colors.blueAccent)),
-                                  child: Text(
-                                    'Sign in with Facebook',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                    ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image(
+                                        image: AssetImage("assets/fb_logo.png"),
+                                        height: 20.0,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          'Sign in with Facebook',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   onPressed: () async {
                                     setState(() => loading = true);
@@ -184,7 +198,7 @@ class _SignInState extends State<SignIn> {
                                 height: 5.0,
                               ),
                               ButtonTheme(
-                                minWidth: 200.0,
+                                minWidth: 225.0,
                                 child: RaisedButton(
                                   color: Colors.red[300],
                                   shape: RoundedRectangleBorder(

@@ -1,5 +1,39 @@
 \chapter{Architectural Design}
 
-\section{Mobile Application Design}
+\section{Overview}
+	The application architecture is basically composed by three layers, two of which are provided by Google services as you can see in the following picture:
+
+	TODO: picture
+
+\section{Presentation Layer}
+	The presentation layer is figured out by the mobile application which runs on a device. 
+	It comunicate with the Application/Web Server to retrieve and send data according to the user will. 
+	The communication are handled by some protected request to the Application Server. 
+	The mobile application contains as well the most of the logic layer in order to render data coming from the server and in order to organize the data to be sent.
+
+\section{Application/Web Server}
+
+	TODO: Description
 
 \section{Database Design}
+	The database is the one provided by Firebase and it's a NoSQL database, so information are stored in a sort of semi-structured way.
+	Using Google solution we can achieve \textbf{Durability and persistance of data} in order to have them alway available, 
+	\textbf{Consistency} so the database is always in a consistent state, \textbf{Atomicity} in this way all the operation are completelly executed and 
+	\textbf{Isolation} which means that every operation are executed isoleted and indipendetly from the other ones.
+	
+	\subsection{Database Structure}
+	In order lo let the read understand better the structure, here is provided a translated E/R schema of the database implemented by the application.
+	
+	TODO: picture of simplified structure 
+
+	\subsection{Database feature}
+	The application database allows to:
+	
+	\begin{itemize}
+		\item Login the application.
+		\item Read stored data in order to retrieve what was post by other users.
+		\item Data manipulation (CRUD operation) depending on user permissions over data.
+	\end{itemize}
+	
+	
+\section{Significative design decision}
