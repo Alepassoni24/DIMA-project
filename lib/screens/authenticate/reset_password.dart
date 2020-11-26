@@ -16,7 +16,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   bool loading = false;
   //piece of state to store value inserted into the form
   String email = '';
-  String message = null;
+  String message;
 
   @override
   Widget build(BuildContext context) {

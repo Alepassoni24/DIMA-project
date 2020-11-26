@@ -1,5 +1,6 @@
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
+import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:dima_project/services/auth.dart';
 
@@ -18,7 +19,7 @@ class _RegisterState extends State<Register> {
   String username = '';
   String email = '';
   String password = '';
-  String error = '';
+  String error;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,15 @@ class _RegisterState extends State<Register> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            SizedBox(
+                              height: 2.0,
+                            ),
+                            WarningAlert(
+                              warning: error,
+                            ),
+                            SizedBox(
+                              height: 2.0,
+                            ),
                             FlutterLogo(
                               size: 125,
                             ),
@@ -110,12 +120,17 @@ class _RegisterState extends State<Register> {
                                 if (_formKey.currentState.validate()) {
                                   setState(() => loading = true);
                                   dynamic result =
-                                      _auth.registerWithEmailAndPassword(
+                                      await _auth.registerWithEmailAndPassword(
                                           email, password, username);
                                   if (result == null) {
                                     setState(() {
                                       loading = false;
                                       error = 'please supply a valid email';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      loading = false;
+                                      Navigator.pop(context);
                                     });
                                   }
                                 }

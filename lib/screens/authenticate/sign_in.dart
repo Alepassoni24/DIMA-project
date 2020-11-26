@@ -1,6 +1,7 @@
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
+import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SignInState extends State<SignIn> {
   //piece of state to store value inserted into the form
   String email = '';
   String password = '';
-  String error = '';
+  String error;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,15 @@ class _SignInState extends State<SignIn> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              WarningAlert(
+                                warning: error,
+                              ),
+                              SizedBox(
+                                height: 2.0,
+                              ),
                               FlutterLogo(
                                 size: 125,
                               ),
@@ -99,7 +109,8 @@ class _SignInState extends State<SignIn> {
                                     //show error must be defined differently
                                     if (result == null) {
                                       setState(() {
-                                        //error = 'please supply valid credential';
+                                        error =
+                                            'please supply valid credential';
                                         loading = false;
                                       });
                                     }
@@ -200,6 +211,8 @@ class _SignInState extends State<SignIn> {
                                     if (result == null) {
                                       setState(() {
                                         loading = false;
+                                        error =
+                                            'An error occured during you Facebook login';
                                       });
                                     }
                                   },
@@ -245,6 +258,8 @@ class _SignInState extends State<SignIn> {
                                     if (result == null) {
                                       setState(() {
                                         loading = false;
+                                        error =
+                                            'An error occured during you Google login';
                                       });
                                     }
                                   },
