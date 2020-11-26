@@ -108,6 +108,17 @@ class _SignInState extends State<SignIn> {
                               ),
                               FlatButton(
                                 child: Text(
+                                  'Forgot password?',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/resetPsw');
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(
                                   'If do not have an account register here',
                                   style: TextStyle(
                                     color: Colors.grey[600],
