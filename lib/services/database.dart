@@ -10,7 +10,7 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('user');
   final CollectionReference recipeCollection =
-    FirebaseFirestore.instance.collection('recipe');
+      FirebaseFirestore.instance.collection('recipe');
 
   Future updateUserData(String username) async {
     return await userCollection.doc(uid).set({
@@ -57,7 +57,10 @@ class DatabaseService {
 
   //get stream of last num recipes
   Stream<QuerySnapshot> getLastRecipes(int num) {
-    return recipeCollection.orderBy('submissionTime', descending: true).limit(num).snapshots();
+    return recipeCollection
+        .orderBy('submissionTime', descending: true)
+        .limit(num)
+        .snapshots();
   }
 
   //get ingredients stream from a recipe id
@@ -66,7 +69,8 @@ class DatabaseService {
   }
 
   //get ingredients data from snapshot
-  IngredientData ingredientsDataFromSnapshot(DocumentSnapshot documentSnapshot) {
+  IngredientData ingredientsDataFromSnapshot(
+      DocumentSnapshot documentSnapshot) {
     return IngredientData(
       id: documentSnapshot.id,
       quantity: documentSnapshot.data()['quantity'].toString(),

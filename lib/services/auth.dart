@@ -16,6 +16,10 @@ class AuthService {
     return user != null ? UserObj(uid: user.uid) : null;
   }
 
+  Future getCurrentUser() async {
+    return await _auth.currentUser;
+  }
+
   //authentication changes on user stream
   Stream<UserObj> get user {
     return _auth.authStateChanges().map(_userFromFirebaseUser);

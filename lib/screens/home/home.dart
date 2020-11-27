@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
 class Home extends StatefulWidget {
-
   @override
   HomeState createState() => HomeState();
 }
@@ -42,7 +41,7 @@ class HomeState extends State<Home> {
       style: optionStyle,
     ),
     Text(
-      'Account and settings',
+      'Profile and settings',
       style: optionStyle,
     ),
   ];
