@@ -57,8 +57,7 @@ class _SignInState extends State<SignIn> {
                               ),
                               //field for email
                               TextFormField(
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter an email' : null,
+                                validator: EmailFieldValidator.validate,
                                 decoration: textInputDecoration.copyWith(
                                   hintText: 'email',
                                 ),
@@ -72,9 +71,7 @@ class _SignInState extends State<SignIn> {
                               ),
                               //field for password
                               TextFormField(
-                                validator: (val) => val.length < 8
-                                    ? 'Enter a password of at least 8 characters'
-                                    : null,
+                                validator: PasswordFieldValidator.validate,
                                 decoration: textInputDecoration.copyWith(
                                   hintText: 'password',
                                 ),
@@ -271,5 +268,19 @@ class _SignInState extends State<SignIn> {
                       )),
                 )),
           );
+  }
+}
+
+class EmailFieldValidator {
+  static String validate(String value) {
+    return value.isEmpty ? 'Enter an email' : null;
+  }
+}
+
+class PasswordFieldValidator {
+  static String validate(String value) {
+    return value.length < 8
+        ? 'Enter a password of at least 8 characters'
+        : null;
   }
 }
