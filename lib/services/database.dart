@@ -18,6 +18,16 @@ class DatabaseService {
     });
   }
 
+  Future insertUserData(String username, String recipeNum, String rating,
+      String reviewNum) async {
+    return await userCollection.doc(uid).set({
+      'username': username,
+      'recipeNumber': recipeNum,
+      'rating': rating,
+      'reviewNumber': reviewNum,
+    });
+  }
+
   //get user stream if needed
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();
@@ -28,6 +38,9 @@ class DatabaseService {
     return UserData(
       uid: uid,
       username: snapshot.get('username'),
+      recipeNumber: int.parse(snapshot.get('recipeNumber')),
+      rating: double.parse(snapshot.get('rating')),
+      reviewNumber: int.parse(snapshot.get('reviewNumber')),
     );
   }
 

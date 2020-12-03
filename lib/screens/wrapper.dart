@@ -16,7 +16,12 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return SignIn();
     } else {
-      return Home();
+      return Provider<UserObj>.value(
+        value: user,
+        child: Home(),
+      );
+
+      //return Home();
     }
   }
 }

@@ -33,7 +33,8 @@ class AuthService {
           email: email, password: password);
       User user = result.user;
       //create a new document for the user with th uid
-      await DatabaseService(uid: user.uid).updateUserData(username);
+      await DatabaseService(uid: user.uid)
+          .insertUserData(username, '0', '0.0', '0');
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -86,8 +87,20 @@ class AuthService {
 
       final User currentUser = _auth.currentUser;
       assert(user.uid == currentUser.uid);
+      DatabaseService db = DatabaseService();
+      db.userCollection.doc(user.uid).get().then((doc) async => {
+            if (doc.exists)
+              {
+                await DatabaseService(uid: user.uid)
+                    .insertUserData(user.displayName, '0', '0.0', '0')
+              }
+            else
+              {
+                await DatabaseService(uid: user.uid)
+                    .updateUserData(user.displayName)
+              }
+          });
 
-      await DatabaseService(uid: user.uid).updateUserData(user.displayName);
       return _userFromFirebaseUser(user);
     }
 
@@ -112,7 +125,19 @@ class AuthService {
         //user credential to sign in with firebase
         UserCredential result = await _auth.signInWithCredential(credential);
         User user = result.user;
-        await DatabaseService(uid: user.uid).updateUserData(user.displayName);
+        DatabaseService db = DatabaseService();
+        db.userCollection.doc(user.uid).get().then((doc) async => {
+              if (doc.exists)
+                {
+                  await DatabaseService(uid: user.uid)
+                      .insertUserData(user.displayName, '0', '0.0', '0')
+                }
+              else
+                {
+                  await DatabaseService(uid: user.uid)
+                      .updateUserData(user.displayName)
+                }
+            });
         return _userFromFirebaseUser(user);
         break;
       case FacebookLoginStatus.Cancel:

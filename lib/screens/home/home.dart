@@ -1,4 +1,5 @@
 import 'package:dima_project/screens/homeRecipes/latestRecipes.dart';
+import 'package:dima_project/screens/userProfile/user_profile.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
@@ -40,10 +41,11 @@ class HomeState extends State<Home> {
       'Saved recipes',
       style: optionStyle,
     ),
-    Text(
+    /*Text(
       'Profile and settings',
       style: optionStyle,
-    ),
+    ),*/
+    UserProfilePage(),
   ];
 
   void _onItemTapped(int index) {
