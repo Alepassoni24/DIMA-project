@@ -1,5 +1,6 @@
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +53,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       ),
                       //field for email
                       TextFormField(
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter an email' : null,
+                        validator: EmailFieldValidator.validate,
                         decoration: textInputDecoration.copyWith(
                           hintText: 'email',
                         ),

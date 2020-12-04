@@ -1,4 +1,5 @@
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,7 @@ class _RegisterState extends State<Register> {
                               decoration: textInputDecoration.copyWith(
                                 hintText: 'username',
                               ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter an username' : null,
+                              validator: UsernameFieldValidator.validate,
                               //val represent whatever will be into the field
                               onChanged: (val) {
                                 setState(() => username = val);
@@ -77,8 +77,7 @@ class _RegisterState extends State<Register> {
                               decoration: textInputDecoration.copyWith(
                                 hintText: 'email',
                               ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter an email' : null,
+                              validator: EmailFieldValidator.validate,
                               //val represent whatever will be into the field
                               onChanged: (val) {
                                 setState(() => email = val);
@@ -92,9 +91,7 @@ class _RegisterState extends State<Register> {
                               decoration: textInputDecoration.copyWith(
                                 hintText: 'password',
                               ),
-                              validator: (val) => val.length < 8
-                                  ? 'Enter a password of at least 8 characters'
-                                  : null,
+                              validator: PasswordFieldValidator.validate,
                               obscureText: true,
                               //val represent whatever will be into the field
                               onChanged: (val) {

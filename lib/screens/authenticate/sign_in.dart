@@ -1,5 +1,6 @@
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
@@ -268,19 +269,5 @@ class _SignInState extends State<SignIn> {
                       )),
                 )),
           );
-  }
-}
-
-class EmailFieldValidator {
-  static String validate(String value) {
-    return value.isEmpty ? 'Enter an email' : null;
-  }
-}
-
-class PasswordFieldValidator {
-  static String validate(String value) {
-    return value.length < 8
-        ? 'Enter a password of at least 8 characters'
-        : null;
   }
 }
