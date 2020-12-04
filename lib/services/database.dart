@@ -106,4 +106,12 @@ class DatabaseService {
       imageURL: documentSnapshot.data()['imageURL'],
     );
   }
+
+  //get stream of last num recipes
+  Stream<QuerySnapshot> get getUserRecipes {
+    //TODO implement query WHERE uid = chef uid
+    return recipeCollection
+        .orderBy('submissionTime', descending: true)
+        .snapshots();
+  }
 }

@@ -41,10 +41,6 @@ class HomeState extends State<Home> {
       'Saved recipes',
       style: optionStyle,
     ),
-    /*Text(
-      'Profile and settings',
-      style: optionStyle,
-    ),*/
     UserProfilePage(),
   ];
 

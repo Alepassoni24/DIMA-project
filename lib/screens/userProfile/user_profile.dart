@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/user_obj.dart';
+import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +57,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   indent: 15,
                   endIndent: 15,
                 ),
+                UserRecipeList(),
               ],
             ),
           ),
@@ -196,6 +199,25 @@ class UserRecipeList extends StatefulWidget {
 class _UserRecipeListState extends State<UserRecipeList> {
   @override
   Widget build(BuildContext context) {
-    return ListView();
+    final databaseService = Provider.of<DatabaseService>(context);
+
+    return StreamBuilder(
+      stream: databaseService.getUserRecipes,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView(
+            padding: const EdgeInsets.all(8),
+            children: [
+              snapshot.data.documents
+                  .map<Widget>((document) => UserRecipeCard(
+                      databaseService.recipeDataFromSnapshot(document)))
+                  .toList()
+            ],
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
