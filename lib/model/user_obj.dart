@@ -11,6 +11,7 @@ class UserObj {
 class UserData {
   final String uid;
   final String username;
+  String profilePhotoURL;
   int recipeNumber;
   int reviewNumber;
   double rating;
@@ -22,7 +23,8 @@ class UserData {
       this.username,
       this.recipeNumber,
       this.rating,
-      this.reviewNumber});
+      this.reviewNumber,
+      this.profilePhotoURL});
 
   String getUsername() {
     return username;

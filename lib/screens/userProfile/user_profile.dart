@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
 import 'package:dima_project/services/database.dart';
@@ -79,11 +78,18 @@ class UserProfileInfo extends StatelessWidget {
           if (snapshot.hasData) {
             return Column(
               children: [
-                Icon(
-                  Icons.account_circle_outlined,
-                  size: 175,
-                  color: Colors.grey[600],
-                ),
+                if (snapshot.data.profilePhotoURL == null)
+                  Icon(
+                    Icons.account_circle_outlined,
+                    size: 175,
+                    color: Colors.grey[600],
+                  ),
+                if (snapshot.data.profilePhotoURL != null)
+                  CircleAvatar(
+                    radius: 87.5,
+                    backgroundImage:
+                        NetworkImage(snapshot.data.profilePhotoURL),
+                  ),
                 SizedBox(
                   height: 10.0,
                 ),

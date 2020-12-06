@@ -17,7 +17,7 @@ class AuthService {
   }
 
   Future getCurrentUser() async {
-    return await _auth.currentUser;
+    return _auth.currentUser;
   }
 
   //authentication changes on user stream
@@ -34,7 +34,7 @@ class AuthService {
       User user = result.user;
       //create a new document for the user with th uid
       await DatabaseService(uid: user.uid)
-          .insertUserData(username, '0', '0.0', '0');
+          .insertUserData(username, '0', '0.0', '0', null);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -91,8 +91,8 @@ class AuthService {
       db.userCollection.doc(user.uid).get().then((doc) async => {
             if (doc.exists)
               {
-                await DatabaseService(uid: user.uid)
-                    .insertUserData(user.displayName, '0', '0.0', '0')
+                await DatabaseService(uid: user.uid).insertUserData(
+                    user.displayName, '0', '0.0', '0', user.photoURL)
               }
             else
               {
@@ -129,8 +129,8 @@ class AuthService {
         db.userCollection.doc(user.uid).get().then((doc) async => {
               if (doc.exists)
                 {
-                  await DatabaseService(uid: user.uid)
-                      .insertUserData(user.displayName, '0', '0.0', '0')
+                  await DatabaseService(uid: user.uid).insertUserData(
+                      user.displayName, '0', '0.0', '0', user.photoURL)
                 }
               else
                 {

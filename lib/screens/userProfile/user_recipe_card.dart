@@ -70,11 +70,12 @@ class ImageContainer extends StatelessWidget {
       height: 50,
       width: 90,
       decoration: new BoxDecoration(
-          image: new DecorationImage(
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.center,
-        image: new NetworkImage(cardImageURL),
-      )),
+        image: new DecorationImage(
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.center,
+          image: new NetworkImage(cardImageURL),
+        ),
+      ),
     );
   }
 }

@@ -12,19 +12,21 @@ class DatabaseService {
   final CollectionReference recipeCollection =
       FirebaseFirestore.instance.collection('recipe');
 
-  Future updateUserData(String username) async {
+  Future updateUserData(String username /*, String profilePhotoURL*/) async {
     return await userCollection.doc(uid).set({
       'username': username,
+      //'profilePhotoURL': photoURL,
     });
   }
 
   Future insertUserData(String username, String recipeNum, String rating,
-      String reviewNum) async {
+      String reviewNum, String profilePhotoURL) async {
     return await userCollection.doc(uid).set({
       'username': username,
       'recipeNumber': recipeNum,
       'rating': rating,
       'reviewNumber': reviewNum,
+      'profilePhotoURL': profilePhotoURL,
     });
   }
 
@@ -109,8 +111,8 @@ class DatabaseService {
 
   //get stream of last num recipes
   Stream<QuerySnapshot> get getUserRecipes {
-    //TODO implement query WHERE uid = chef uid
     return recipeCollection
+        //TODO .where('title', isEqualTo: uid)
         .orderBy('submissionTime', descending: true)
         .snapshots();
   }
