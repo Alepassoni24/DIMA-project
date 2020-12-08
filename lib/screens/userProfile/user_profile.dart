@@ -211,14 +211,14 @@ class _UserRecipeListState extends State<UserRecipeList> {
       stream: databaseService.getUserRecipes,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView(
-            padding: const EdgeInsets.all(8),
-            children: [
-              snapshot.data.documents
+          return Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(8),
+              children: snapshot.data.documents
                   .map<Widget>((document) => UserRecipeCard(
                       databaseService.recipeDataFromSnapshot(document)))
-                  .toList()
-            ],
+                  .toList(),
+            ),
           );
         } else {
           return CircularProgressIndicator();

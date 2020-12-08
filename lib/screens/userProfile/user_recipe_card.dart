@@ -22,8 +22,15 @@ class UserRecipeCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: [
-                  ImageContainer(recipeData.imageURL),
-                  TitleListTile(recipeData.title, recipeData.rating),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: ImageContainer(recipeData.imageURL),
+                  ),
+                  TitleListTile(
+                      recipeData.title,
+                      recipeData.rating,
+                      DateTime.fromMicrosecondsSinceEpoch(
+                          recipeData.submissionTime.microsecondsSinceEpoch)),
                 ],
               )
             ],
@@ -42,17 +49,45 @@ class UserRecipeCard extends StatelessWidget {
 class TitleListTile extends StatelessWidget {
   final String cardTitle;
   final String cardRating;
+  final DateTime dateOfSubmission;
+  //final String numOfReviwes;
 
-  TitleListTile(this.cardTitle, this.cardRating);
+  TitleListTile(this.cardTitle, this.cardRating, this.dateOfSubmission);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(cardTitle),
-      trailing: Column(children: [
-        Text(cardRating),
-        Icon(Icons.star_outline),
-      ]),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(cardTitle),
+        Row(
+          children: [
+            Text(dateOfSubmission.day.toString() +
+                '-' +
+                dateOfSubmission.month.toString() +
+                '-' +
+                dateOfSubmission.year.toString()),
+            SizedBox(
+              width: 5,
+            ),
+            Text('##'),
+
+            ///TODO
+            Icon(
+              Icons.message,
+              color: Colors.grey[600],
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(cardRating),
+            Icon(
+              Icons.star_half,
+              color: Colors.orange[400],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
