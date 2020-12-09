@@ -50,8 +50,10 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 2.0,
                               ),
-                              FlutterLogo(
-                                size: 125,
+                              Image(
+                                image:
+                                    AssetImage("assets/cookingTime_logo.png"),
+                                height: 150.0,
                               ),
                               SizedBox(
                                 height: 20.0,
@@ -144,13 +146,14 @@ class _SignInState extends State<SignIn> {
                                 children: [
                                   Expanded(
                                     child: new Container(
-                                        margin: const EdgeInsets.only(
-                                          right: 20.0,
-                                        ),
-                                        child: Divider(
-                                          color: Colors.grey[900],
-                                          height: 36,
-                                        )),
+                                      margin: const EdgeInsets.only(
+                                        right: 20.0,
+                                      ),
+                                      child: Divider(
+                                        color: Colors.grey[900],
+                                        height: 36,
+                                      ),
+                                    ),
                                   ),
                                   Text(
                                     "or",
@@ -233,12 +236,14 @@ class _SignInState extends State<SignIn> {
                                       children: [
                                         Image(
                                           image: AssetImage(
-                                              "assets/google_logo.png"),
+                                              "assets/signin_google.png"),
                                           height: 20.0,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10.0),
+                                          padding: const EdgeInsets.only(
+                                            left: 10.0,
+                                            right: 20.0,
+                                          ),
                                           child: Text(
                                             'Sign in with Google',
                                             style: TextStyle(

@@ -56,6 +56,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   indent: 15,
                   endIndent: 15,
                 ),
+                Text(
+                  'Your recipes:',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 17,
+                  ),
+                ),
                 UserRecipeList(),
               ],
             ),
@@ -98,7 +105,7 @@ class UserProfileInfo extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 25,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -125,12 +132,14 @@ class UserStatistics extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Recipes',
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 17,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
@@ -143,12 +152,14 @@ class UserStatistics extends StatelessWidget {
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Reviews',
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 17,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
@@ -161,12 +172,14 @@ class UserStatistics extends StatelessWidget {
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Rating',
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 17,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(

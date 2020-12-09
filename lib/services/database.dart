@@ -43,6 +43,7 @@ class DatabaseService {
       recipeNumber: int.parse(snapshot.get('recipeNumber')),
       rating: double.parse(snapshot.get('rating')),
       reviewNumber: int.parse(snapshot.get('reviewNumber')),
+      profilePhotoURL: snapshot.get('profilePhotoURL'),
     );
   }
 

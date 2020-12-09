@@ -59,28 +59,55 @@ class TitleListTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(cardTitle),
+        Text(
+          cardTitle,
+          style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Row(
           children: [
-            Text(dateOfSubmission.day.toString() +
-                '-' +
-                dateOfSubmission.month.toString() +
-                '-' +
-                dateOfSubmission.year.toString()),
-            SizedBox(
-              width: 5,
+            Text(
+              dateOfSubmission.day.toString() +
+                  '-' +
+                  dateOfSubmission.month.toString() +
+                  '-' +
+                  dateOfSubmission.year.toString(),
+              style: TextStyle(
+                color: Colors.grey[800],
+              ),
             ),
-            Text('##'),
-
-            ///TODO
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              '##',
+              style: TextStyle(
+                color: Colors.grey[800],
+              ),
+            ),
+            SizedBox(
+              width: 3,
+            ),
+            //TODO
             Icon(
               Icons.message,
               color: Colors.grey[600],
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
-            Text(cardRating),
+            Text(
+              cardRating,
+              style: TextStyle(
+                color: Colors.grey[800],
+              ),
+            ),
+            SizedBox(
+              width: 3,
+            ),
             Icon(
               Icons.star_half,
               color: Colors.orange[400],
@@ -92,7 +119,6 @@ class TitleListTile extends StatelessWidget {
   }
 }
 
-//TODO put this class in a shared part in order to save from code repetition
 //class to display a small picture of the recipe
 class ImageContainer extends StatelessWidget {
   final String cardImageURL;
