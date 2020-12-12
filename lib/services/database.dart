@@ -12,10 +12,10 @@ class DatabaseService {
   final CollectionReference recipeCollection =
       FirebaseFirestore.instance.collection('recipe');
 
-  Future updateUserData(String username /*, String profilePhotoURL*/) async {
+  Future updateUserData(String username, String profilePhotoURL) async {
     return await userCollection.doc(uid).set({
       'username': username,
-      //'profilePhotoURL': photoURL,
+      'profilePhotoURL': profilePhotoURL,
     });
   }
 

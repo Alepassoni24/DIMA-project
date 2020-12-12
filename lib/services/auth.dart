@@ -94,11 +94,6 @@ class AuthService {
                 await DatabaseService(uid: user.uid).insertUserData(
                     user.displayName, '0', '0.0', '0', user.photoURL)
               }
-            else
-              {
-                await DatabaseService(uid: user.uid)
-                    .updateUserData(user.displayName)
-              }
           });
 
       return _userFromFirebaseUser(user);
@@ -131,11 +126,6 @@ class AuthService {
                 {
                   await DatabaseService(uid: user.uid).insertUserData(
                       user.displayName, '0', '0.0', '0', user.photoURL)
-                }
-              else
-                {
-                  await DatabaseService(uid: user.uid)
-                      .updateUserData(user.displayName)
                 }
             });
         return _userFromFirebaseUser(user);

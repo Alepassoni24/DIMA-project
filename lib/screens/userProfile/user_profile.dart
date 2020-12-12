@@ -1,5 +1,6 @@
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
+import 'package:dima_project/screens/userProfile/user_setting.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     //variable to provide database instance to each ancestors
     final user = Provider.of<UserObj>(context);
     final databaseService = new DatabaseService(uid: user.uid);
+    //Provide database service to his descendants
     return Provider<DatabaseService>.value(
       value: databaseService,
       child: Scaffold(
@@ -26,7 +28,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
           actions: [
             IconButton(
               icon: Icon(Icons.settings),
-              onPressed: null,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Provider<DatabaseService>.value(
+                              value: databaseService,
+                              child: UserSettings(),
+                            )));
+              },
             )
           ],
         ),

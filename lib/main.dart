@@ -2,6 +2,7 @@ import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/authenticate/register.dart';
 import 'package:dima_project/screens/authenticate/reset_password.dart';
 import 'package:dima_project/screens/singleRecipe/recipeView.dart';
+import 'package:dima_project/screens/userProfile/user_setting.dart';
 import 'package:dima_project/screens/wrapper.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
                 '/register': (context) => Register(),
                 '/recipeView': (context) => RecipeView(),
                 '/resetPsw': (context) => ResetPassword(),
+                '/settings': (context) => UserSettings(),
               },
               title: 'CookingTime',
             ));

@@ -44,7 +44,6 @@ class UserRecipeCard extends StatelessWidget {
   }
 }
 
-//TODO verify the layout
 //class for the title of the recipe card
 class TitleListTile extends StatelessWidget {
   final String cardTitle;
