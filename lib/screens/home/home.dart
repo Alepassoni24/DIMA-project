@@ -1,5 +1,6 @@
 import 'package:dima_project/screens/homeRecipes/latestRecipes.dart';
 import 'package:dima_project/screens/userProfile/user_profile.dart';
+import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
@@ -49,14 +50,7 @@ class HomeState extends State<Home> {
         title: Text('Search for recipes'),
       ),
     ),
-    Scaffold(
-      backgroundColor: Colors.orange[50],
-      appBar: AppBar(
-        backgroundColor: Colors.orange[400],
-        elevation: 0.0,
-        title: Text('Write a recipe'),
-      ),
-    ),
+    WriteRecipeView(),
     Scaffold(
       backgroundColor: Colors.orange[50],
       appBar: AppBar(
