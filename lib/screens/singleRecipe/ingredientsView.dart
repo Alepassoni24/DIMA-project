@@ -1,5 +1,6 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsView extends StatelessWidget {
@@ -16,11 +17,7 @@ class IngredientsView extends StatelessWidget {
         if (snapshot.hasError)
           return Text('Something went wrong');
         if (snapshot.connectionState == ConnectionState.waiting)
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-            )
-          );
+          return Loading();
         
         return new Column(
           children: [

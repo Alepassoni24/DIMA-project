@@ -1,6 +1,7 @@
 import 'package:dima_project/screens/homeRecipes/recipeCard.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class LatestRecipes extends StatelessWidget{
@@ -31,11 +32,7 @@ class LatestRecipes extends StatelessWidget{
           if (snapshot.hasError)
             return Text('Something went wrong');
           if (snapshot.connectionState == ConnectionState.waiting)
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-              )
-            );
+            return Loading();
           
           return new ListView(
             padding: const EdgeInsets.all(8),
