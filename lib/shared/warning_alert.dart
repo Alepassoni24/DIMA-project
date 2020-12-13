@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WarningAlert extends StatefulWidget {
-  String warning;
+  final String warning;
 
   @override
   _WarningAlertState createState() => _WarningAlertState(warning: warning);
