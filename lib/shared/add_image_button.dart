@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 class AddImageButton extends StatefulWidget {
 
-  final Function setFatherImage;
+  final Function(File) setFatherImage;
   final double height, width, elevation, borderRadius;
 
   const AddImageButton ({
@@ -25,7 +25,7 @@ class AddImageButtonState extends State<AddImageButton> {
   
   File _image;
   final ImagePicker _picker = ImagePicker();
-  final Function setFatherImage;
+  final Function(File) setFatherImage;
   final double height, width, elevation, borderRadius;
 
   AddImageButtonState(
