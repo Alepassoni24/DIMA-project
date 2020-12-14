@@ -1,5 +1,6 @@
 import 'package:dima_project/screens/homeRecipes/latestRecipes.dart';
 import 'package:dima_project/screens/userProfile/user_profile.dart';
+import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:flutter/material.dart';
 
 // This is the stateful widget that the main application instantiates
@@ -10,45 +11,56 @@ class Home extends StatefulWidget {
 
 // This is the private State class that goes with Home
 class HomeState extends State<Home> {
-  int _selectedIndex = 0;
+  int _pageIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState(){
+    super.initState();
+    _pageController = PageController(initialPage: _pageIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.orange[50],
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: PageView(
+        children: _widgetOptions,
+        onPageChanged: onPageChanged,
+        controller: _pageController,
       ),
       bottomNavigationBar: getBottomNavigationBarItem(),
     );
   }
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   static List<Widget> _widgetOptions = <Widget>[
     // Here we must insert the five widgets that characterize the app instead of the dummy Text widgets
     LatestRecipes(),
-    Text(
-      'Search for recipes',
-      style: optionStyle,
+    Scaffold(
+      backgroundColor: Colors.orange[50],
+      appBar: AppBar(
+        backgroundColor: Colors.orange[400],
+        elevation: 0.0,
+        title: Text('Search for recipes'),
+      ),
     ),
-    Text(
-      'Write a recipe',
-      style: optionStyle,
-    ),
-    Text(
-      'Saved recipes',
-      style: optionStyle,
+    WriteRecipeView(),
+    Scaffold(
+      backgroundColor: Colors.orange[50],
+      appBar: AppBar(
+        backgroundColor: Colors.orange[400],
+        elevation: 0.0,
+        title: Text('Saved recipes'),
+      ),
     ),
     UserProfilePage(),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   BottomNavigationBar getBottomNavigationBarItem() {
     return BottomNavigationBar(
@@ -75,9 +87,19 @@ class HomeState extends State<Home> {
         ),
       ],
       type: BottomNavigationBarType.fixed,
-      currentIndex: _selectedIndex,
+      currentIndex: _pageIndex,
       selectedItemColor: Colors.amber[800],
-      onTap: _onItemTapped,
+      onTap: onTabTapped,
     );
+  }
+
+  void onPageChanged(int index) {
+    setState(() {
+      this._pageIndex = index;
+    });
+  }
+
+  void onTabTapped(int index) {
+    this._pageController.animateToPage(index, duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
   }
 }

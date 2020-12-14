@@ -13,23 +13,23 @@
 
 \section{Presentation Layer}
 	The presentation layer is figured out by the mobile application which runs on a device and composes the client. 
-	It comunicate with the Application Server to retrieve and send data according to the user will. 
-	The communication are handled by some protected request to the Application Server. 
-	The mobile application contains as well the most of the logic layer in order to render data coming from the server and in order to organize the data to be sent.
+	It communicates with the Application Server to retrieve and send data according to the user will. 
+	The communication is handled by some protected request to the Application Server. 
+	The mobile application contains as well most of the logic layer in order to render the data coming from the server and in order to organize the data to be sent.
 
 \section{Application Server}
 	This layer is devoted to handle all the information and the request coming from the client side. 
 	Moreover it is a sort of bridge between the application and the database. 
-	As this layer is hosted by the same provider of the database the integration is easly implemented and so the communication will be more efficient and safer.
+	As this layer is hosted by the same provider of the database, the integration is easily implemented and so the communication will be more efficient and safer.
 
 \section{Database Design}
 	The database is the one provided by Firebase and it's a NoSQL database, so information are stored in a sort of semi-structured way.
-	Using Google solution we can achieve \textbf{Durability and persistance of data} in order to have them alway available, 
-	\textbf{Consistency} so the database is always in a consistent state, \textbf{Atomicity} in this way all the operation are completelly executed and 
-	\textbf{Isolation} which means that every operation are executed isoleted and indipendetly from the other ones.
+	Using Google solution we can achieve \textbf{Durability and persistence of data} in order to have them always available, 
+	\textbf{Consistency} so the database is always in a consistent state, \textbf{Atomicity} in this way all the operation are completely executed and 
+	\textbf{Isolation} which means that every operation is executed isolated and independently from the other ones.
 	
 	\subsection{Database Structure}
-	In order lo let the read understand better the structure, here is provided a translated E/R schema of the database implemented by the application.
+	In order to let the reader understand better the structure, here is provided a translated E/R schema of the database implemented by the application.
 	
 	TODO: picture of simplified structure 
 
@@ -38,7 +38,7 @@
 	
 	\begin{itemize}
 		\item Login the application.
-		\item Read stored data in order to retrieve what was post by other users.
+		\item Read stored data in order to retrieve what was posted by other users.
 		\item Data manipulation (CRUD operation) depending on user permissions over data.
 	\end{itemize}
 	
