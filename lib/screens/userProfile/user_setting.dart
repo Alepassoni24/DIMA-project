@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/constants.dart';
@@ -13,6 +15,8 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  bool firstBuilt = true;
+
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
 
@@ -28,8 +32,11 @@ class _UserSettingsState extends State<UserSettings> {
         stream: databaseService.userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            username = snapshot.data.username;
-            profilePhotoURL = snapshot.data.profilePhotoURL;
+            if (firstBuilt) {
+              username = snapshot.data.username;
+              profilePhotoURL = snapshot.data.profilePhotoURL;
+              firstBuilt = false;
+            }
             return Scaffold(
               backgroundColor: Colors.orange[50],
               appBar: AppBar(
@@ -67,10 +74,13 @@ class _UserSettingsState extends State<UserSettings> {
                           height: 2.0,
                         ),
                         if (profilePhotoURL == null)
-                          Icon(
-                            Icons.account_circle_outlined,
-                            size: 175,
+                          IconButton(
+                            icon: Icon(
+                              Icons.account_circle_outlined,
+                            ),
+                            iconSize: 175,
                             color: Colors.grey[600],
+                            onPressed: null,
                           ),
                         if (profilePhotoURL != null)
                           CircleAvatar(
@@ -102,5 +112,11 @@ class _UserSettingsState extends State<UserSettings> {
             return Loading();
           }
         });
+  }
+
+  Future<String> getImgFromGallery() {
+    //File img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    //return img.path;
+    return null;
   }
 }
