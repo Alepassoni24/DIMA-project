@@ -7,6 +7,7 @@ import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class UserSettings extends StatefulWidget {
@@ -16,17 +17,52 @@ class UserSettings extends StatefulWidget {
 
 class _UserSettingsState extends State<UserSettings> {
   bool firstBuilt = true;
+  final picker = ImagePicker();
 
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
-
-  String username;
-  String profilePhotoURL;
-  String message;
+  File image;
+  String username, profilePhotoURL, message;
 
   @override
   Widget build(BuildContext context) {
     final databaseService = Provider.of<DatabaseService>(context);
+
+    void _showChoosingPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              child: Column(
+                children: [
+                  FlatButton(
+                    onPressed: () => getImgFromCamera(),
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera_enhance),
+                        Text(
+                          'Take a picture',
+                        ),
+                      ],
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () => getImgFromGallery(),
+                    child: Row(
+                      children: [
+                        Icon(Icons.photo),
+                        Text(
+                          'Select from gallery',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+    }
 
     return StreamBuilder<UserData>(
         stream: databaseService.userData,
@@ -73,20 +109,20 @@ class _UserSettingsState extends State<UserSettings> {
                         SizedBox(
                           height: 2.0,
                         ),
-                        if (profilePhotoURL == null)
-                          IconButton(
-                            icon: Icon(
-                              Icons.account_circle_outlined,
-                            ),
-                            iconSize: 175,
-                            color: Colors.grey[600],
-                            onPressed: null,
-                          ),
-                        if (profilePhotoURL != null)
-                          CircleAvatar(
-                            radius: 87.5,
-                            backgroundImage: NetworkImage(profilePhotoURL),
-                          ),
+                        InkWell(
+                          child: profilePhotoURL == null
+                              ? Icon(
+                                  Icons.account_circle_outlined,
+                                  size: 175,
+                                  color: Colors.grey[600],
+                                )
+                              : CircleAvatar(
+                                  radius: 87.5,
+                                  backgroundImage:
+                                      NetworkImage(profilePhotoURL),
+                                ),
+                          onTap: () => _showChoosingPanel(),
+                        ),
                         SizedBox(
                           height: 10.0,
                         ),
@@ -114,9 +150,19 @@ class _UserSettingsState extends State<UserSettings> {
         });
   }
 
-  Future<String> getImgFromGallery() {
-    //File img = await ImagePicker.pickImage(source: ImageSource.gallery);
-    //return img.path;
-    return null;
+  Future getImgFromGallery() async {
+    PickedFile img = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      image = File(img.path);
+      profilePhotoURL = img.path;
+    });
+  }
+
+  Future getImgFromCamera() async {
+    PickedFile img = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      image = File(img.path);
+      profilePhotoURL = img.path;
+    });
   }
 }
