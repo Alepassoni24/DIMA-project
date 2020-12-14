@@ -67,6 +67,7 @@ class DatabaseService {
       imageURL: documentSnapshot.data()['imageURL'],
       rating: documentSnapshot.data()['rating'].toString(),
       time: documentSnapshot.data()['time'],
+      servings: documentSnapshot.data()['servings'],
       submissionTime: documentSnapshot.data()['submissionTime'],
     );
   }

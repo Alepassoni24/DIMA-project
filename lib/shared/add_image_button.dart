@@ -5,10 +5,12 @@ import 'package:image_picker/image_picker.dart';
 
 class AddImageButton extends StatefulWidget {
 
+  final Function setFatherImage;
   final double height, width, elevation, borderRadius;
 
   const AddImageButton ({
     Key key,
+    @required this.setFatherImage,
     this.height = 50,
     this.width = 50,
     this.elevation = 0,
@@ -16,25 +18,33 @@ class AddImageButton extends StatefulWidget {
   }): super(key: key);
 
   @override
-  AddImageButtonState createState() => AddImageButtonState(height, width, elevation, borderRadius);
+  AddImageButtonState createState() => AddImageButtonState(setFatherImage, height, width, elevation, borderRadius);
 }
 
 class AddImageButtonState extends State<AddImageButton> {
   
   File _image;
-  final _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
+  final Function setFatherImage;
   final double height, width, elevation, borderRadius;
 
-  AddImageButtonState(this.height, this.width, this.elevation, this.borderRadius);
+  AddImageButtonState(
+    this.setFatherImage,
+    this.height,
+    this.width,
+    this.elevation,
+    this.borderRadius,
+  );
 
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.camera);
 
-    setState(() {
-      if (pickedFile != null) {
+    if (pickedFile != null) {
+      setState(() {
         _image = File(pickedFile.path);
-      }
-    });
+      });
+      setFatherImage(File(pickedFile.path));
+    }
   }
 
   @override

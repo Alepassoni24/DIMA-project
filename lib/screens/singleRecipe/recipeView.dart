@@ -31,6 +31,8 @@ class RecipeView extends StatelessWidget{
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
             Time(recipeData.time),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            Servings(recipeData.servings),
+            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
             IngredientsView(databaseService, recipeData.recipeId),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
             StepsView(databaseService, recipeData.recipeId),
@@ -135,7 +137,27 @@ class Time extends StatelessWidget {
         children: [
           Icon(Icons.timer_outlined),
           SizedBox(width: 10),
-          Text(recipeTime),
+          Text("Time: " + recipeTime),
+        ],
+      ),
+    );
+  }
+}
+
+class Servings extends StatelessWidget {
+  final String servingNumber;
+
+  Servings(this.servingNumber);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.people_outline),
+          SizedBox(width: 10),
+          Text("Servings: " + servingNumber),
         ],
       ),
     );
