@@ -9,6 +9,8 @@ import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as Path;
 
 class UserSettings extends StatefulWidget {
   @override
@@ -35,14 +37,18 @@ class _UserSettingsState extends State<UserSettings> {
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   FlatButton(
                     onPressed: () => getImgFromCamera(),
                     child: Row(
                       children: [
                         Icon(Icons.camera_enhance),
-                        Text(
-                          'Take a picture',
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Take a picture',
+                          ),
                         ),
                       ],
                     ),
@@ -52,8 +58,11 @@ class _UserSettingsState extends State<UserSettings> {
                     child: Row(
                       children: [
                         Icon(Icons.photo),
-                        Text(
-                          'Select from gallery',
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Select from gallery',
+                          ),
                         ),
                       ],
                     ),
@@ -82,7 +91,8 @@ class _UserSettingsState extends State<UserSettings> {
                 actions: [
                   IconButton(
                     icon: Icon(Icons.save),
-                    onPressed: () {
+                    onPressed: () async {
+                      if (image != null) await uploadImage();
                       databaseService.updateUserData(username, profilePhotoURL);
                     },
                   )
@@ -164,5 +174,18 @@ class _UserSettingsState extends State<UserSettings> {
       image = File(img.path);
       profilePhotoURL = img.path;
     });
+  }
+
+  Future uploadImage() async {
+    Reference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('profilePhoto/${Path.basename(image.path)}');
+    UploadTask uploadTask = storageReference.putFile(image);
+    await uploadTask;
+    storageReference.getDownloadURL().then((imgUrl) => {
+          setState(() {
+            profilePhotoURL = imgUrl;
+          })
+        });
   }
 }

@@ -89,7 +89,7 @@ class AuthService {
       assert(user.uid == currentUser.uid);
       DatabaseService db = DatabaseService();
       db.userCollection.doc(user.uid).get().then((doc) async => {
-            if (doc.exists)
+            if (!doc.exists)
               {
                 await DatabaseService(uid: user.uid).insertUserData(
                     user.displayName, '0', '0.0', '0', user.photoURL)
@@ -122,7 +122,7 @@ class AuthService {
         User user = result.user;
         DatabaseService db = DatabaseService();
         db.userCollection.doc(user.uid).get().then((doc) async => {
-              if (doc.exists)
+              if (!doc.exists)
                 {
                   await DatabaseService(uid: user.uid).insertUserData(
                       user.displayName, '0', '0.0', '0', user.photoURL)
