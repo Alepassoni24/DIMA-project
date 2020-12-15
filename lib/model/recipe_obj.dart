@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipeData {
@@ -28,6 +30,7 @@ class StepData {
   String title;
   String description;
   String imageURL;
+  File imageFile;
 
-  StepData({this.id, this.title, this.description, this.imageURL});
+  StepData({this.id, this.title, this.description, this.imageURL, this.imageFile});
 }

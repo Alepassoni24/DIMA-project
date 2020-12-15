@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
+import 'package:dima_project/screens/writeRecipe/write_step_view.dart';
 import 'package:dima_project/shared/add_image_button.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         child: ListView(
           padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
           children: [
-            MainPhoto(setRecipeImage),
+            AddImageButton(setFatherImage: setRecipeImage, image: _recipeImage, height: 300, elevation: 5, borderRadius: 5),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
             TextFormFieldShort("Title", setRecipeTitle),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
@@ -50,10 +51,9 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
             ...getIngredientsWidgetList(),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
-            // TODO: Steps
-            // TODO: Button to add a step row
+            ...getStepsWidgetList(),
             Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
-            // TODO: Button to submit recipe
+            FlatButton(child: Text("SUBMIT RECIPE", style: subtitleStyle), color: Colors.orange[300], onPressed: submitRecipe),
           ]
         )
       )
@@ -62,15 +62,47 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
   List<Widget> getIngredientsWidgetList() {
     List<Widget> _ingredients = [];
-    _ingredients.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Ingredients:")));
+
+    // Title
+    _ingredients.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Ingredients:", style: subtitleStyle)));
+
+    // All ingredients
     for(int i = 0; i < _ingredientsData.length; i++) {
       _ingredients.add(WriteIngredientView(i+1, setIngredientQuantity, setIngredientUnit, setIngredientName));
     }
+
+    // Add button
     _ingredients.add(Padding(
       padding: EdgeInsets.only(left: 2.5, right: 2.5),
       child: FlatButton(child: Icon(Icons.add_outlined), onPressed: addIngredient)
     ));
     return _ingredients;
+  }
+
+  List<Widget> getStepsWidgetList() {
+    List<Widget> _steps = [];
+    
+    // Title
+    _steps.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Procedure:", style: subtitleStyle)));
+
+    // All steps with a divider but the last
+    for(int i = 0; i < _stepsData.length-1; i++) {
+      _steps.add(WriteStepView(i+1, _stepsData[i].imageFile, setStepTitle, setStepDescription, setStepImageFile(i)));
+      _steps.add(Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5));
+    }
+    _steps.add(WriteStepView(_stepsData.length, _stepsData[_stepsData.length-1].imageFile,
+      setStepTitle, setStepDescription, setStepImageFile(_stepsData.length-1)));
+
+    // Add button
+    _steps.add(Padding(
+      padding: EdgeInsets.only(left: 2.5, right: 2.5),
+      child: FlatButton(child: Icon(Icons.add_outlined), onPressed: addStep),
+    ));
+    return _steps;
+  }
+
+  void submitRecipe() {
+    // TODO: Submit recipe
   }
 
   // Recipe setters
@@ -80,25 +112,22 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   void setRecipeTime(String text) => setState(() => _recipeData.time = text);
   void setRecipeServings(String text) => setState(() => _recipeData.servings = text);
   
-  void addIngredient() => setState(() {
-    _ingredientsData.add(IngredientData(id: (_ingredientsData.length+1).toString(), quantity: "", unit: "", name: "")); });
+  // Ingredient setters
+  void addIngredient() => setState(() =>
+    _ingredientsData.add(IngredientData(id: (_ingredientsData.length+1).toString(), quantity: "", unit: "", name: "")));
   void setIngredientQuantity(int id, String text) => setState(() => _ingredientsData[id].quantity = text);
   void setIngredientUnit(int id, String text) => setState(() => _ingredientsData[id].unit = text);
   void setIngredientName(int id, String text) => setState(() => _ingredientsData[id].name = text);
+
+  // Step setters
+  void addStep() => setState(() =>
+    _stepsData.add(StepData(id: (_stepsData.length+1).toString(), title: "", description: "", imageURL: "")));
+  void setStepTitle(int id, String text) => setState(() => _stepsData[id].title = text);
+  void setStepDescription(int id, String text) => setState(() => _stepsData[id].description = text);
+  Function(File) setStepImageFile(int id) => (File image) => setState(() => _stepsData[id].imageFile = image);
 }
 
-class MainPhoto extends StatelessWidget {
-
-  final Function(File) setRecipeImage;
-
-  MainPhoto(this.setRecipeImage);
-
-  @override
-  Widget build(BuildContext context) {
-      return AddImageButton(setFatherImage: setRecipeImage, height: 300, elevation: 5, borderRadius: 5);
-  }
-}
-
+// Generic one line text form field
 class TextFormFieldShort extends StatelessWidget {
   final String hintText;
   final Function(String) setText;
@@ -112,6 +141,7 @@ class TextFormFieldShort extends StatelessWidget {
       child: TextFormField(
         decoration: textInputDecoration.copyWith(
           hintText: hintText,
+          contentPadding: EdgeInsets.only(left: 2.5, right: 2.5),
         ),
         onChanged: setText,
       ),
@@ -119,6 +149,7 @@ class TextFormFieldShort extends StatelessWidget {
   }
 }
 
+// Generic multi line text form field
 class TextFormFieldLong extends StatelessWidget {
   final String hintText;
   final Function(String) setText;
@@ -132,6 +163,7 @@ class TextFormFieldLong extends StatelessWidget {
       child: TextFormField(
         decoration: textInputDecoration.copyWith(
           hintText: hintText,
+          contentPadding: EdgeInsets.only(left: 2.5, right: 2.5),
         ),
         keyboardType: TextInputType.multiline,
         maxLines: null,

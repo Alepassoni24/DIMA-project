@@ -3,46 +3,26 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddImageButton extends StatefulWidget {
-
-  final Function(File) setFatherImage;
-  final double height, width, elevation, borderRadius;
-
-  const AddImageButton ({
-    Key key,
-    @required this.setFatherImage,
-    this.height = 50,
-    this.width = 50,
-    this.elevation = 0,
-    this.borderRadius = 0,
-  }): super(key: key);
-
-  @override
-  AddImageButtonState createState() => AddImageButtonState(setFatherImage, height, width, elevation, borderRadius);
-}
-
-class AddImageButtonState extends State<AddImageButton> {
+class AddImageButton extends StatelessWidget {
   
-  File _image;
+  final File image;
   final ImagePicker _picker = ImagePicker();
   final Function(File) setFatherImage;
   final double height, width, elevation, borderRadius;
 
-  AddImageButtonState(
+  AddImageButton({
     this.setFatherImage,
+    this.image,
     this.height,
     this.width,
     this.elevation,
     this.borderRadius,
-  );
+  });
 
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
       setFatherImage(File(pickedFile.path));
     }
   }
@@ -54,13 +34,11 @@ class AddImageButtonState extends State<AddImageButton> {
       width: this.width,
       child: Card(
         elevation: this.elevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
         child: InkWell(
-          child: _image == null
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: image == null
             ? Icon(Icons.add_a_photo_outlined)
-            : ImageContainer(_image),
+            : ImageContainer(image, borderRadius),
           onTap: getImage
         ),
       ),
@@ -71,15 +49,17 @@ class AddImageButtonState extends State<AddImageButton> {
 class ImageContainer extends StatelessWidget {
   
   final File _image;
+  final double borderRadius;
 
-  ImageContainer(this._image);
+  ImageContainer(this._image, this.borderRadius);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
         image: new DecorationImage(
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.cover,
           alignment: Alignment.center,
           image: FileImage(_image),
         )

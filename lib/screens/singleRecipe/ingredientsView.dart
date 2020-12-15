@@ -1,5 +1,6 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class IngredientsView extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Ingredients:", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))
+              child: Text("Ingredients:", style: subtitleStyle)
             ),
             SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>

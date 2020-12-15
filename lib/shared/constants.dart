@@ -8,3 +8,8 @@ const textInputDecoration = InputDecoration(
     ),
   ),
 );
+
+const subtitleStyle = TextStyle(
+  fontSize: 25,
+  fontWeight: FontWeight.bold
+);

@@ -1,5 +1,6 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class StepsView extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Procedure:", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))
+              child: Text("Procedure:", style: subtitleStyle)
             ),
             SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>
@@ -49,7 +50,7 @@ class StepView extends StatelessWidget {
             CircleAvatar(
               child: Text(
                 stepData.id,
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                style: subtitleStyle),
               radius: 15,
               backgroundColor: Colors.orange[700],
               foregroundColor: Colors.black
