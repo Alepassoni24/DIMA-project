@@ -5,7 +5,6 @@ import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
-import 'package:dima_project/shared/warning_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,7 @@ class _UserSettingsState extends State<UserSettings> {
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
   File image;
-  String username, profilePhotoURL, message;
+  String username, profilePhotoURL;
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +94,7 @@ class _UserSettingsState extends State<UserSettings> {
                       if (image != null) await uploadImage();
                       await databaseService.updateUserData(
                           username, profilePhotoURL);
-                      setState(() {
-                        message = 'Your settings were uploaded';
-                      });
+                      Navigator.of(context).pop();
                     },
                   )
                 ],
@@ -115,13 +112,7 @@ class _UserSettingsState extends State<UserSettings> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 2.0,
-                        ),
-                        WarningAlert(
-                          warning: message,
-                        ),
-                        SizedBox(
-                          height: 2.0,
+                          height: 5.0,
                         ),
                         InkWell(
                           child: profilePhotoURL == null
