@@ -93,7 +93,11 @@ class _UserSettingsState extends State<UserSettings> {
                     icon: Icon(Icons.save),
                     onPressed: () async {
                       if (image != null) await uploadImage();
-                      databaseService.updateUserData(username, profilePhotoURL);
+                      await databaseService.updateUserData(
+                          username, profilePhotoURL);
+                      setState(() {
+                        message = 'Your settings were uploaded';
+                      });
                     },
                   )
                 ],
@@ -161,6 +165,7 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future getImgFromGallery() async {
+    Navigator.of(context).pop();
     PickedFile img = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       image = File(img.path);
@@ -169,6 +174,7 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future getImgFromCamera() async {
+    Navigator.of(context).pop();
     PickedFile img = await picker.getImage(source: ImageSource.camera);
     setState(() {
       image = File(img.path);

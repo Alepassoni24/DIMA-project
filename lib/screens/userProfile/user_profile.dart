@@ -1,6 +1,7 @@
 import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
 import 'package:dima_project/screens/userProfile/user_setting.dart';
+import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,8 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     //variable to provide database instance to each ancestors
@@ -36,6 +39,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               value: databaseService,
                               child: UserSettings(),
                             )));
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                _auth.signOut();
               },
             )
           ],
