@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:dima_project/shared/add_image_button.dart';
-import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/circle_number.dart';
 import 'package:flutter/material.dart';
 
 class WriteStepView extends StatelessWidget {
 
   final int id;
-  File stepImage;
+  final File stepImage;
   final Function(int, String) setTitle, setDescription;
   final Function(File) setImageFile;
 
@@ -23,14 +23,7 @@ class WriteStepView extends StatelessWidget {
             Flexible(
               flex: 1,
               fit: FlexFit.tight,
-              child: CircleAvatar(
-                child: Text(
-                  id.toString(),
-                  style: subtitleStyle),
-                radius: 15,
-                backgroundColor: Colors.orange[700],
-                foregroundColor: Colors.black
-              ),
+              child: CircleNumber(id.toString()),
             ),
             SizedBox(width: 5),
             Flexible(

@@ -5,6 +5,7 @@ import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
 import 'package:dima_project/screens/writeRecipe/write_step_view.dart';
 import 'package:dima_project/shared/add_image_button.dart';
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/section_divider.dart';
 import 'package:flutter/material.dart';
 
 class WriteRecipeView extends StatefulWidget {
@@ -40,19 +41,21 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
           padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
           children: [
             AddImageButton(setFatherImage: setRecipeImage, image: _recipeImage, height: 300, elevation: 5, borderRadius: 5),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             TextFormFieldShort("Title", setRecipeTitle),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
+            TextFormFieldShort("Subtitle", setRecipeSubtitle),
+            SectionDivider(),
             TextFormFieldLong("Description", setRecipeDescription),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             TimeRow(setRecipeTime),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             ServingsRow(setRecipeServings),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             ...getIngredientsWidgetList(),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             ...getStepsWidgetList(),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             FlatButton(child: Text("SUBMIT RECIPE", style: subtitleStyle), color: Colors.orange[300], onPressed: submitRecipe),
           ]
         )
@@ -88,7 +91,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     // All steps with a divider but the last
     for(int i = 0; i < _stepsData.length-1; i++) {
       _steps.add(WriteStepView(i+1, _stepsData[i].imageFile, setStepTitle, setStepDescription, setStepImageFile(i)));
-      _steps.add(Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5));
+      _steps.add(SectionDivider());
     }
     _steps.add(WriteStepView(_stepsData.length, _stepsData[_stepsData.length-1].imageFile,
       setStepTitle, setStepDescription, setStepImageFile(_stepsData.length-1)));
@@ -108,6 +111,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   // Recipe setters
   void setRecipeImage(File _image) => setState(() => _recipeImage = _image);
   void setRecipeTitle(String text) => setState(() => _recipeData.title = text);
+  void setRecipeSubtitle(String text) => setState(() => _recipeData.subtitle = text);
   void setRecipeDescription(String text) => setState(() => _recipeData.description = text);
   void setRecipeTime(String text) => setState(() => _recipeData.time = text);
   void setRecipeServings(String text) => setState(() => _recipeData.servings = text);

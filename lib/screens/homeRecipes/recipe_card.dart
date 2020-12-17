@@ -42,10 +42,19 @@ class TitleListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.account_circle_outlined),
+      leading: Icon(Icons.account_circle_outlined), // TODO: Change with author avatar
       title: Text(cardTitle),
       subtitle: Text(cardSubtitle),
-      trailing: Column(children: [Text(cardRating), Icon(Icons.star_outline)]),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(cardRating),
+          Icon(
+            Icons.star_half,
+            color: Colors.orange[400],
+          ),
+        ],
+      ),
     );
   }
 }

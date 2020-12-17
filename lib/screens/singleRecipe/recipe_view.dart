@@ -1,7 +1,8 @@
 import 'package:dima_project/model/recipe_obj.dart';
-import 'package:dima_project/screens/singleRecipe/ingredientsView.dart';
-import 'package:dima_project/screens/singleRecipe/stepsView.dart';
+import 'package:dima_project/screens/singleRecipe/ingredients_view.dart';
+import 'package:dima_project/screens/singleRecipe/steps_view.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/section_divider.dart';
 import 'package:flutter/material.dart';
 
 class RecipeView extends StatelessWidget{
@@ -26,15 +27,15 @@ class RecipeView extends StatelessWidget{
           padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
           children: [
             MainPhoto(recipeData.imageURL),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             Description(recipeData.description),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             Time(recipeData.time),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             Servings(recipeData.servings),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             IngredientsView(databaseService, recipeData.recipeId),
-            Divider(color: Colors.orange[900], thickness: 1.5, indent: 2.5, endIndent: 2.5),
+            SectionDivider(),
             StepsView(databaseService, recipeData.recipeId),
           ],
         ),
@@ -91,12 +92,7 @@ class MainPhoto extends StatelessWidget {
     return Container(
       height: 300,
       decoration: new BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10), 
-          topRight: Radius.circular(10),
-          bottomLeft: Radius.circular(2),
-          bottomRight: Radius.circular(2),
-        ),
+        borderRadius: BorderRadius.circular(5),
         image: new DecorationImage(
           fit: BoxFit.cover,
           alignment: Alignment.center,
