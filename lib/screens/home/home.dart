@@ -1,4 +1,4 @@
-import 'package:dima_project/screens/homeRecipes/latestRecipes.dart';
+import 'package:dima_project/screens/homeRecipes/latest_recipes.dart';
 import 'package:dima_project/screens/userProfile/user_profile.dart';
 import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:flutter/material.dart';

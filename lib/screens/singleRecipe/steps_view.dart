@@ -1,7 +1,9 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/circle_number.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
+import 'package:dima_project/shared/section_divider.dart';
 import 'package:flutter/material.dart';
 
 class StepsView extends StatelessWidget {
@@ -47,14 +49,7 @@ class StepView extends StatelessWidget {
       children: [
         Row(
           children: [
-            CircleAvatar(
-              child: Text(
-                stepData.id,
-                style: subtitleStyle),
-              radius: 15,
-              backgroundColor: Colors.orange[700],
-              foregroundColor: Colors.black
-              ),
+            CircleNumber(stepData.id),
             SizedBox(width: 5),
             Text(stepData.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
           ]
@@ -66,7 +61,7 @@ class StepView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(stepData.description, style: TextStyle(fontSize: 18)),
         ),
-        Divider(color: Colors.orange[900], thickness: 0.5, indent: 2.5, endIndent: 2.5),
+        SectionDivider(),
         SizedBox(height: 1),
       ]
     );

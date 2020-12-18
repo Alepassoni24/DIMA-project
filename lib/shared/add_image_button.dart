@@ -34,6 +34,7 @@ class AddImageButton extends StatelessWidget {
       width: this.width,
       child: Card(
         elevation: this.elevation,
+        color: Colors.grey[50],
         child: InkWell(
           borderRadius: BorderRadius.circular(borderRadius),
           child: image == null
