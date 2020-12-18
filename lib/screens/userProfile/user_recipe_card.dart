@@ -30,7 +30,8 @@ class UserRecipeCard extends StatelessWidget {
                       recipeData.title,
                       recipeData.rating,
                       DateTime.fromMicrosecondsSinceEpoch(
-                          recipeData.submissionTime.microsecondsSinceEpoch)),
+                          recipeData.submissionTime.microsecondsSinceEpoch),
+                      'TODO'),
                 ],
               )
             ],
@@ -49,9 +50,10 @@ class TitleListTile extends StatelessWidget {
   final String cardTitle;
   final String cardRating;
   final DateTime dateOfSubmission;
-  //final String numOfReviwes;
+  final String numOfReviwes;
 
-  TitleListTile(this.cardTitle, this.cardRating, this.dateOfSubmission);
+  TitleListTile(this.cardTitle, this.cardRating, this.dateOfSubmission,
+      this.numOfReviwes);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class TitleListTile extends StatelessWidget {
               width: 10,
             ),
             Text(
-              '##',
+              numOfReviwes,
               style: TextStyle(
                 color: Colors.grey[800],
               ),
@@ -90,7 +92,6 @@ class TitleListTile extends StatelessWidget {
             SizedBox(
               width: 3,
             ),
-            //TODO
             Icon(
               Icons.message,
               color: Colors.grey[600],

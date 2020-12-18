@@ -19,14 +19,20 @@ class DatabaseService {
     });
   }
 
-  Future insertUserData(String username, String recipeNum, String rating,
-      String reviewNum, String profilePhotoURL) async {
+  Future insertUserData(
+      String username,
+      String recipeNum,
+      String rating,
+      String reviewNum,
+      String profilePhotoURL,
+      bool userRegisteredWithMail) async {
     return await userCollection.doc(uid).set({
       'username': username,
       'recipeNumber': recipeNum,
       'rating': rating,
       'reviewNumber': reviewNum,
       'profilePhotoURL': profilePhotoURL,
+      'userRegisteredWithMail': userRegisteredWithMail,
     });
   }
 
@@ -44,6 +50,7 @@ class DatabaseService {
       rating: double.parse(snapshot.get('rating')),
       reviewNumber: int.parse(snapshot.get('reviewNumber')),
       profilePhotoURL: snapshot.get('profilePhotoURL'),
+      userRegisteredWithMail: snapshot.get('userRegisteredWithMail'),
     );
   }
 

@@ -15,8 +15,7 @@ class UserData {
   int recipeNumber;
   int reviewNumber;
   double rating;
-
-  //UserData({this.uid, this.username});
+  final bool userRegisteredWithMail;
 
   UserData(
       {this.uid,
@@ -24,7 +23,8 @@ class UserData {
       this.recipeNumber,
       this.rating,
       this.reviewNumber,
-      this.profilePhotoURL});
+      this.profilePhotoURL,
+      this.userRegisteredWithMail});
 
   String getUsername() {
     return username;

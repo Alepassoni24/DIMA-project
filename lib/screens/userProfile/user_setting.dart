@@ -23,7 +23,12 @@ class _UserSettingsState extends State<UserSettings> {
   //key to identify the form
   final _formKey = GlobalKey<FormState>();
   File image;
-  String username, profilePhotoURL;
+  String username,
+      profilePhotoURL,
+      profilePhotoURI,
+      oldProfilePhotoURL,
+      password,
+      newPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +84,7 @@ class _UserSettingsState extends State<UserSettings> {
             if (firstBuilt) {
               username = snapshot.data.username;
               profilePhotoURL = snapshot.data.profilePhotoURL;
+              oldProfilePhotoURL = snapshot.data.profilePhotoURL;
               firstBuilt = false;
             }
             return Scaffold(
@@ -91,7 +97,10 @@ class _UserSettingsState extends State<UserSettings> {
                   IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () async {
-                      if (image != null) await uploadImage();
+                      if (image != null) {
+                        await uploadImage();
+                        await deleteOldImage();
+                      }
                       await databaseService.updateUserData(
                           username, profilePhotoURL);
                       Navigator.of(context).pop();
@@ -115,17 +124,23 @@ class _UserSettingsState extends State<UserSettings> {
                           height: 5.0,
                         ),
                         InkWell(
-                          child: profilePhotoURL == null
-                              ? Icon(
-                                  Icons.account_circle_outlined,
-                                  size: 175,
-                                  color: Colors.grey[600],
-                                )
-                              : CircleAvatar(
-                                  radius: 87.5,
-                                  backgroundImage:
-                                      NetworkImage(profilePhotoURL),
-                                ),
+                          child:
+                              profilePhotoURL == null && profilePhotoURI == null
+                                  ? Icon(
+                                      Icons.account_circle_outlined,
+                                      size: 175,
+                                      color: Colors.grey[600],
+                                    )
+                                  : profilePhotoURL != null
+                                      ? CircleAvatar(
+                                          radius: 87.5,
+                                          backgroundImage:
+                                              NetworkImage(profilePhotoURL),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 87.5,
+                                          backgroundImage: FileImage(image),
+                                        ),
                           onTap: () => _showChoosingPanel(),
                         ),
                         SizedBox(
@@ -143,6 +158,33 @@ class _UserSettingsState extends State<UserSettings> {
                             setState(() => username = val);
                           },
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        if (snapshot.data.userRegisteredWithMail)
+                          TextFormField(
+                            validator: PasswordFieldValidator.validate,
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'current password',
+                            ),
+                            obscureText: true,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
+                          ),
+                        if (snapshot.data.userRegisteredWithMail)
+                          TextFormField(
+                            validator: PasswordFieldValidator.validate,
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'new password',
+                            ),
+                            obscureText: true,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => newPassword = val);
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -160,7 +202,7 @@ class _UserSettingsState extends State<UserSettings> {
     PickedFile img = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       image = File(img.path);
-      profilePhotoURL = img.path;
+      profilePhotoURI = img.path;
     });
   }
 
@@ -169,7 +211,7 @@ class _UserSettingsState extends State<UserSettings> {
     PickedFile img = await picker.getImage(source: ImageSource.camera);
     setState(() {
       image = File(img.path);
-      profilePhotoURL = img.path;
+      profilePhotoURI = img.path;
     });
   }
 
@@ -179,10 +221,23 @@ class _UserSettingsState extends State<UserSettings> {
         .child('profilePhoto/${Path.basename(image.path)}');
     UploadTask uploadTask = storageReference.putFile(image);
     await uploadTask;
-    storageReference.getDownloadURL().then((imgUrl) => {
+    await storageReference.getDownloadURL().then((imgUrl) => {
           setState(() {
             profilePhotoURL = imgUrl;
+            profilePhotoURI = null;
           })
         });
+  }
+
+  Future deleteOldImage() async {
+    if (oldProfilePhotoURL != null) {
+      var path =
+          '${Path.basename(oldProfilePhotoURL).replaceFirst("%2F", "/").split("?")[0]}';
+      Reference fileRef = FirebaseStorage.instance.ref().child(path);
+      await fileRef.delete();
+      setState(() {
+        oldProfilePhotoURL = profilePhotoURL;
+      });
+    }
   }
 }
