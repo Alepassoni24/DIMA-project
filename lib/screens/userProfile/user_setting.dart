@@ -111,7 +111,7 @@ class _UserSettingsState extends State<UserSettings> {
                       await databaseService.updateUserData(
                           username, profilePhotoURL);
 
-                      if (error != null) {
+                      if (error == null) {
                         Navigator.of(context).pop();
                       }
                     },
@@ -175,8 +175,13 @@ class _UserSettingsState extends State<UserSettings> {
                           },
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 50,
                         ),
+                        if (snapshot.data.userRegisteredWithMail)
+                          Text(
+                            'change your password',
+                          ),
+
                         if (snapshot.data.userRegisteredWithMail)
                           TextFormField(
                             validator: PasswordFieldValidator.validate,

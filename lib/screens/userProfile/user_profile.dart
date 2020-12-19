@@ -75,6 +75,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   indent: 15,
                   endIndent: 15,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
                   'Your recipes:',
                   style: TextStyle(
