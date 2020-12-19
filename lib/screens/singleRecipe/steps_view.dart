@@ -26,7 +26,7 @@ class StepsView extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Procedure:", style: subtitleStyle)
+              child: Text("Procedure:", style: titleStyle)
             ),
             SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>

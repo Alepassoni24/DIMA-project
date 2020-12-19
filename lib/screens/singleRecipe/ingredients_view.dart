@@ -24,7 +24,7 @@ class IngredientsView extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Ingredients:", style: subtitleStyle)
+              child: Text("Ingredients:", style: titleStyle)
             ),
             SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>

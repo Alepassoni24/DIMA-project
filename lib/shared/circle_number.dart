@@ -11,7 +11,7 @@ class CircleNumber extends StatelessWidget {
     return CircleAvatar(
       child: Text(
         number,
-        style: subtitleStyle
+        style: titleStyle
       ),
       radius: 15,
       backgroundColor: Colors.orange[500],

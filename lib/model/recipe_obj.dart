@@ -12,8 +12,30 @@ class RecipeData {
   String time;
   String servings;
   Timestamp submissionTime;
+  int difficulty;
+  String category;
+  bool isVegan;
+  bool isVegetarian;
+  bool isGlutenFree;
+  bool isLactoseFree; 
   
-  RecipeData({this.recipeId, this.title, this.subtitle, this.description, this.imageURL, this.rating, this.submissionTime, this.time, this.servings});
+  RecipeData({
+    this.recipeId,
+    this.title,
+    this.subtitle,
+    this.description,
+    this.imageURL,
+    this.rating,
+    this.submissionTime,
+    this.time,
+    this.servings,
+    this.difficulty,
+    this.category,
+    this.isVegan,
+    this.isVegetarian,
+    this.isGlutenFree,
+    this.isLactoseFree,
+  });
 }
 
 class IngredientData {

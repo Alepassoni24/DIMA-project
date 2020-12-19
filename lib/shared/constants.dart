@@ -9,4 +9,14 @@ const textInputDecoration = InputDecoration(
   ),
 );
 
-const subtitleStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+const TextStyle titleStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+
+const TextStyle subtitleStyle = TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
+
+const List<String> categories = [
+  "First course",
+  "Second course",
+  "Single course",
+  "Side dish",
+  "Dessert",
+];
