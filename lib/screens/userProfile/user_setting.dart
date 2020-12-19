@@ -5,6 +5,8 @@ import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/loading.dart';
+import 'package:dima_project/shared/warning_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +29,9 @@ class _UserSettingsState extends State<UserSettings> {
       profilePhotoURL,
       profilePhotoURI,
       oldProfilePhotoURL,
-      password,
-      newPassword;
+      newPassword,
+      repeatedNewPassword,
+      error;
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +100,20 @@ class _UserSettingsState extends State<UserSettings> {
                   IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () async {
+                      if (newPassword != null) {
+                        validateAndUpdatePassword();
+                      }
+
                       if (image != null) {
                         await uploadImage();
                         await deleteOldImage();
                       }
                       await databaseService.updateUserData(
                           username, profilePhotoURL);
-                      Navigator.of(context).pop();
+
+                      if (error != null) {
+                        Navigator.of(context).pop();
+                      }
                     },
                   )
                 ],
@@ -121,7 +131,13 @@ class _UserSettingsState extends State<UserSettings> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 5.0,
+                          height: 2.0,
+                        ),
+                        WarningAlert(
+                          warning: error,
+                        ),
+                        SizedBox(
+                          height: 2.0,
                         ),
                         InkWell(
                           child:
@@ -131,15 +147,15 @@ class _UserSettingsState extends State<UserSettings> {
                                       size: 175,
                                       color: Colors.grey[600],
                                     )
-                                  : profilePhotoURL != null
+                                  : profilePhotoURI != null
                                       ? CircleAvatar(
                                           radius: 87.5,
-                                          backgroundImage:
-                                              NetworkImage(profilePhotoURL),
+                                          backgroundImage: FileImage(image),
                                         )
                                       : CircleAvatar(
                                           radius: 87.5,
-                                          backgroundImage: FileImage(image),
+                                          backgroundImage:
+                                              NetworkImage(profilePhotoURL),
                                         ),
                           onTap: () => _showChoosingPanel(),
                         ),
@@ -165,24 +181,24 @@ class _UserSettingsState extends State<UserSettings> {
                           TextFormField(
                             validator: PasswordFieldValidator.validate,
                             decoration: textInputDecoration.copyWith(
-                              hintText: 'current password',
-                            ),
-                            obscureText: true,
-                            //val represent whatever will be into the field
-                            onChanged: (val) {
-                              setState(() => password = val);
-                            },
-                          ),
-                        if (snapshot.data.userRegisteredWithMail)
-                          TextFormField(
-                            validator: PasswordFieldValidator.validate,
-                            decoration: textInputDecoration.copyWith(
                               hintText: 'new password',
                             ),
                             obscureText: true,
                             //val represent whatever will be into the field
                             onChanged: (val) {
                               setState(() => newPassword = val);
+                            },
+                          ),
+                        if (snapshot.data.userRegisteredWithMail)
+                          TextFormField(
+                            validator: PasswordFieldValidator.validate,
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'repeat new password',
+                            ),
+                            obscureText: true,
+                            //val represent whatever will be into the field
+                            onChanged: (val) {
+                              setState(() => repeatedNewPassword = val);
                             },
                           ),
                       ],
@@ -223,8 +239,8 @@ class _UserSettingsState extends State<UserSettings> {
     await uploadTask;
     await storageReference.getDownloadURL().then((imgUrl) => {
           setState(() {
-            profilePhotoURL = imgUrl;
             profilePhotoURI = null;
+            profilePhotoURL = imgUrl;
           })
         });
   }
@@ -237,6 +253,30 @@ class _UserSettingsState extends State<UserSettings> {
       await fileRef.delete();
       setState(() {
         oldProfilePhotoURL = profilePhotoURL;
+      });
+    }
+  }
+
+  Future validateAndUpdatePassword() async {
+    User user = await FirebaseAuth.instance.currentUser;
+    if (newPassword == repeatedNewPassword) {
+      user
+          .updatePassword(newPassword)
+          .then((_) => {
+                this.setState(() {
+                  error = null;
+                  newPassword = null;
+                  repeatedNewPassword = null;
+                })
+              })
+          .catchError((onError) {
+        setState(() {
+          error = 'something went wrong';
+        });
+      });
+    } else {
+      setState(() {
+        error = 'passwords don\'t match';
       });
     }
   }
