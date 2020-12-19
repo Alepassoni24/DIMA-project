@@ -183,6 +183,7 @@ class _UserSettingsState extends State<UserSettings> {
                           ),
 
                         if (snapshot.data.userRegisteredWithMail)
+                          //field to insert the new password
                           TextFormField(
                             validator: PasswordFieldValidator.validate,
                             decoration: textInputDecoration.copyWith(
@@ -195,6 +196,7 @@ class _UserSettingsState extends State<UserSettings> {
                             },
                           ),
                         if (snapshot.data.userRegisteredWithMail)
+                          //field to insert the repeatition of the new password for checking purpose
                           TextFormField(
                             validator: PasswordFieldValidator.validate,
                             decoration: textInputDecoration.copyWith(
@@ -218,30 +220,42 @@ class _UserSettingsState extends State<UserSettings> {
         });
   }
 
+  //Funtion to get a picture from the device gallery
   Future getImgFromGallery() async {
+    //close the choosing dialog
     Navigator.of(context).pop();
+    //get file from the camera
     PickedFile img = await picker.getImage(source: ImageSource.gallery);
+    //set information into the widget state
     setState(() {
       image = File(img.path);
       profilePhotoURI = img.path;
     });
   }
 
+  //Function to get a picture from the device camera
   Future getImgFromCamera() async {
+    //close the choosing dialog
     Navigator.of(context).pop();
+    //get file from the camera
     PickedFile img = await picker.getImage(source: ImageSource.camera);
+    //set information into the widget state
     setState(() {
       image = File(img.path);
       profilePhotoURI = img.path;
     });
   }
 
+  //Function to upload the new profile photo onto the storage
   Future uploadImage() async {
+    //create a referenco fot the image into the storage
     Reference storageReference = FirebaseStorage.instance
         .ref()
         .child('profilePhoto/${Path.basename(image.path)}');
+    //upload file
     UploadTask uploadTask = storageReference.putFile(image);
     await uploadTask;
+    //update the state of the widget
     await storageReference.getDownloadURL().then((imgUrl) => {
           setState(() {
             profilePhotoURI = null;
@@ -250,21 +264,29 @@ class _UserSettingsState extends State<UserSettings> {
         });
   }
 
+  //Function to delete the old profile picture of the user from the storage
   Future deleteOldImage() async {
     if (oldProfilePhotoURL != null) {
+      //retrieve the path of the picture in the storage
       var path =
           '${Path.basename(oldProfilePhotoURL).replaceFirst("%2F", "/").split("?")[0]}';
+      //create a reference of the file
       Reference fileRef = FirebaseStorage.instance.ref().child(path);
+      //delete the file from the storage
       await fileRef.delete();
+      //set the widget state
       setState(() {
         oldProfilePhotoURL = profilePhotoURL;
       });
     }
   }
 
+  //Function to verify if the new provided passwords match and update in onto the database
   Future validateAndUpdatePassword() async {
+    //get the current user from auth service
     User user = await FirebaseAuth.instance.currentUser;
     if (newPassword == repeatedNewPassword) {
+      //update password and manage errors and for each outcome the widget state
       user
           .updatePassword(newPassword)
           .then((_) => {
