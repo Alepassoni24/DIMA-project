@@ -28,6 +28,7 @@ class WriteStepView extends StatelessWidget {
               child: CircleNumber(stepData.id.toString()),
             ),
             SizedBox(width: 5),
+            // Form for title
             Flexible(
               flex: 9,
               fit: FlexFit.tight,
@@ -36,10 +37,12 @@ class WriteStepView extends StatelessWidget {
           ],
         ),
         SizedBox(width: 5),
+        // Imagepicker for image
         AddImageButton(setFatherImage: setImageFile, image: stepData.imageFile, height: 200, width: double.infinity, elevation: 5, borderRadius: 2),
         if(stepData.validate && stepData.imageFile == null)
           Container(child: Text("Enter an image", style: errorStyle), alignment: Alignment.centerLeft, padding: EdgeInsets.only(left: 5)),
-        SizedBox(width: 5), 
+        SizedBox(width: 5),
+        // Form for description
         TextFormFieldLong("Step description", stepData.description, (val) => setDescription(stepData.id, val), DescriptionFieldValidator.validate),
       ],
     );

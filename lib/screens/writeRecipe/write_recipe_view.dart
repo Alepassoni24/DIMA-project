@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
@@ -9,7 +10,9 @@ import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/section_divider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as Path;
 
 class WriteRecipeView extends StatefulWidget {
 
@@ -117,17 +120,83 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     return _steps;
   }
 
-  void submitRecipe() {
+  void submitRecipe() async {
+    // Check if all forms and imagepicker are not empty
     setRecipeValidate();
     bool canSubmit = _recipeData.imageFile != null;
-    for(StepData stepData in _stepsData)
-    {
+    for(StepData stepData in _stepsData) {
       setStepValidate(stepData.id);
       canSubmit &= stepData.imageFile != null;
     }
     if (_formKey.currentState.validate() && canSubmit) {
-    // TODO: Submit recipe
+      // Submit recipe
+      _recipeData.imageURL = await uploadImage(_recipeData.imageFile, 'recipe/');
+      String recipeId = await sendRecipe(_recipeData);
+      // Submit all ingredients
+      for(IngredientData ingredientData in _ingredientsData) {
+        sendIngredient(ingredientData, recipeId);
+      }
+      // Submit all steps
+      for(StepData stepData in _stepsData) {
+        stepData.imageURL = await uploadImage(stepData.imageFile, 'step/');
+        sendStep(stepData, recipeId);
+      }
+      // Show the view of the recipe
+      Navigator.pushNamed(context, '/recipeView', arguments: _recipeData);
     }
+  }
+
+  // Upload a generic image to Firebase Storage
+  Future<String> uploadImage(File image, String path) async {
+    Reference storageReference = FirebaseStorage.instance.ref()
+      .child(path + Path.basename(image.path));
+    await storageReference.putFile(image);
+    return await storageReference.getDownloadURL();
+  }
+
+  // Add a recipe document to Cloud Firestore
+  Future<String> sendRecipe(RecipeData recipeData) async
+  {
+    DocumentReference docRef =
+      await FirebaseFirestore.instance.collection('recipe').add({
+        'title': recipeData.title,
+        'subtitle': recipeData.subtitle,
+        'description': recipeData.description,
+        'imageURL': recipeData.imageURL,
+        'rating': 0,
+        'time': recipeData.time,
+        'servings': recipeData.servings,
+        'submissionTime': FieldValue.serverTimestamp(),
+        'difficulty': recipeData.difficulty,
+        'category': recipeData.category,
+        'isVegan': recipeData.isVegan,
+        'isVegetarian': recipeData.isVegetarian,
+        'isGlutenFree': recipeData.isGlutenFree,
+        'isLactoseFree': recipeData.isLactoseFree,
+    });
+    return docRef.id;
+  }
+
+  // Add a ingredient document, under a recipe, to Cloud Firestore
+  Future<void> sendIngredient(IngredientData ingredientData, String recipeId) async
+  {
+    FirebaseFirestore.instance.collection('recipe').doc(recipeId)
+      .collection('ingredient').doc(ingredientData.id.toString()).set({
+        'quantity': ingredientData.quantity,
+        'unit': ingredientData.unit,
+        'name': ingredientData.name,
+    });
+  }
+
+  // Add a step document, under a recipe, to Cloud Firestore
+  Future<void> sendStep(StepData stepData, String recipeId) async
+  {
+    FirebaseFirestore.instance.collection('recipe').doc(recipeId)
+      .collection('step').doc(stepData.id.toString()).set({
+        'title': stepData.title,
+        'description': stepData.description,
+        'imageURL': stepData.imageURL,
+    });
   }
 
   // Recipe setters
@@ -181,6 +250,7 @@ class TimeRow extends StatelessWidget {
             child: Text("Total time:", style: subtitleStyle),
             fit: FlexFit.tight,
           ),
+          // Form for recipe time
           Flexible(
             flex: 2,
             child: TextFormFieldShort("30", recipeData.time, setRecipeTime, NumberFieldValidator.validate),
@@ -215,6 +285,7 @@ class ServingsRow extends StatelessWidget {
             child: Text("Servings:", style: subtitleStyle),
             fit: FlexFit.tight,
           ),
+          // Form for recipe servings
           Flexible(
             flex: 2,
             child: TextFormFieldShort("4", recipeData.servings, setRecipeServings, NumberFieldValidator.validate),
@@ -252,6 +323,7 @@ class Difficulty extends StatelessWidget {
             fit: FlexFit.tight,
             child: Text("Difficulty:", style: subtitleStyle),
           ),
+          // Three chef hats to simbolize the difficulty
           Flexible(
             flex: 1,
             fit: FlexFit.tight,
@@ -318,6 +390,7 @@ class CategoryDropdown extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: Text("Category:", style: subtitleStyle),
               ),
+              // Dropdown menu for category
               Flexible(
                 flex: 3,
                 fit: FlexFit.tight,
@@ -337,6 +410,7 @@ class CategoryDropdown extends StatelessWidget {
               ),
             ]
           ),
+          // Four checkbox for options
           CheckboxListTile(
             title: Text("Vegan"),
             secondary: Icon(AppIcons.vegan),

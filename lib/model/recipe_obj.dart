@@ -32,11 +32,11 @@ class RecipeData {
     this.time,
     this.servings,
     this.difficulty,
-    this.category,
-    this.isVegan,
-    this.isVegetarian,
-    this.isGlutenFree,
-    this.isLactoseFree,
+    this.category = "First course",
+    this.isVegan = false,
+    this.isVegetarian = false,
+    this.isGlutenFree = false,
+    this.isLactoseFree = false,
   });
 }
 

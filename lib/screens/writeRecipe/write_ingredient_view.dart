@@ -14,18 +14,21 @@ class WriteIngredientView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // Form for quantity
         Flexible(
           flex: 3,
           child: TextFormFieldShort("100", ingredientData.quantity, (val) => setQuantity(ingredientData.id, val), NumberFieldValidator.validate),
           fit: FlexFit.tight,
         ),
-        SizedBox(width: 10), 
+        SizedBox(width: 10),
+        // Form for unit
         Flexible(
           flex: 2,
           child: TextFormFieldShort("g", ingredientData.unit, (val) => setUnit(ingredientData.id, val), UnitFieldValidator.validate),
           fit: FlexFit.tight,
         ),
-        SizedBox(width: 10), 
+        SizedBox(width: 10),
+        // Form for ingredient
         Flexible(
           flex: 12,
           child: TextFormFieldShort("flour", ingredientData.name, (val) => setName(ingredientData.id, val), IngredientFieldValidator.validate),
