@@ -96,7 +96,7 @@ class DatabaseService {
   IngredientData ingredientsDataFromSnapshot(
       DocumentSnapshot documentSnapshot) {
     return IngredientData(
-      id: documentSnapshot.id,
+      id: int.parse(documentSnapshot.id),
       quantity: documentSnapshot.data()['quantity'].toString(),
       unit: documentSnapshot.data()['unit'],
       name: documentSnapshot.data()['name'],
@@ -111,7 +111,7 @@ class DatabaseService {
   //get steps data from snapshot
   StepData stepsDataFromSnapshot(DocumentSnapshot documentSnapshot) {
     return StepData(
-      id: documentSnapshot.id,
+      id: int.parse(documentSnapshot.id),
       title: documentSnapshot.data()['title'],
       description: documentSnapshot.data()['description'],
       imageURL: documentSnapshot.data()['imageURL'],

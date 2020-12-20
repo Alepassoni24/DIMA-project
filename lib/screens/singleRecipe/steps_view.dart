@@ -49,7 +49,7 @@ class StepView extends StatelessWidget {
       children: [
         Row(
           children: [
-            CircleNumber(stepData.id),
+            CircleNumber(stepData.id.toString()),
             SizedBox(width: 5),
             Text(stepData.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
           ]

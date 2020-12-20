@@ -17,7 +17,9 @@ class RecipeData {
   bool isVegan;
   bool isVegetarian;
   bool isGlutenFree;
-  bool isLactoseFree; 
+  bool isLactoseFree;
+  File imageFile;
+  bool validate = false;
   
   RecipeData({
     this.recipeId,
@@ -39,7 +41,7 @@ class RecipeData {
 }
 
 class IngredientData {
-  String id;
+  int id;
   String quantity;
   String unit;
   String name;
@@ -48,11 +50,12 @@ class IngredientData {
 }
 
 class StepData {
-  String id;
+  int id;
   String title;
   String description;
   String imageURL;
   File imageFile;
+  bool validate = false;
 
-  StepData({this.id, this.title, this.description, this.imageURL, this.imageFile});
+  StepData({this.id, this.title, this.description, this.imageURL});
 }

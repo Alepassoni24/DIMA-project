@@ -13,6 +13,8 @@ const TextStyle titleStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold
 
 const TextStyle subtitleStyle = TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
 
+final TextStyle errorStyle = TextStyle(fontSize: 12, color: Colors.red[700]);
+
 const List<String> categories = [
   "First course",
   "Second course",
