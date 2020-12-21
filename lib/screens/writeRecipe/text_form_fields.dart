@@ -15,7 +15,6 @@ class TextFormFieldShort extends StatefulWidget {
 class TextFormFieldShortState extends State<TextFormFieldShort> {
   final String hintText, initialValue;
   final Function(String) setText, validator;
-  final _controller = new TextEditingController();
 
   TextFormFieldShortState(this.hintText, this.initialValue, this.setText, this.validator);
 
@@ -28,9 +27,9 @@ class TextFormFieldShortState extends State<TextFormFieldShort> {
           hintText: hintText,
           contentPadding: EdgeInsets.only(left: 2.5, right: 2.5),
         ),
+        initialValue: initialValue,
         onChanged: setText,
         validator: validator,
-        controller: _controller,
       ),
     );
   }
@@ -50,7 +49,6 @@ class TextFormFieldLong extends StatefulWidget {
 class TextFormFieldLongState extends State<TextFormFieldLong> {
   final String hintText, initialValue;
   final Function(String) setText, validator;
-  final _controller = new TextEditingController();
 
   TextFormFieldLongState(this.hintText, this.initialValue, this.setText, this.validator);
 
@@ -65,9 +63,9 @@ class TextFormFieldLongState extends State<TextFormFieldLong> {
         ),
         keyboardType: TextInputType.multiline,
         maxLines: null,
+        initialValue: initialValue,
         onChanged: setText,
         validator: validator,
-        controller: _controller,
       ),
     );
   }

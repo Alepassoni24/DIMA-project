@@ -21,17 +21,10 @@ class WriteRecipeView extends StatefulWidget {
 }
 
 class WriteRecipeViewState extends State<WriteRecipeView> {
-  final RecipeData _recipeData = new RecipeData(difficulty: 0);
-  final List<IngredientData> _ingredientsData = List<IngredientData>();
-  final List<StepData> _stepsData = List<StepData>();
+  RecipeData _recipeData = RecipeData(difficulty: 0);
+  List<IngredientData> _ingredientsData = [IngredientData(id: 1)];
+  List<StepData> _stepsData = [StepData(id: 1)];
   final _formKey = GlobalKey<FormState>();
-  
-  @override
-  void initState() {
-    super.initState();
-    _ingredientsData.add(IngredientData(id: 1));
-    _stepsData.add(StepData(id: 1));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,18 +124,19 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     if (_formKey.currentState.validate() && canSubmit) {
       // Submit recipe
       _recipeData.imageURL = await uploadImage(_recipeData.imageFile, 'recipe/');
-      String recipeId = await sendRecipe(_recipeData);
+      _recipeData.recipeId = await sendRecipe(_recipeData);
       // Submit all ingredients
       for(IngredientData ingredientData in _ingredientsData) {
-        sendIngredient(ingredientData, recipeId);
+        sendIngredient(ingredientData, _recipeData.recipeId);
       }
       // Submit all steps
       for(StepData stepData in _stepsData) {
         stepData.imageURL = await uploadImage(stepData.imageFile, 'step/');
-        sendStep(stepData, recipeId);
+        sendStep(stepData, _recipeData.recipeId);
       }
-      // Show the view of the recipe
-      Navigator.pushNamed(context, '/recipeView', arguments: _recipeData);
+      // Show the view of the recipe and then reset the form
+      Navigator.pushNamed(context, '/recipeView', arguments: _recipeData)
+        .then((_) => resetData());
     }
   }
 
@@ -155,8 +149,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   }
 
   // Add a recipe document to Cloud Firestore
-  Future<String> sendRecipe(RecipeData recipeData) async
-  {
+  Future<String> sendRecipe(RecipeData recipeData) async {
     DocumentReference docRef =
       await FirebaseFirestore.instance.collection('recipe').add({
         'title': recipeData.title,
@@ -178,8 +171,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   }
 
   // Add a ingredient document, under a recipe, to Cloud Firestore
-  Future<void> sendIngredient(IngredientData ingredientData, String recipeId) async
-  {
+  Future<void> sendIngredient(IngredientData ingredientData, String recipeId) async {
     FirebaseFirestore.instance.collection('recipe').doc(recipeId)
       .collection('ingredient').doc(ingredientData.id.toString()).set({
         'quantity': ingredientData.quantity,
@@ -189,14 +181,21 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   }
 
   // Add a step document, under a recipe, to Cloud Firestore
-  Future<void> sendStep(StepData stepData, String recipeId) async
-  {
+  Future<void> sendStep(StepData stepData, String recipeId) async {
     FirebaseFirestore.instance.collection('recipe').doc(recipeId)
       .collection('step').doc(stepData.id.toString()).set({
         'title': stepData.title,
         'description': stepData.description,
         'imageURL': stepData.imageURL,
     });
+  }
+
+  // Reset form data after submitting a recipe
+  void resetData() {
+    setState(() => _recipeData = RecipeData(difficulty: 0));
+    setState(() => _ingredientsData = [IngredientData(id: 1)]);
+    setState(() => _stepsData = [StepData(id: 1)]);
+    _formKey.currentState.reset();
   }
 
   // Recipe setters
