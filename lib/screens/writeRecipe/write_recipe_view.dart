@@ -5,7 +5,7 @@ import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
 import 'package:dima_project/screens/writeRecipe/write_step_view.dart';
-import 'package:dima_project/shared/add_image_button.dart';
+import 'package:dima_project/screens/writeRecipe/add_image_button.dart';
 import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
