@@ -1,4 +1,6 @@
 import 'package:dima_project/model/recipe_obj.dart';
+import 'package:dima_project/shared/app_icons.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 //The recipe must be obtained from a query to the database
@@ -21,6 +23,9 @@ class RecipeCard extends StatelessWidget{
             children: <Widget>[
               TitleListTile(recipeData.title, recipeData.subtitle, recipeData.rating),
               ImageContainer(recipeData.imageURL),
+              SizedBox(height: 5),
+              BottomRow(recipeData),
+              SizedBox(height: 5),
             ],
           ),
           onTap: () {
@@ -69,7 +74,6 @@ class ImageContainer extends StatelessWidget {
     return Container(
       height: 200,
       decoration: new BoxDecoration(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
         image: new DecorationImage(
           fit: BoxFit.fitWidth,
           alignment: Alignment.center,
@@ -80,23 +84,31 @@ class ImageContainer extends StatelessWidget {
   }
 }
 
-//TODO: Remove this if only one button is enough
-class ButtonRow extends StatelessWidget {
+class BottomRow extends StatelessWidget {
+  final RecipeData recipeData;
+
+  BottomRow(this.recipeData);
+
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        TextButton(
-          child: const Text('READ'),
-          onPressed: () {/* ... */},
-        ),
-        const SizedBox(width: 8),
-        TextButton(
-          child: const Text('COOK'),
-          onPressed: () {/* ... */},
-        ),
-        const SizedBox(width: 8),
+      children: [
+        SizedBox(width: 10),
+        recipeData.isVegan ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+        SizedBox(width: 10),
+        recipeData.isVegetarian ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+        SizedBox(width: 10),
+        recipeData.isGlutenFree ? Icon(AppIcons.gluten_free, size: 25) : SizedBox(width: 25),
+        SizedBox(width: 10),
+        recipeData.isLactoseFree ? Icon(AppIcons.lactose_free, size: 25) : SizedBox(width: 25),
+        SizedBox(width: 10),
+        Spacer(),
+        Icon(AppIcons.chef_hat, size: 25, color: difficultyColors[recipeData.difficulty]),
+        SizedBox(width: 10),
+        Icon(AppIcons.chef_hat, size: 25, color: recipeData.difficulty >= 1 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor),
+        SizedBox(width: 10),
+        Icon(AppIcons.chef_hat, size: 25, color: recipeData.difficulty >= 2 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor),
+        SizedBox(width: 10),
       ],
     );
   }

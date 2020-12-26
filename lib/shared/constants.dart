@@ -22,3 +22,11 @@ const List<String> categories = [
   "Side dish",
   "Dessert",
 ];
+
+const difficultyBaseColor = Colors.grey;
+
+const List<Color> difficultyColors = [
+  Colors.yellow,
+  Colors.orange,
+  Colors.red
+];

@@ -302,10 +302,6 @@ class ServingsRow extends StatelessWidget {
 }
 
 class Difficulty extends StatelessWidget {
-
-  final List<Color> colors = [Colors.yellow, Colors.orange, Colors.red];
-  final Color baseColor = Colors.grey;
-
   final RecipeData recipeData;
   final Function(int) setDifficulty;
 
@@ -332,7 +328,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: colors[recipeData.difficulty],
+                color: difficultyColors[recipeData.difficulty],
               ),
             ),
           ),
@@ -345,7 +341,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: recipeData.difficulty >= 1 ? colors[recipeData.difficulty] : baseColor,
+                color: recipeData.difficulty >= 1 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor,
               ),
             ),
           ),
@@ -358,7 +354,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: recipeData.difficulty >= 2 ? colors[recipeData.difficulty] : baseColor,
+                color: recipeData.difficulty >= 2 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor,
               ),
             ),
           ),
