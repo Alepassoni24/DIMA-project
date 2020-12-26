@@ -111,7 +111,7 @@ class AuthService {
 
     //handle all the possible outcome of the fb login process
     switch (fbResult.status) {
-      case FacebookLoginStatus.Success:
+      case FacebookLoginStatus.success:
         //get the token from facebook
         final FacebookAccessToken fbToken = fbResult.accessToken;
         //convert to auth credential
@@ -130,10 +130,10 @@ class AuthService {
             });
         return _userFromFirebaseUser(user);
         break;
-      case FacebookLoginStatus.Cancel:
+      case FacebookLoginStatus.cancel:
         print('the user canceled the login');
         break;
-      case FacebookLoginStatus.Error:
+      case FacebookLoginStatus.error:
         print('there was an error');
         break;
     }
