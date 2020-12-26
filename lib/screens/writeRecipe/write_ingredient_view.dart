@@ -1,6 +1,7 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/shared/form_validators.dart';
+import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
 class WriteIngredientView extends StatelessWidget {
@@ -17,7 +18,7 @@ class WriteIngredientView extends StatelessWidget {
         // Form for quantity
         Flexible(
           flex: 3,
-          child: TextFormFieldShort("100", ingredientData.quantity, (val) => setQuantity(ingredientData.id, val), NumberFieldValidator.validate),
+          child: TextFormFieldShort("100", Utils.truncateDouble(ingredientData.quantity), (val) => setQuantity(ingredientData.id, val), NumberFieldValidator.validate),
           fit: FlexFit.tight,
         ),
         SizedBox(width: 10),

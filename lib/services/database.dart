@@ -72,7 +72,7 @@ class DatabaseService {
       subtitle: documentSnapshot.data()['subtitle'],
       description: documentSnapshot.data()['description'],
       imageURL: documentSnapshot.data()['imageURL'],
-      rating: documentSnapshot.data()['rating'].toString(),
+      rating: documentSnapshot.data()['rating'].toDouble(),
       time: documentSnapshot.data()['time'],
       servings: documentSnapshot.data()['servings'],
       submissionTime: documentSnapshot.data()['submissionTime'],
@@ -102,7 +102,7 @@ class DatabaseService {
       DocumentSnapshot documentSnapshot) {
     return IngredientData(
       id: int.parse(documentSnapshot.id),
-      quantity: documentSnapshot.data()['quantity'].toString(),
+      quantity: documentSnapshot.data()['quantity'].toDouble(),
       unit: documentSnapshot.data()['unit'],
       name: documentSnapshot.data()['name'],
     );

@@ -203,8 +203,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   void setRecipeTitle(String text) => setState(() => _recipeData.title = text);
   void setRecipeSubtitle(String text) => setState(() => _recipeData.subtitle = text);
   void setRecipeDescription(String text) => setState(() => _recipeData.description = text);
-  void setRecipeTime(String text) => setState(() => _recipeData.time = text);
-  void setRecipeServings(String text) => setState(() => _recipeData.servings = text);
+  void setRecipeTime(String text) => setState(() => _recipeData.time = int.tryParse(text) ?? 0);
+  void setRecipeServings(String text) => setState(() => _recipeData.servings = int.tryParse(text) ?? 0);
   void setRecipeDifficulty(int val) => setState(() => _recipeData.difficulty = val);
   void setRecipeValidate() => setState(() => _recipeData.validate = true);
 
@@ -217,14 +217,14 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   
   // Ingredient setters
   void addIngredient() => setState(() =>
-    _ingredientsData.add(IngredientData(id: _ingredientsData.length+1, quantity: "", unit: "", name: "")));
-  void setIngredientQuantity(int id, String text) => setState(() => _ingredientsData[id-1].quantity = text);
+    _ingredientsData.add(IngredientData(id: _ingredientsData.length+1)));
+  void setIngredientQuantity(int id, String text) => setState(() => _ingredientsData[id-1].quantity = double.tryParse(text) ?? 0.0);
   void setIngredientUnit(int id, String text) => setState(() => _ingredientsData[id-1].unit = text);
   void setIngredientName(int id, String text) => setState(() => _ingredientsData[id-1].name = text);
 
   // Step setters
   void addStep() => setState(() =>
-    _stepsData.add(StepData(id: _stepsData.length+1, title: "", description: "", imageURL: "")));
+    _stepsData.add(StepData(id: _stepsData.length+1)));
   void setStepTitle(int id, String text) => setState(() => _stepsData[id-1].title = text);
   void setStepDescription(int id, String text) => setState(() => _stepsData[id-1].description = text);
   Function(File) setStepImageFile(int id) => (File image) => setState(() => _stepsData[id].imageFile = image);
@@ -252,7 +252,7 @@ class TimeRow extends StatelessWidget {
           // Form for recipe time
           Flexible(
             flex: 2,
-            child: TextFormFieldShort("30", recipeData.time, setRecipeTime, NumberFieldValidator.validate),
+            child: TextFormFieldShort("30", recipeData.time == null ? "" : recipeData.time.toString(), setRecipeTime, NumberFieldValidator.validate),
             fit: FlexFit.tight,
           ),
           Flexible(
@@ -287,7 +287,7 @@ class ServingsRow extends StatelessWidget {
           // Form for recipe servings
           Flexible(
             flex: 2,
-            child: TextFormFieldShort("4", recipeData.servings, setRecipeServings, NumberFieldValidator.validate),
+            child: TextFormFieldShort("4", recipeData.servings == null ? "" : recipeData.servings.toString(), setRecipeServings, NumberFieldValidator.validate),
             fit: FlexFit.tight,
           ),
           Flexible(

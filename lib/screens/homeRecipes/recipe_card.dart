@@ -37,23 +37,24 @@ class RecipeCard extends StatelessWidget{
   }
 }
 
+// This ListTile contains the authore image and the recipe title, subtitle, rating
 class TitleListTile extends StatelessWidget {
   final String cardTitle;
   final String cardSubtitle;
-  final String cardRating;
+  final double cardRating;
 
   TitleListTile(this.cardTitle, this.cardSubtitle, this.cardRating);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.account_circle_outlined), // TODO: Change with author avatar
+      leading: Icon(Icons.account_circle_outlined), // TODO: Change icon with author avatar
       title: Text(cardTitle),
       subtitle: Text(cardSubtitle),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(cardRating),
+          Text(cardRating.toStringAsFixed(1)),
           Icon(
             Icons.star_half,
             color: Colors.orange[400],
@@ -64,6 +65,7 @@ class TitleListTile extends StatelessWidget {
   }
 }
 
+// This image container shows the main image of the recipe
 class ImageContainer extends StatelessWidget {
   final String cardImageURL;
 
@@ -84,6 +86,7 @@ class ImageContainer extends StatelessWidget {
   }
 }
 
+// This Row shows the checkmarks and the difficulty of the recipe
 class BottomRow extends StatelessWidget {
   final RecipeData recipeData;
 

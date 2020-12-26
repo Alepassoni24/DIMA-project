@@ -51,4 +51,9 @@ void main() {
     var result = NumberFieldValidator.validate('23089a4673');
     expect(result, 'Enter a number');
   });
+
+  test('11 - Number field with a double returns null', () {
+    var result = NumberFieldValidator.validate('23.8946');
+    expect(result, null);
+  });
 }

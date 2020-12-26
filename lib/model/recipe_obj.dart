@@ -8,9 +8,9 @@ class RecipeData {
   String subtitle;
   String description;
   String imageURL;
-  String rating;
-  String time;
-  String servings;
+  double rating;
+  int time;
+  int servings;
   Timestamp submissionTime;
   int difficulty;
   String category;
@@ -42,7 +42,7 @@ class RecipeData {
 
 class IngredientData {
   int id;
-  String quantity;
+  double quantity;
   String unit;
   String name;
 
