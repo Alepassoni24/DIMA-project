@@ -87,6 +87,7 @@ class DatabaseService {
       isVegetarian: documentSnapshot.data()['isVegetarian'],
       isGlutenFree: documentSnapshot.data()['isGlutenFree'],
       isLactoseFree: documentSnapshot.data()['isLactoseFree'],
+      reviewNumber: documentSnapshot.data()['reviewNumber'],
     );
   }
 
@@ -139,7 +140,7 @@ class DatabaseService {
   //get stream of last num recipes
   Stream<QuerySnapshot> get getUserRecipes {
     return recipeCollection
-        //TODO .where('title', isEqualTo: uid)
+        .where('author', isEqualTo: uid)
         .orderBy('submissionTime', descending: true)
         .snapshots();
   }
