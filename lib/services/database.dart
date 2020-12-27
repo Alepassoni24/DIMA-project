@@ -42,9 +42,9 @@ class DatabaseService {
   }
 
   //get user data from snapshot
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
-      uid: uid,
+      uid: snapshot.id,
       username: snapshot.get('username'),
       recipeNumber: int.parse(snapshot.get('recipeNumber')),
       rating: double.parse(snapshot.get('rating')),
@@ -56,7 +56,12 @@ class DatabaseService {
 
   //get user doc stream
   Stream<UserData> get userData {
-    return userCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+    return userCollection.doc(uid).snapshots().map(userDataFromSnapshot);
+  }
+
+  //get user stream from a user id
+  Stream<DocumentSnapshot> getUser(String userId) {
+    return userCollection.doc(userId).snapshots();
   }
 
   //get recipe stream
@@ -68,23 +73,36 @@ class DatabaseService {
   RecipeData recipeDataFromSnapshot(DocumentSnapshot documentSnapshot) {
     return RecipeData(
       recipeId: documentSnapshot.id,
+      authorId: documentSnapshot.data()['author'],
       title: documentSnapshot.data()['title'],
       subtitle: documentSnapshot.data()['subtitle'],
       description: documentSnapshot.data()['description'],
       imageURL: documentSnapshot.data()['imageURL'],
-      rating: documentSnapshot.data()['rating'].toString(),
+      rating: documentSnapshot.data()['rating'].toDouble(),
       time: documentSnapshot.data()['time'],
       servings: documentSnapshot.data()['servings'],
       submissionTime: documentSnapshot.data()['submissionTime'],
+      difficulty: documentSnapshot.data()['difficulty'],
+      isVegan: documentSnapshot.data()['isVegan'],
+      isVegetarian: documentSnapshot.data()['isVegetarian'],
+      isGlutenFree: documentSnapshot.data()['isGlutenFree'],
+      isLactoseFree: documentSnapshot.data()['isLactoseFree'],
     );
   }
 
-  //get stream of last num recipes
-  Stream<QuerySnapshot> getLastRecipes(int num) {
+  //get query of last num recipes
+  Query getLastRecipes(int num) {
     return recipeCollection
         .orderBy('submissionTime', descending: true)
-        .limit(num)
-        .snapshots();
+        .limit(num);
+  }
+
+  //get query of last num recipes after submissionTime
+  Query getNextLastRecipes(int num, Timestamp submissionTime) {
+    return recipeCollection
+        .orderBy('submissionTime', descending: true)
+        .where('submissionTime', isLessThan: submissionTime)
+        .limit(num);
   }
 
   //get ingredients stream from a recipe id
@@ -97,7 +115,7 @@ class DatabaseService {
       DocumentSnapshot documentSnapshot) {
     return IngredientData(
       id: int.parse(documentSnapshot.id),
-      quantity: documentSnapshot.data()['quantity'].toString(),
+      quantity: documentSnapshot.data()['quantity'].toDouble(),
       unit: documentSnapshot.data()['unit'],
       name: documentSnapshot.data()['name'],
     );

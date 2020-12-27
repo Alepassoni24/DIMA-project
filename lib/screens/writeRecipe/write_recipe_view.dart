@@ -5,11 +5,12 @@ import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
 import 'package:dima_project/screens/writeRecipe/write_step_view.dart';
-import 'package:dima_project/shared/add_image_button.dart';
+import 'package:dima_project/screens/writeRecipe/add_image_button.dart';
 import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/section_divider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as Path;
@@ -152,6 +153,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   Future<String> sendRecipe(RecipeData recipeData) async {
     DocumentReference docRef =
       await FirebaseFirestore.instance.collection('recipe').add({
+        'author': FirebaseAuth.instance.currentUser.uid,
         'title': recipeData.title,
         'subtitle': recipeData.subtitle,
         'description': recipeData.description,
@@ -203,8 +205,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   void setRecipeTitle(String text) => setState(() => _recipeData.title = text);
   void setRecipeSubtitle(String text) => setState(() => _recipeData.subtitle = text);
   void setRecipeDescription(String text) => setState(() => _recipeData.description = text);
-  void setRecipeTime(String text) => setState(() => _recipeData.time = text);
-  void setRecipeServings(String text) => setState(() => _recipeData.servings = text);
+  void setRecipeTime(String text) => setState(() => _recipeData.time = int.tryParse(text) ?? 0);
+  void setRecipeServings(String text) => setState(() => _recipeData.servings = int.tryParse(text) ?? 0);
   void setRecipeDifficulty(int val) => setState(() => _recipeData.difficulty = val);
   void setRecipeValidate() => setState(() => _recipeData.validate = true);
 
@@ -217,14 +219,14 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   
   // Ingredient setters
   void addIngredient() => setState(() =>
-    _ingredientsData.add(IngredientData(id: _ingredientsData.length+1, quantity: "", unit: "", name: "")));
-  void setIngredientQuantity(int id, String text) => setState(() => _ingredientsData[id-1].quantity = text);
+    _ingredientsData.add(IngredientData(id: _ingredientsData.length+1)));
+  void setIngredientQuantity(int id, String text) => setState(() => _ingredientsData[id-1].quantity = double.tryParse(text) ?? 0.0);
   void setIngredientUnit(int id, String text) => setState(() => _ingredientsData[id-1].unit = text);
   void setIngredientName(int id, String text) => setState(() => _ingredientsData[id-1].name = text);
 
   // Step setters
   void addStep() => setState(() =>
-    _stepsData.add(StepData(id: _stepsData.length+1, title: "", description: "", imageURL: "")));
+    _stepsData.add(StepData(id: _stepsData.length+1)));
   void setStepTitle(int id, String text) => setState(() => _stepsData[id-1].title = text);
   void setStepDescription(int id, String text) => setState(() => _stepsData[id-1].description = text);
   Function(File) setStepImageFile(int id) => (File image) => setState(() => _stepsData[id].imageFile = image);
@@ -252,7 +254,7 @@ class TimeRow extends StatelessWidget {
           // Form for recipe time
           Flexible(
             flex: 2,
-            child: TextFormFieldShort("30", recipeData.time, setRecipeTime, NumberFieldValidator.validate),
+            child: TextFormFieldShort("30", recipeData.time == null ? "" : recipeData.time.toString(), setRecipeTime, NumberFieldValidator.validate),
             fit: FlexFit.tight,
           ),
           Flexible(
@@ -287,7 +289,7 @@ class ServingsRow extends StatelessWidget {
           // Form for recipe servings
           Flexible(
             flex: 2,
-            child: TextFormFieldShort("4", recipeData.servings, setRecipeServings, NumberFieldValidator.validate),
+            child: TextFormFieldShort("4", recipeData.servings == null ? "" : recipeData.servings.toString(), setRecipeServings, NumberFieldValidator.validate),
             fit: FlexFit.tight,
           ),
           Flexible(
@@ -302,10 +304,6 @@ class ServingsRow extends StatelessWidget {
 }
 
 class Difficulty extends StatelessWidget {
-
-  final List<Color> colors = [Colors.yellow, Colors.orange, Colors.red];
-  final Color baseColor = Colors.grey;
-
   final RecipeData recipeData;
   final Function(int) setDifficulty;
 
@@ -332,7 +330,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: colors[recipeData.difficulty],
+                color: difficultyColors[recipeData.difficulty],
               ),
             ),
           ),
@@ -345,7 +343,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: recipeData.difficulty >= 1 ? colors[recipeData.difficulty] : baseColor,
+                color: recipeData.difficulty >= 1 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor,
               ),
             ),
           ),
@@ -358,7 +356,7 @@ class Difficulty extends StatelessWidget {
               child: Image(
                 image: AssetImage("assets/chef_hat.png"),
                 height: 50,
-                color: recipeData.difficulty >= 2 ? colors[recipeData.difficulty] : baseColor,
+                color: recipeData.difficulty >= 2 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor,
               ),
             ),
           ),

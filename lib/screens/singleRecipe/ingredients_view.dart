@@ -2,6 +2,7 @@ import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
+import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
 class IngredientsView extends StatelessWidget {
@@ -47,7 +48,7 @@ class IngredientView extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(ingredientData.quantity + " ", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(Utils.truncateDouble(ingredientData.quantity) + " ", style: TextStyle(fontWeight: FontWeight.bold)),
             Text(ingredientData.unit + " ", style: TextStyle(fontWeight: FontWeight.bold)),
             Text(ingredientData.name),
           ]

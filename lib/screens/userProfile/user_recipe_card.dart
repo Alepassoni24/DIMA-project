@@ -48,7 +48,7 @@ class UserRecipeCard extends StatelessWidget {
 //class for the title of the recipe card
 class TitleListTile extends StatelessWidget {
   final String cardTitle;
-  final String cardRating;
+  final double cardRating;
   final DateTime dateOfSubmission;
   final String numOfReviwes;
 
@@ -100,7 +100,7 @@ class TitleListTile extends StatelessWidget {
               width: 10,
             ),
             Text(
-              cardRating,
+              cardRating.toStringAsFixed(1),
               style: TextStyle(
                 color: Colors.grey[800],
               ),

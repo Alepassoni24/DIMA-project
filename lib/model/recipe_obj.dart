@@ -4,13 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipeData {
   String recipeId;
+  String authorId;
   String title;
   String subtitle;
   String description;
   String imageURL;
-  String rating;
-  String time;
-  String servings;
+  double rating;
+  int time;
+  int servings;
   Timestamp submissionTime;
   int difficulty;
   String category;
@@ -23,6 +24,7 @@ class RecipeData {
   
   RecipeData({
     this.recipeId,
+    this.authorId,
     this.title,
     this.subtitle,
     this.description,
@@ -42,7 +44,7 @@ class RecipeData {
 
 class IngredientData {
   int id;
-  String quantity;
+  double quantity;
   String unit;
   String name;
 

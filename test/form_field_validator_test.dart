@@ -41,4 +41,19 @@ void main() {
     var result = UsernameFieldValidator.validate('12345678901234567890');
     expect(result, null);
   });
+
+  test('9 - Number field with numbers return null', () {
+    var result = NumberFieldValidator.validate('230894673');
+    expect(result, null);
+  });
+
+  test('10 - Number field with characters return error string', () {
+    var result = NumberFieldValidator.validate('23089a4673');
+    expect(result, 'Enter a number');
+  });
+
+  test('11 - Number field with a double returns null', () {
+    var result = NumberFieldValidator.validate('23.8946');
+    expect(result, null);
+  });
 }

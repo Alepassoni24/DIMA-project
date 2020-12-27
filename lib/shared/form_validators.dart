@@ -26,7 +26,7 @@ class UsernameFieldValidator {
 //validator for number fields in order to check that they are a valid number
 class NumberFieldValidator {
   static String validate(String value) {
-    return int.tryParse(value) == null ? 'Enter a number' : null;
+    return int.tryParse(value) == null && double.tryParse(value) == null ? 'Enter a number' : null;
   }
 }
 
@@ -42,8 +42,8 @@ class TitleFieldValidator {
 //validator for subtitle fields in order to check that they are not empty
 class SubtitleFieldValidator {
   static String validate(String value) {
-    return (value == null || value.isEmpty || value.length > 20)
-      ? 'Enter a subtitle (max 20 char)'
+    return (value == null || value.isEmpty || value.length > 50)
+      ? 'Enter a subtitle (max 50 char)'
       : null;
   }
 }
