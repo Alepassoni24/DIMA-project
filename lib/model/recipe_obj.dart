@@ -19,6 +19,7 @@ class RecipeData {
   bool isVegetarian;
   bool isGlutenFree;
   bool isLactoseFree;
+  int reviewNumber;
   File imageFile;
   bool validate = false;
   
@@ -39,6 +40,7 @@ class RecipeData {
     this.isVegetarian = false,
     this.isGlutenFree = false,
     this.isLactoseFree = false,
+    this.reviewNumber = 0,
   });
 }
 
