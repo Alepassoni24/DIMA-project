@@ -90,12 +90,19 @@ class DatabaseService {
     );
   }
 
-  //get stream of last num recipes
-  Stream<QuerySnapshot> getLastRecipes(int num) {
+  //get query of last num recipes
+  Query getLastRecipes(int num) {
     return recipeCollection
         .orderBy('submissionTime', descending: true)
-        .limit(num)
-        .snapshots();
+        .limit(num);
+  }
+
+  //get query of last num recipes after submissionTime
+  Query getNextLastRecipes(int num, Timestamp submissionTime) {
+    return recipeCollection
+        .orderBy('submissionTime', descending: true)
+        .where('submissionTime', isLessThan: submissionTime)
+        .limit(num);
   }
 
   //get ingredients stream from a recipe id
