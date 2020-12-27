@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
+import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/screens/singleRecipe/ingredients_view.dart';
 import 'package:dima_project/screens/singleRecipe/steps_view.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/section_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +32,8 @@ class RecipeView extends StatelessWidget{
           padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
           children: [
             MainPhoto(recipeData.imageURL),
+            SectionDivider(),
+            AuthorImage(databaseService, recipeData.authorId),
             SectionDivider(),
             Description(recipeData.description),
             SectionDivider(),
@@ -110,6 +115,41 @@ class MainPhoto extends StatelessWidget {
           image: new NetworkImage(imageURL),
         )
       ),
+    );
+  }
+}
+
+class AuthorImage extends StatelessWidget {
+  final DatabaseService databaseService;
+  final String authorId;
+
+  AuthorImage(this.databaseService, this.authorId);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: databaseService.getUser(authorId),
+      builder: (context, snapshot) {
+        if (snapshot.hasError)
+          return Text('Something went wrong');
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Loading();
+        if (!snapshot.hasData)
+          return Text('User does not exists');
+        
+        final UserData user = databaseService.userDataFromSnapshot(snapshot.data);
+
+        return new Row(
+          children: [
+            Text(user.username, style: titleStyle),
+            Spacer(),
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(user.profilePhotoURL),
+            ),
+          ],
+        );
+      }
     );
   }
 }

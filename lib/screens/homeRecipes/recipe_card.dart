@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
+import 'package:dima_project/model/user_obj.dart';
+import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
+import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 //The recipe must be obtained from a query to the database
@@ -21,7 +25,7 @@ class RecipeCard extends StatelessWidget{
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              TitleListTile(recipeData.title, recipeData.subtitle, recipeData.rating),
+              TitleListTile(recipeData),
               ImageContainer(recipeData.imageURL),
               SizedBox(height: 5),
               BottomRow(recipeData),
@@ -37,30 +41,46 @@ class RecipeCard extends StatelessWidget{
   }
 }
 
-// This ListTile contains the authore image and the recipe title, subtitle, rating
+// This ListTile contains the author profile image and the recipe title, subtitle, rating
 class TitleListTile extends StatelessWidget {
-  final String cardTitle;
-  final String cardSubtitle;
-  final double cardRating;
+  final DatabaseService databaseService = new DatabaseService();
+  final RecipeData recipeData;
 
-  TitleListTile(this.cardTitle, this.cardSubtitle, this.cardRating);
+  TitleListTile(this.recipeData);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.account_circle_outlined), // TODO: Change icon with author avatar
-      title: Text(cardTitle),
-      subtitle: Text(cardSubtitle),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(cardRating.toStringAsFixed(1)),
-          Icon(
-            Icons.star_half,
-            color: Colors.orange[400],
+    return StreamBuilder<DocumentSnapshot>(
+      stream: databaseService.getUser(recipeData.authorId),
+      builder: (context, snapshot) {
+        if (snapshot.hasError)
+          return Text('Something went wrong');
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Loading();
+        if (!snapshot.hasData)
+          return Text('User does not exists');
+        
+        final UserData user = databaseService.userDataFromSnapshot(snapshot.data);
+        
+        return ListTile(
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: NetworkImage(user.profilePhotoURL),
           ),
-        ],
-      ),
+          title: Text(recipeData.title),
+          subtitle: Text(recipeData.subtitle),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(recipeData.rating.toStringAsFixed(1)),
+              Icon(
+                Icons.star_half,
+                color: Colors.orange[400],
+              ),
+            ],
+          ),
+        );
+      }
     );
   }
 }

@@ -284,7 +284,7 @@ class _UserSettingsState extends State<UserSettings> {
   //Function to verify if the new provided passwords match and update in onto the database
   Future validateAndUpdatePassword() async {
     //get the current user from auth service
-    User user = await FirebaseAuth.instance.currentUser;
+    User user = FirebaseAuth.instance.currentUser;
     if (newPassword == repeatedNewPassword) {
       //update password and manage errors and for each outcome the widget state
       user

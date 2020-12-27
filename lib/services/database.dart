@@ -42,9 +42,9 @@ class DatabaseService {
   }
 
   //get user data from snapshot
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
-      uid: uid,
+      uid: snapshot.id,
       username: snapshot.get('username'),
       recipeNumber: int.parse(snapshot.get('recipeNumber')),
       rating: double.parse(snapshot.get('rating')),
@@ -56,7 +56,12 @@ class DatabaseService {
 
   //get user doc stream
   Stream<UserData> get userData {
-    return userCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+    return userCollection.doc(uid).snapshots().map(userDataFromSnapshot);
+  }
+
+  //get user stream from a user id
+  Stream<DocumentSnapshot> getUser(String userId) {
+    return userCollection.doc(userId).snapshots();
   }
 
   //get recipe stream
@@ -68,6 +73,7 @@ class DatabaseService {
   RecipeData recipeDataFromSnapshot(DocumentSnapshot documentSnapshot) {
     return RecipeData(
       recipeId: documentSnapshot.id,
+      authorId: documentSnapshot.data()['author'],
       title: documentSnapshot.data()['title'],
       subtitle: documentSnapshot.data()['subtitle'],
       description: documentSnapshot.data()['description'],

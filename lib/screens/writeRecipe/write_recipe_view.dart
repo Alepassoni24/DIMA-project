@@ -10,6 +10,7 @@ import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/section_divider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as Path;
@@ -152,6 +153,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   Future<String> sendRecipe(RecipeData recipeData) async {
     DocumentReference docRef =
       await FirebaseFirestore.instance.collection('recipe').add({
+        'author': FirebaseAuth.instance.currentUser.uid,
         'title': recipeData.title,
         'subtitle': recipeData.subtitle,
         'description': recipeData.description,
