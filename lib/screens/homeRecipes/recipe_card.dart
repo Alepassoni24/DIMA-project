@@ -8,9 +8,9 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 //The recipe must be obtained from a query to the database
-class RecipeCard extends StatelessWidget{
+class RecipeCard extends StatelessWidget {
   final RecipeData recipeData;
-  
+
   RecipeCard(this.recipeData);
 
   @override
@@ -51,37 +51,35 @@ class TitleListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: databaseService.getUser(recipeData.authorId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError)
-          return Text('Something went wrong');
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Loading();
-        if (!snapshot.hasData)
-          return Text('User does not exists');
-        
-        final UserData user = databaseService.userDataFromSnapshot(snapshot.data);
-        
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(user.profilePhotoURL),
-          ),
-          title: Text(recipeData.title),
-          subtitle: Text(recipeData.subtitle),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(recipeData.rating.toStringAsFixed(1)),
-              Icon(
-                Icons.star_half,
-                color: Colors.orange[400],
-              ),
-            ],
-          ),
-        );
-      }
-    );
+        stream: databaseService.getUser(recipeData.authorId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Something went wrong');
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Loading();
+          if (!snapshot.hasData) return Text('User does not exists');
+
+          final UserData user =
+              databaseService.userDataFromSnapshot(snapshot.data);
+
+          return ListTile(
+            leading: CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(user.profilePhotoURL),
+            ),
+            title: Text(recipeData.title),
+            subtitle: Text(recipeData.subtitle),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(recipeData.rating.toStringAsFixed(1)),
+                Icon(
+                  Icons.star_half,
+                  color: Colors.orange[400],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
 
@@ -96,12 +94,11 @@ class ImageContainer extends StatelessWidget {
     return Container(
       height: 200,
       decoration: new BoxDecoration(
-        image: new DecorationImage(
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.center,
-          image: new NetworkImage(cardImageURL),
-        )
-      ),
+          image: new DecorationImage(
+        fit: BoxFit.fitWidth,
+        alignment: Alignment.center,
+        image: new NetworkImage(cardImageURL),
+      )),
     );
   }
 }
@@ -117,20 +114,37 @@ class BottomRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(width: 10),
-        recipeData.isVegan ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+        recipeData.isVegan
+            ? Icon(AppIcons.vegan, size: 25)
+            : SizedBox(width: 25),
         SizedBox(width: 10),
-        recipeData.isVegetarian ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+        recipeData.isVegetarian
+            ? Icon(AppIcons.vegan, size: 25)
+            : SizedBox(width: 25),
         SizedBox(width: 10),
-        recipeData.isGlutenFree ? Icon(AppIcons.gluten_free, size: 25) : SizedBox(width: 25),
+        recipeData.isGlutenFree
+            ? Icon(AppIcons.gluten_free, size: 25)
+            : SizedBox(width: 25),
         SizedBox(width: 10),
-        recipeData.isLactoseFree ? Icon(AppIcons.lactose_free, size: 25) : SizedBox(width: 25),
+        recipeData.isLactoseFree
+            ? Icon(AppIcons.lactose_free, size: 25)
+            : SizedBox(width: 25),
         SizedBox(width: 10),
         Spacer(),
-        Icon(AppIcons.chef_hat, size: 25, color: difficultyColors[recipeData.difficulty]),
+        Icon(AppIcons.chef_hat,
+            size: 25, color: difficultyColors[recipeData.difficulty]),
         SizedBox(width: 10),
-        Icon(AppIcons.chef_hat, size: 25, color: recipeData.difficulty >= 1 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor),
+        Icon(AppIcons.chef_hat,
+            size: 25,
+            color: recipeData.difficulty >= 1
+                ? difficultyColors[recipeData.difficulty]
+                : difficultyBaseColor),
         SizedBox(width: 10),
-        Icon(AppIcons.chef_hat, size: 25, color: recipeData.difficulty >= 2 ? difficultyColors[recipeData.difficulty] : difficultyBaseColor),
+        Icon(AppIcons.chef_hat,
+            size: 25,
+            color: recipeData.difficulty >= 2
+                ? difficultyColors[recipeData.difficulty]
+                : difficultyBaseColor),
         SizedBox(width: 10),
       ],
     );
