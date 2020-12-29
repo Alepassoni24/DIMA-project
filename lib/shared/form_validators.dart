@@ -60,8 +60,8 @@ class UnitFieldValidator {
 //validator for description fields in order to check that they are not empty
 class DescriptionFieldValidator {
   static String validate(String value) {
-    return (value == null || value.isEmpty)
-      ? 'Enter a description'
+    return (value == null || value.isEmpty || value.length > 1000)
+      ? 'Enter a description (max 1000 char)'
       : null;
   }
 }

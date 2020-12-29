@@ -13,6 +13,7 @@ const textInputDecoration = InputDecoration(
 // Text styles for different types of text widgets
 const TextStyle titleStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
 const TextStyle subtitleStyle = TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
+const TextStyle descriptionStyle = TextStyle(fontSize: 17.5);
 final TextStyle errorStyle = TextStyle(fontSize: 12, color: Colors.red[700]);
 
 // List of possible categories for a recipe
