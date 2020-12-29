@@ -9,67 +9,110 @@ class _SearchScreenState extends State<SearchScreen> {
   RangeValues _currentRangeValues = const RangeValues(0, 240);
   bool isVegan = false;
   bool isVegetarian = false;
+  bool isGlutenFree = false;
+  bool isLactoseFree = false;
 
   void _showFilterPanel() {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                RangeSlider(
-                  values: _currentRangeValues,
-                  min: 0,
-                  max: 240,
-                  divisions: 5,
-                  labels: RangeLabels(
-                    _currentRangeValues.start.round().toString(),
-                    _currentRangeValues.end.round().toString(),
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Preparing time (min): '),
+                  RangeSlider(
+                    values: _currentRangeValues,
+                    min: 0,
+                    max: 240,
+                    divisions: 240,
+                    labels: RangeLabels(
+                      _currentRangeValues.start.round().toString(),
+                      _currentRangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _currentRangeValues = values;
+                      });
+                      setModalState(() {
+                        _currentRangeValues = values;
+                      });
+                    },
                   ),
-                  onChanged: (RangeValues values) {
-                    setState(() {
-                      _currentRangeValues = values;
-                    });
-                  },
-                ),
-                Row(
-                  children: [
-                    Checkbox(
-                        value: isVegan,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isVegan = value;
-                          });
-                        }),
-                    Checkbox(
-                        value: isVegetarian,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isVegetarian = value;
-                          });
-                        }),
-                  ],
-                ),
-                FlatButton(
-                  onPressed: () =>
-                      Navigator.of(context).pop(), //TODO function to query
-                  child: Row(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Icons.filter_alt),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          'Filter',
-                        ),
-                      ),
+                      Checkbox(
+                          value: isVegan,
+                          onChanged: (value) {
+                            setState(() => isVegan = value);
+                            setModalState(() {
+                              isVegan = value;
+                            });
+                          }),
+                      Text('Vegan'),
+                      Checkbox(
+                          value: isVegetarian,
+                          onChanged: (value) {
+                            setState(() => isVegetarian = value);
+                            setModalState(() {
+                              isVegetarian = value;
+                            });
+                          }),
+                      Text('Vegetarian'),
                     ],
                   ),
-                ),
-              ],
-            ),
-          );
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                          value: isGlutenFree,
+                          onChanged: (value) {
+                            setState(() => isGlutenFree = value);
+                            setModalState(() {
+                              isGlutenFree = value;
+                            });
+                          }),
+                      Text('Gluten free'),
+                      Checkbox(
+                          value: isLactoseFree,
+                          onChanged: (value) {
+                            setState(() => isLactoseFree = value);
+                            setModalState(() {
+                              isLactoseFree = value;
+                            });
+                          }),
+                      Text('Lactose free'),
+                    ],
+                  ),
+                  FlatButton(
+                    color: Colors.orange[400],
+                    onPressed: () =>
+                        Navigator.of(context).pop(), //TODO function to query
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.filter_alt,
+                          color: Colors.grey[800],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            'Filter',
+                            style: TextStyle(color: Colors.grey[800]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
         });
   }
 
