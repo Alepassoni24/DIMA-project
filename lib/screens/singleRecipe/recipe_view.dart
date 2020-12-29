@@ -32,7 +32,7 @@ class RecipeView extends StatelessWidget{
       ),
       body: Center(
         child: ListView(
-          padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
+          padding: EdgeInsets.all(10),
           children: [
             MainPhoto(recipeData.imageURL),
             SectionDivider(),
@@ -56,6 +56,7 @@ class RecipeView extends StatelessWidget{
             IngredientsView(databaseService, recipeData.recipeId),
             SectionDivider(),
             StepsView(databaseService, recipeData.recipeId),
+            SectionDivider(),
             if (recipeData.authorId != FirebaseAuth.instance.currentUser.uid)
               ...[
                 WriteReviewView(recipeData),

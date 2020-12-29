@@ -40,7 +40,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
+            padding: EdgeInsets.all(10),
             child: Column(
               children: [
                 AddImageButton(setFatherImage: setRecipeImage, image: _recipeData.imageFile, height: 300, width: double.infinity, elevation: 5, borderRadius: 5),
@@ -78,17 +78,18 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     List<Widget> _ingredients = [];
 
     // Title
-    _ingredients.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Ingredients:", style: titleStyle)));
+    _ingredients.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Ingredients", style: titleStyle)));
 
     // All ingredients
     for(int i = 0; i < _ingredientsData.length; i++) {
       _ingredients.add(WriteIngredientView(_ingredientsData[i], setIngredientQuantity, setIngredientUnit, setIngredientName));
     }
+    _ingredients.add(SizedBox(height: 5));
 
     // Add button
     _ingredients.add(Padding(
       padding: EdgeInsets.only(left: 2.5, right: 2.5),
-      child: FlatButton(child: Icon(Icons.add_outlined), onPressed: addIngredient)
+      child: FlatButton(child: Icon(Icons.add_outlined), minWidth: double.infinity, onPressed: addIngredient)
     ));
     return _ingredients;
   }
@@ -97,19 +98,18 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     List<Widget> _steps = [];
     
     // Title
-    _steps.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Procedure:", style: titleStyle)));
+    _steps.add(Padding(padding: EdgeInsets.only(left: 2.5, right: 2.5), child: Text("Procedure", style: titleStyle)));
 
     // All steps with a divider but the last
-    for(int i = 0; i < _stepsData.length-1; i++) {
+    for(int i = 0; i < _stepsData.length; i++) {
       _steps.add(WriteStepView(_stepsData[i], setStepTitle, setStepDescription, setStepImageFile(i)));
-      _steps.add(SectionDivider());
+      _steps.add(SizedBox(height: 5));
     }
-    _steps.add(WriteStepView(_stepsData[_stepsData.length-1], setStepTitle, setStepDescription, setStepImageFile(_stepsData.length-1)));
 
     // Add button
     _steps.add(Padding(
       padding: EdgeInsets.only(left: 2.5, right: 2.5),
-      child: FlatButton(child: Icon(Icons.add_outlined), onPressed: addStep),
+      child: FlatButton(child: Icon(Icons.add_outlined), minWidth: double.infinity, onPressed: addStep),
     ));
     return _steps;
   }

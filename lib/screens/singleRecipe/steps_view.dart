@@ -3,7 +3,6 @@ import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/circle_number.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
-import 'package:dima_project/shared/section_divider.dart';
 import 'package:flutter/material.dart';
 
 class StepsView extends StatelessWidget {
@@ -26,7 +25,7 @@ class StepsView extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Procedure:", style: titleStyle)
+              child: Text("Procedure", style: titleStyle)
             ),
             SizedBox(height: 10),
             ...snapshot.data.documents.map<Widget>((document) =>
@@ -61,8 +60,7 @@ class StepView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(stepData.description, style: TextStyle(fontSize: 18)),
         ),
-        SectionDivider(),
-        SizedBox(height: 1),
+        SizedBox(height: 10),
       ]
     );
   }
