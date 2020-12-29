@@ -1,4 +1,5 @@
 import 'package:dima_project/screens/homeRecipes/latest_recipes.dart';
+import 'package:dima_project/screens/search/search_screen.dart';
 import 'package:dima_project/screens/userProfile/user_profile.dart';
 import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class HomeState extends State<Home> {
   PageController _pageController;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _pageController = PageController(initialPage: _pageIndex);
   }
@@ -42,14 +43,7 @@ class HomeState extends State<Home> {
   static List<Widget> _widgetOptions = <Widget>[
     // Here we must insert the five widgets that characterize the app instead of the dummy Text widgets
     LatestRecipes(),
-    Scaffold(
-      backgroundColor: Colors.orange[50],
-      appBar: AppBar(
-        backgroundColor: Colors.orange[400],
-        elevation: 0.0,
-        title: Text('Search for recipes'),
-      ),
-    ),
+    SearchScreen(),
     WriteRecipeView(),
     Scaffold(
       backgroundColor: Colors.orange[50],
@@ -100,6 +94,7 @@ class HomeState extends State<Home> {
   }
 
   void onTabTapped(int index) {
-    this._pageController.animateToPage(index, duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
+    this._pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 }

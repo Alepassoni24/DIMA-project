@@ -246,6 +246,7 @@ class _UserSettingsState extends State<UserSettings> {
     });
   }
 
+//TODO fix it
   //Function to upload the new profile photo onto the storage
   Future uploadImage() async {
     //create a referenco fot the image into the storage
@@ -285,27 +286,19 @@ class _UserSettingsState extends State<UserSettings> {
   Future validateAndUpdatePassword() async {
     //get the current user from auth service
     User user = await FirebaseAuth.instance.currentUser;
-    print(newPassword + ' = ' + repeatedNewPassword);
-    /*if (newPassword == repeatedNewPassword) {
+    String message;
+    if (newPassword == repeatedNewPassword) {
       //update password and manage errors and for each outcome the widget state
-      user
-          .updatePassword(newPassword)
-          .then((_) => {
-                this.setState(() {
-                  error = null;
-                  newPassword = null;
-                  repeatedNewPassword = null;
-                })
-              })
-          .catchError((onError) {
-        setState(() {
-          error = 'something went wrong';
-        });
+      user.updatePassword(newPassword).then((_) => {}).catchError((onError) {
+        message = 'something went wrong';
       });
     } else {
-      setState(() {
-        error = 'passwords don\'t match';
-      });
-    }*/
+      message = 'passwords don\'t match';
+    }
+    setState(() {
+      error = message;
+      newPassword = null;
+      repeatedNewPassword = null;
+    });
   }
 }
