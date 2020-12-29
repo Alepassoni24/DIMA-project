@@ -7,10 +7,19 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   RangeValues _currentRangeValues = const RangeValues(0, 240);
-  bool isVegan = false;
-  bool isVegetarian = false;
-  bool isGlutenFree = false;
-  bool isLactoseFree = false;
+  final List<String> course = [
+    'Any',
+    'First course',
+    'Second course',
+    'Single course',
+    'Side dish',
+    'Dessert'
+  ];
+  bool _isVegan = false;
+  bool _isVegetarian = false;
+  bool _isGlutenFree = false;
+  bool _isLactoseFree = false;
+  String _category;
 
   void _showFilterPanel() {
     showModalBottomSheet(
@@ -23,7 +32,23 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Preparing time (min): '),
+                  Text('Select course:'),
+                  DropdownButtonFormField(
+                    value: _category ?? 'Any',
+                    items: course.map((course) {
+                      return DropdownMenuItem(
+                        value: course,
+                        child: Text('$course'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() => _category = value);
+                      setModalState(() {
+                        _category = value;
+                      });
+                    },
+                  ),
+                  Text('Preparing time (min):'),
                   RangeSlider(
                     values: _currentRangeValues,
                     min: 0,
@@ -46,20 +71,20 @@ class _SearchScreenState extends State<SearchScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Checkbox(
-                          value: isVegan,
+                          value: _isVegan,
                           onChanged: (value) {
-                            setState(() => isVegan = value);
+                            setState(() => _isVegan = value);
                             setModalState(() {
-                              isVegan = value;
+                              _isVegan = value;
                             });
                           }),
                       Text('Vegan'),
                       Checkbox(
-                          value: isVegetarian,
+                          value: _isVegetarian,
                           onChanged: (value) {
-                            setState(() => isVegetarian = value);
+                            setState(() => _isVegetarian = value);
                             setModalState(() {
-                              isVegetarian = value;
+                              _isVegetarian = value;
                             });
                           }),
                       Text('Vegetarian'),
@@ -69,20 +94,20 @@ class _SearchScreenState extends State<SearchScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Checkbox(
-                          value: isGlutenFree,
+                          value: _isGlutenFree,
                           onChanged: (value) {
-                            setState(() => isGlutenFree = value);
+                            setState(() => _isGlutenFree = value);
                             setModalState(() {
-                              isGlutenFree = value;
+                              _isGlutenFree = value;
                             });
                           }),
                       Text('Gluten free'),
                       Checkbox(
-                          value: isLactoseFree,
+                          value: _isLactoseFree,
                           onChanged: (value) {
-                            setState(() => isLactoseFree = value);
+                            setState(() => _isLactoseFree = value);
                             setModalState(() {
-                              isLactoseFree = value;
+                              _isLactoseFree = value;
                             });
                           }),
                       Text('Lactose free'),
