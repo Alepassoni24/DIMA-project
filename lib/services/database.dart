@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
+import 'package:dima_project/model/review_obj.dart';
 import 'package:dima_project/model/user_obj.dart';
 
 class DatabaseService {
@@ -143,5 +144,36 @@ class DatabaseService {
         .where('author', isEqualTo: uid)
         .orderBy('submissionTime', descending: true)
         .snapshots();
+  }
+
+  //get review stream from a recipe id
+  Stream<QuerySnapshot> getReviews(String recipeId) {
+    return recipeCollection.doc(recipeId).collection('review').snapshots();
+  }
+
+  //get steps data from snapshot
+  ReviewData reviewDataFromSnapshot(DocumentSnapshot documentSnapshot) {
+    return ReviewData(
+      reviewId: documentSnapshot.id,
+      authorId: documentSnapshot.data()['author'],
+      comment: documentSnapshot.data()['comment'],
+      rating: documentSnapshot.data()['rating'],
+      submissionTime: documentSnapshot.data()['submissionTime'],
+    );
+  }
+
+  //get query of last num reviews
+  Query getLastReviews(String recipeId, int num) {
+    return recipeCollection.doc(recipeId).collection('review')
+        .orderBy('submissionTime', descending: true)
+        .limit(num);
+  }
+
+  //get query of last num reviews after submissionTime
+  Query getNextLastReviews(String recipeId, int num, Timestamp submissionTime) {
+    return recipeCollection.doc(recipeId).collection('review')
+        .orderBy('submissionTime', descending: true)
+        .where('submissionTime', isLessThan: submissionTime)
+        .limit(num);
   }
 }

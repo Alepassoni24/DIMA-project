@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/model/user_obj.dart';
+import 'package:dima_project/screens/review/review_view.dart';
+import 'package:dima_project/screens/review/write_review_view.dart';
 import 'package:dima_project/screens/singleRecipe/ingredients_view.dart';
 import 'package:dima_project/screens/singleRecipe/steps_view.dart';
 import 'package:dima_project/services/database.dart';
@@ -8,6 +10,7 @@ import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/section_divider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RecipeView extends StatelessWidget{
@@ -53,6 +56,13 @@ class RecipeView extends StatelessWidget{
             IngredientsView(databaseService, recipeData.recipeId),
             SectionDivider(),
             StepsView(databaseService, recipeData.recipeId),
+            if (recipeData.authorId != FirebaseAuth.instance.currentUser.uid)
+              ...[
+                WriteReviewView(recipeData),
+                SectionDivider(),
+              ],
+            Text("Ratings and reviews", style: titleStyle),
+            ReviewView(recipeData),
           ],
         ),
       ),
@@ -165,7 +175,7 @@ class Description extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         recipeDescription,
-        style: TextStyle(fontSize: 18),
+        style: descriptionStyle,
       )
     );
   }
