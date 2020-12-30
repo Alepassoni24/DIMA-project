@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/model/review_obj.dart';
 import 'package:dima_project/model/user_obj.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseService {
   //unique id of the current user
@@ -164,16 +165,42 @@ class DatabaseService {
 
   //get query of last num reviews
   Query getLastReviews(String recipeId, int num) {
-    return recipeCollection.doc(recipeId).collection('review')
+    return recipeCollection
+        .doc(recipeId)
+        .collection('review')
         .orderBy('submissionTime', descending: true)
         .limit(num);
   }
 
   //get query of last num reviews after submissionTime
   Query getNextLastReviews(String recipeId, int num, Timestamp submissionTime) {
-    return recipeCollection.doc(recipeId).collection('review')
+    return recipeCollection
+        .doc(recipeId)
+        .collection('review')
         .orderBy('submissionTime', descending: true)
         .where('submissionTime', isLessThan: submissionTime)
         .limit(num);
+  }
+
+  Query getFilteredRecipe(
+      String order,
+      int maxDifficulty,
+      RangeValues timing,
+      String course,
+      bool isVegan,
+      bool isVegetarian,
+      bool isGlutenFree,
+      bool isLactoseFree) {
+    CollectionReference query = recipeCollection
+        .orderBy(order, descending: true)
+        .where('difficulty', isLessThanOrEqualTo: maxDifficulty)
+        .where('time', isGreaterThanOrEqualTo: timing.start)
+        .where('time', isLessThanOrEqualTo: timing.end);
+    if (course != 'Any') query.where('category', isEqualTo: course);
+    if (isVegan) query.where('isVegan', isEqualTo: true);
+    if (isVegetarian) query.where('isVegetarian', isEqualTo: true);
+    if (isGlutenFree) query.where('isGlutenFree', isEqualTo: true);
+    if (isLactoseFree) query.where('isLactoseFree', isEqualTo: true);
+    return query.limit(10);
   }
 }

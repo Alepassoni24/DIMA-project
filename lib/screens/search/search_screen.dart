@@ -1,3 +1,6 @@
+import 'package:dima_project/model/recipe_obj.dart';
+import 'package:dima_project/screens/homeRecipes/recipe_card.dart';
+import 'package:dima_project/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dima_project/shared/constants.dart';
 
@@ -7,6 +10,21 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final List<RecipeData> recipesList = List();
+  final DatabaseService databaseService = new DatabaseService();
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge &&
+          scrollController.position.pixels != 0) {
+        //TODO fetchNextDocuments();
+      }
+    });
+  }
+
   RangeValues _currentRangeValues = const RangeValues(0, 240);
   final List<String> course = [
     'Any',
@@ -16,16 +34,18 @@ class _SearchScreenState extends State<SearchScreen> {
     'Side dish',
     'Dessert'
   ];
-  bool _filtered = false;
+  final List<String> ordering = ['submissionTime', 'rating'];
   bool _isVegan = false;
   bool _isVegetarian = false;
   bool _isGlutenFree = false;
   bool _isLactoseFree = false;
   String _category = 'Any';
+  String _orderBy = 'submissionTime';
   int _difficulty = 2;
 
   void _showFilterPanel() {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return StatefulBuilder(
@@ -37,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Select maimum difficulty:'),
+                    Text('Select maximum difficulty:'),
                     Row(
                       children: [
                         // Three chef hats to simbolize the difficulty
@@ -54,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             shape: CircleBorder(),
                             child: Image(
                               image: AssetImage("assets/chef_hat.png"),
-                              height: 50,
+                              height: 40,
                               color: difficultyColors[_difficulty],
                             ),
                           ),
@@ -72,7 +92,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             shape: CircleBorder(),
                             child: Image(
                               image: AssetImage("assets/chef_hat.png"),
-                              height: 50,
+                              height: 40,
                               color: _difficulty >= 1
                                   ? difficultyColors[_difficulty]
                                   : difficultyBaseColor,
@@ -92,7 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             shape: CircleBorder(),
                             child: Image(
                               image: AssetImage("assets/chef_hat.png"),
-                              height: 50,
+                              height: 40,
                               color: _difficulty >= 2
                                   ? difficultyColors[_difficulty]
                                   : difficultyBaseColor,
@@ -123,7 +143,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text('Preparing time range:'),
+                    Text('Preparing time range (minutes):'),
                     RangeSlider(
                       values: _currentRangeValues,
                       min: 0,
@@ -194,11 +214,41 @@ class _SearchScreenState extends State<SearchScreen> {
                         Text('Lactose free'),
                       ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text('Ordered by:'),
+                    DropdownButtonFormField(
+                      value: _orderBy,
+                      items: ordering.map((ordering) {
+                        return DropdownMenuItem(
+                          value: ordering,
+                          child: Text('$ordering'),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() => _orderBy = value);
+                        setModalState(() {
+                          _orderBy = value;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     FlatButton(
                       color: Colors.orange[400],
                       onPressed: () {
-                        setState(() => _filtered = true);
                         Navigator.of(context).pop();
+                        /*fetchFirstDocuments(
+                            _orderBy,
+                            _difficulty,
+                            _currentRangeValues,
+                            _category,
+                            _isVegan,
+                            _isVegetarian,
+                            _isGlutenFree,
+                            _isLactoseFree);*/
                       }, //TODO function to query
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -240,9 +290,51 @@ class _SearchScreenState extends State<SearchScreen> {
           )
         ],
       ),
-      body: !_filtered
-          ? Center(child: Text('Press filter to select recipes'))
-          : Container(),
+      body: recipesList.isEmpty
+          ? Center(
+              child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Press'),
+                Icon(
+                  Icons.filter_alt,
+                  color: Colors.grey[700],
+                ),
+                Text('to filter recipes'),
+              ],
+            ))
+          : ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              controller: scrollController,
+              padding: const EdgeInsets.all(5),
+              itemCount: recipesList.length,
+              itemBuilder: (context, index) {
+                return RecipeCard(recipesList[index]);
+              },
+            ),
     );
+  }
+
+  // Fetch first 10 documents
+  Future<void> fetchFirstDocuments(
+      String order,
+      int maxDifficulty,
+      RangeValues timing,
+      String course,
+      bool isVegan,
+      bool isVegetarian,
+      bool isGlutenFree,
+      bool isLactoseFree) async {
+    databaseService
+        .getFilteredRecipe(order, maxDifficulty, timing, course, isVegan,
+            isVegetarian, isGlutenFree, isLactoseFree)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        setState(() {
+          recipesList.add(databaseService.recipeDataFromSnapshot(element));
+        });
+      });
+    });
   }
 }
