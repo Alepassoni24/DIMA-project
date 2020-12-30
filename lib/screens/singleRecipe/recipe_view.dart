@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 
 class RecipeView extends StatelessWidget{
   final DatabaseService databaseService = new DatabaseService();
+  final ScrollController scrollController = new ScrollController();
   
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class RecipeView extends StatelessWidget{
       ),
       body: Center(
         child: ListView(
+          controller: scrollController,
           padding: EdgeInsets.all(10),
           children: [
             MainPhoto(recipeData.imageURL),
@@ -63,7 +65,7 @@ class RecipeView extends StatelessWidget{
                 SectionDivider(),
               ],
             Text("Ratings and reviews", style: titleStyle),
-            ReviewView(recipeData),
+            ReviewView(recipeData, scrollController),
           ],
         ),
       ),

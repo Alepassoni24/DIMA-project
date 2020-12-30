@@ -19,7 +19,8 @@ class LatestRecipesState extends State<LatestRecipes> {
     super.initState();
     fetchFirstDocuments();
     scrollController.addListener(() {
-      if (scrollController.position.atEdge && scrollController.position.pixels != 0) {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
         fetchNextDocuments();
       }
     });
@@ -28,24 +29,23 @@ class LatestRecipesState extends State<LatestRecipes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[50],
-      appBar: AppBar(
-        backgroundColor: Colors.orange[400],
-        elevation: 0.0,
-        title: Text('Home'),
-      ),
-      body: recipesList.isEmpty
-        ? Loading()
-        : ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          controller: scrollController,
-          padding: const EdgeInsets.all(5),
-          itemCount: recipesList.length,
-          itemBuilder: (context, index) {
-            return RecipeCard(recipesList[index]);
-          },
-        )
-    );
+        backgroundColor: Colors.orange[50],
+        appBar: AppBar(
+          backgroundColor: Colors.orange[400],
+          elevation: 0.0,
+          title: Text('Home'),
+        ),
+        body: recipesList.isEmpty
+            ? Loading()
+            : ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                padding: const EdgeInsets.all(5),
+                itemCount: recipesList.length,
+                itemBuilder: (context, index) {
+                  return RecipeCard(recipesList[index]);
+                },
+              ));
   }
 
   // Fetch first 10 documents
@@ -61,7 +61,10 @@ class LatestRecipesState extends State<LatestRecipes> {
 
   // Fetch next 10 documents
   Future<void> fetchNextDocuments() async {
-    databaseService.getNextLastRecipes(10, recipesList.last.submissionTime).get().then((value) {
+    databaseService
+        .getNextLastRecipes(10, recipesList.last.submissionTime)
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
         setState(() {
           recipesList.add(databaseService.recipeDataFromSnapshot(element));

@@ -182,6 +182,16 @@ class DatabaseService {
         .limit(num);
   }
 
+  //get the review of a certain user for a certain recipe (max 1 result)
+  Stream<QuerySnapshot> getReviewByAuthor(String recipeId, String authorId) {
+    return recipeCollection
+        .doc(recipeId)
+        .collection('review')
+        .where('author', isEqualTo: authorId)
+        .limit(1)
+        .snapshots();
+  }
+
   Query getFilteredRecipe(
       String order,
       int maxDifficulty,
