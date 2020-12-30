@@ -20,7 +20,9 @@ class WriteIngredientView extends StatelessWidget {
           flex: 3,
           child: TextFormFieldShort(
               "100",
-              Utils.truncateDouble(ingredientData.quantity),
+              ingredientData.quantity == null
+                  ? ""
+                  : ingredientData.quantity.toString(),
               (val) => setQuantity(ingredientData.id, val),
               NumberFieldValidator.validate),
           fit: FlexFit.tight,
