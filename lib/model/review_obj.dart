@@ -6,7 +6,7 @@ class ReviewData {
   String comment;
   int rating;
   Timestamp submissionTime;
-  
+
   ReviewData({
     this.reviewId,
     this.authorId,

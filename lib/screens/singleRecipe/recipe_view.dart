@@ -13,10 +13,10 @@ import 'package:dima_project/shared/section_divider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RecipeView extends StatelessWidget{
+class RecipeView extends StatelessWidget {
   final DatabaseService databaseService = new DatabaseService();
   final ScrollController scrollController = new ScrollController();
-  
+
   @override
   Widget build(BuildContext context) {
     final RecipeData recipeData = ModalRoute.of(context).settings.arguments;
@@ -44,11 +44,13 @@ class RecipeView extends StatelessWidget{
             SectionDivider(),
             Category(recipeData.category),
             SectionDivider(),
-            if (recipeData.isVegan || recipeData.isVegetarian || recipeData.isGlutenFree || recipeData.isLactoseFree)
-              ...[
-                Checkmarks(recipeData),
-                SectionDivider(),
-              ],
+            if (recipeData.isVegan ||
+                recipeData.isVegetarian ||
+                recipeData.isGlutenFree ||
+                recipeData.isLactoseFree) ...[
+              Checkmarks(recipeData),
+              SectionDivider(),
+            ],
             Difficulty(recipeData.difficulty),
             SectionDivider(),
             Time(recipeData.time),
@@ -59,11 +61,11 @@ class RecipeView extends StatelessWidget{
             SectionDivider(),
             StepsView(databaseService, recipeData.recipeId),
             SectionDivider(),
-            if (recipeData.authorId != FirebaseAuth.instance.currentUser.uid)
-              ...[
-                WriteReviewView(recipeData),
-                SectionDivider(),
-              ],
+            if (recipeData.authorId !=
+                FirebaseAuth.instance.currentUser.uid) ...[
+              WriteReviewView(recipeData),
+              SectionDivider(),
+            ],
             Text("Ratings and reviews", style: titleStyle),
             ReviewView(recipeData, scrollController),
           ],
@@ -74,7 +76,6 @@ class RecipeView extends StatelessWidget{
 }
 
 class SaveIcon extends StatefulWidget {
-
   @override
   SaveIconState createState() => SaveIconState();
 }
@@ -89,17 +90,17 @@ class SaveIconState extends State<SaveIcon> {
       onPressed: () {
         // TODO: Add actual behavior of the Save icon
         setState(() => {
-          if(icon == Icons.bookmark_outline)
-            icon = Icons.bookmark
-          else
-            icon = Icons.bookmark_outline});
+              if (icon == Icons.bookmark_outline)
+                icon = Icons.bookmark
+              else
+                icon = Icons.bookmark_outline
+            });
       },
     );
   }
 }
 
 class ShareIcon extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -121,13 +122,12 @@ class MainPhoto extends StatelessWidget {
     return Container(
       height: 300,
       decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        image: new DecorationImage(
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          image: new NetworkImage(imageURL),
-        )
-      ),
+          borderRadius: BorderRadius.circular(5),
+          image: new DecorationImage(
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            image: new NetworkImage(imageURL),
+          )),
     );
   }
 }
@@ -141,29 +141,27 @@ class AuthorImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: databaseService.getUser(authorId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError)
-          return Text('Something went wrong');
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Loading();
-        if (!snapshot.hasData)
-          return Text('User does not exists');
-        
-        final UserData user = databaseService.userDataFromSnapshot(snapshot.data);
+        stream: databaseService.getUser(authorId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Something went wrong');
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Loading();
+          if (!snapshot.hasData) return Text('User does not exists');
 
-        return new Row(
-          children: [
-            Text(user.username, style: titleStyle),
-            Spacer(),
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(user.profilePhotoURL),
-            ),
-          ],
-        );
-      }
-    );
+          final UserData user =
+              databaseService.userDataFromSnapshot(snapshot.data);
+
+          return new Row(
+            children: [
+              Text(user.username, style: titleStyle),
+              Spacer(),
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(user.profilePhotoURL),
+              ),
+            ],
+          );
+        });
   }
 }
 
@@ -175,12 +173,11 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        recipeDescription,
-        style: descriptionStyle,
-      )
-    );
+        alignment: Alignment.centerLeft,
+        child: Text(
+          recipeDescription,
+          style: descriptionStyle,
+        ));
   }
 }
 
@@ -215,13 +212,21 @@ class Checkmarks extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          recipeData.isVegan ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+          recipeData.isVegan
+              ? Icon(AppIcons.vegan, size: 25)
+              : SizedBox(width: 25),
           SizedBox(width: 10),
-          recipeData.isVegetarian ? Icon(AppIcons.vegan, size: 25) : SizedBox(width: 25),
+          recipeData.isVegetarian
+              ? Icon(AppIcons.vegan, size: 25)
+              : SizedBox(width: 25),
           SizedBox(width: 10),
-          recipeData.isGlutenFree ? Icon(AppIcons.gluten_free, size: 25) : SizedBox(width: 25),
+          recipeData.isGlutenFree
+              ? Icon(AppIcons.gluten_free, size: 25)
+              : SizedBox(width: 25),
           SizedBox(width: 10),
-          recipeData.isLactoseFree ? Icon(AppIcons.lactose_free, size: 25) : SizedBox(width: 25),
+          recipeData.isLactoseFree
+              ? Icon(AppIcons.lactose_free, size: 25)
+              : SizedBox(width: 25),
         ],
       ),
     );
@@ -241,11 +246,20 @@ class Difficulty extends StatelessWidget {
         children: [
           Text("Difficulty:"),
           SizedBox(width: 10),
-          Icon(AppIcons.chef_hat, size: 25, color: difficultyColors[recipeDifficulty]),
+          Icon(AppIcons.chef_hat,
+              size: 25, color: difficultyColors[recipeDifficulty]),
           SizedBox(width: 10),
-          Icon(AppIcons.chef_hat, size: 25, color: recipeDifficulty >= 1 ? difficultyColors[recipeDifficulty] : difficultyBaseColor),
+          Icon(AppIcons.chef_hat,
+              size: 25,
+              color: recipeDifficulty >= 1
+                  ? difficultyColors[recipeDifficulty]
+                  : difficultyBaseColor),
           SizedBox(width: 10),
-          Icon(AppIcons.chef_hat, size: 25, color: recipeDifficulty >= 2 ? difficultyColors[recipeDifficulty] : difficultyBaseColor),
+          Icon(AppIcons.chef_hat,
+              size: 25,
+              color: recipeDifficulty >= 2
+                  ? difficultyColors[recipeDifficulty]
+                  : difficultyBaseColor),
         ],
       ),
     );

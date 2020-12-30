@@ -9,12 +9,12 @@ import 'package:dima_project/shared/form_validators.dart';
 import 'package:flutter/material.dart';
 
 class WriteStepView extends StatelessWidget {
-
   final StepData stepData;
   final Function(int, String) setTitle, setDescription;
   final Function(File) setImageFile;
 
-  WriteStepView(this.stepData, this.setTitle, this.setDescription, this.setImageFile);
+  WriteStepView(
+      this.stepData, this.setTitle, this.setDescription, this.setImageFile);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,35 @@ class WriteStepView extends StatelessWidget {
             Flexible(
               flex: 9,
               fit: FlexFit.tight,
-              child: TextFormFieldShort("Step title", stepData.title, (val) => setTitle(stepData.id, val), TitleFieldValidator.validate),
+              child: TextFormFieldShort(
+                  "Step title",
+                  stepData.title,
+                  (val) => setTitle(stepData.id, val),
+                  TitleFieldValidator.validate),
             ),
           ],
         ),
         SizedBox(width: 5),
         // Imagepicker for image
-        AddImageButton(setFatherImage: setImageFile, image: stepData.imageFile, height: 200, width: double.infinity, elevation: 5, borderRadius: 2),
-        if(stepData.validate && stepData.imageFile == null)
-          Container(child: Text("Enter an image", style: errorStyle), alignment: Alignment.centerLeft, padding: EdgeInsets.only(left: 5)),
+        AddImageButton(
+            setFatherImage: setImageFile,
+            image: stepData.imageFile,
+            height: 200,
+            width: double.infinity,
+            elevation: 5,
+            borderRadius: 2),
+        if (stepData.validate && stepData.imageFile == null)
+          Container(
+              child: Text("Enter an image", style: errorStyle),
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 5)),
         SizedBox(width: 5),
         // Form for description
-        TextFormFieldLong("Step description", stepData.description, (val) => setDescription(stepData.id, val), DescriptionFieldValidator.validate),
+        TextFormFieldLong(
+            "Step description",
+            stepData.description,
+            (val) => setDescription(stepData.id, val),
+            DescriptionFieldValidator.validate),
       ],
     );
   }

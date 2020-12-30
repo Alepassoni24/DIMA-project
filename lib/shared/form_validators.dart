@@ -26,7 +26,9 @@ class UsernameFieldValidator {
 //validator for number fields in order to check that they are a valid number
 class NumberFieldValidator {
   static String validate(String value) {
-    return int.tryParse(value) == null && double.tryParse(value) == null ? 'Enter a number' : null;
+    return int.tryParse(value) == null && double.tryParse(value) == null
+        ? 'Enter a number'
+        : null;
   }
 }
 
@@ -34,8 +36,8 @@ class NumberFieldValidator {
 class TitleFieldValidator {
   static String validate(String value) {
     return (value == null || value.isEmpty || value.length > 20)
-      ? 'Enter a title (max 20 char)'
-      : null;
+        ? 'Enter a title (max 20 char)'
+        : null;
   }
 }
 
@@ -43,8 +45,8 @@ class TitleFieldValidator {
 class SubtitleFieldValidator {
   static String validate(String value) {
     return (value == null || value.isEmpty || value.length > 50)
-      ? 'Enter a subtitle (max 50 char)'
-      : null;
+        ? 'Enter a subtitle (max 50 char)'
+        : null;
   }
 }
 
@@ -52,8 +54,8 @@ class SubtitleFieldValidator {
 class UnitFieldValidator {
   static String validate(String value) {
     return (value == null || value.isEmpty || value.length > 6)
-      ? 'Enter a unit (max 6 char)'
-      : null;
+        ? 'Enter a unit (max 6 char)'
+        : null;
   }
 }
 
@@ -61,8 +63,8 @@ class UnitFieldValidator {
 class DescriptionFieldValidator {
   static String validate(String value) {
     return (value == null || value.isEmpty || value.length > 1000)
-      ? 'Enter a description (max 1000 char)'
-      : null;
+        ? 'Enter a description (max 1000 char)'
+        : null;
   }
 }
 
@@ -70,7 +72,7 @@ class DescriptionFieldValidator {
 class IngredientFieldValidator {
   static String validate(String value) {
     return (value == null || value.isEmpty || value.length > 20)
-      ? 'Enter an ingredient (max 20 char)'
-      : null;
+        ? 'Enter an ingredient (max 20 char)'
+        : null;
   }
 }
