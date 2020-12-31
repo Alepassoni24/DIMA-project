@@ -182,25 +182,20 @@ class DatabaseService {
         .limit(num);
   }
 
-  Query getFilteredRecipe(
-      String order,
-      int maxDifficulty,
-      RangeValues timing,
-      String course,
-      bool isVegan,
-      bool isVegetarian,
-      bool isGlutenFree,
-      bool isLactoseFree) {
-    CollectionReference query = recipeCollection
-        .orderBy(order, descending: true)
-        .where('difficulty', isLessThanOrEqualTo: maxDifficulty)
-        .where('time', isGreaterThanOrEqualTo: timing.start)
-        .where('time', isLessThanOrEqualTo: timing.end);
-    if (course != 'Any') query.where('category', isEqualTo: course);
-    if (isVegan) query.where('isVegan', isEqualTo: true);
-    if (isVegetarian) query.where('isVegetarian', isEqualTo: true);
-    if (isGlutenFree) query.where('isGlutenFree', isEqualTo: true);
-    if (isLactoseFree) query.where('isLactoseFree', isEqualTo: true);
-    return query.limit(10);
+  Query getFilteredRecipe(String order, RangeValues timing, String course,
+      bool isVegan, bool isVegetarian, bool isGlutenFree, bool isLactoseFree) {
+    Query query = recipeCollection;
+    if (order == "submissionTime")
+      query =
+          query.where('submissionTime', isLessThanOrEqualTo: Timestamp.now());
+    if (order == "rating")
+      query = query.where('rating', isLessThanOrEqualTo: 5);
+    //.where('time', whereIn: [timing.start, timing.end]);
+    if (course != "Any") query = query.where('category', isEqualTo: course);
+    if (isVegan) query = query.where('isVegan', isEqualTo: true);
+    if (isVegetarian) query = query.where('isVegetarian', isEqualTo: true);
+    if (isGlutenFree) query = query.where('isGlutenFree', isEqualTo: true);
+    if (isLactoseFree) query = query.where('isLactoseFree', isEqualTo: true);
+    return query.orderBy(order, descending: true).limit(10);
   }
 }

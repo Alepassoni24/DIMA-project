@@ -22,7 +22,7 @@ class RecipeData {
   int reviewNumber;
   File imageFile;
   bool validate = false;
-  
+
   RecipeData({
     this.recipeId,
     this.authorId,

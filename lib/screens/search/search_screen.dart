@@ -27,20 +27,20 @@ class _SearchScreenState extends State<SearchScreen> {
 
   RangeValues _currentRangeValues = const RangeValues(0, 240);
   final List<String> course = [
-    'Any',
-    'First course',
-    'Second course',
-    'Single course',
-    'Side dish',
-    'Dessert'
+    "Any",
+    "First course",
+    "Second course",
+    "Single course",
+    "Side dish",
+    "Dessert"
   ];
-  final List<String> ordering = ['submissionTime', 'rating'];
+  final List<String> ordering = ["submissionTime", "rating"];
   bool _isVegan = false;
   bool _isVegetarian = false;
   bool _isGlutenFree = false;
   bool _isLactoseFree = false;
-  String _category = 'Any';
-  String _orderBy = 'submissionTime';
+  String _category = "Any";
+  String _orderBy = "submissionTime";
   int _difficulty = 2;
 
   void _showFilterPanel() {
@@ -240,15 +240,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       color: Colors.orange[400],
                       onPressed: () {
                         Navigator.of(context).pop();
-                        /*fetchFirstDocuments(
+                        fetchFirstDocuments(
                             _orderBy,
-                            _difficulty,
                             _currentRangeValues,
                             _category,
                             _isVegan,
                             _isVegetarian,
                             _isGlutenFree,
-                            _isLactoseFree);*/
+                            _isLactoseFree);
                       }, //TODO function to query
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -318,22 +317,27 @@ class _SearchScreenState extends State<SearchScreen> {
   // Fetch first 10 documents
   Future<void> fetchFirstDocuments(
       String order,
-      int maxDifficulty,
       RangeValues timing,
       String course,
       bool isVegan,
       bool isVegetarian,
       bool isGlutenFree,
       bool isLactoseFree) async {
+    setState(() {
+      recipesList.clear();
+    });
     databaseService
-        .getFilteredRecipe(order, maxDifficulty, timing, course, isVegan,
-            isVegetarian, isGlutenFree, isLactoseFree)
+        .getFilteredRecipe(order, timing, course, isVegan, isVegetarian,
+            isGlutenFree, isLactoseFree)
         .get()
         .then((value) {
       value.docs.forEach((element) {
-        setState(() {
-          recipesList.add(databaseService.recipeDataFromSnapshot(element));
-        });
+        RecipeData recipe = databaseService.recipeDataFromSnapshot(element);
+        if (recipe.difficulty <= _difficulty) {
+          setState(() {
+            recipesList.add(recipe);
+          });
+        }
       });
     });
   }
