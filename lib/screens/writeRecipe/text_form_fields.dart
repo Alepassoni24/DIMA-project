@@ -6,17 +6,20 @@ class TextFormFieldShort extends StatefulWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;
 
-  TextFormFieldShort(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldShort(
+      this.hintText, this.initialValue, this.setText, this.validator);
 
   @override
-  TextFormFieldShortState createState() => new TextFormFieldShortState(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldShortState createState() => new TextFormFieldShortState(
+      this.hintText, this.initialValue, this.setText, this.validator);
 }
 
 class TextFormFieldShortState extends State<TextFormFieldShort> {
   final String hintText, initialValue;
   final Function(String) setText, validator;
 
-  TextFormFieldShortState(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldShortState(
+      this.hintText, this.initialValue, this.setText, this.validator);
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +43,20 @@ class TextFormFieldLong extends StatefulWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;
 
-  TextFormFieldLong(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldLong(
+      this.hintText, this.initialValue, this.setText, this.validator);
 
   @override
-  TextFormFieldLongState createState() => new TextFormFieldLongState(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldLongState createState() => new TextFormFieldLongState(
+      this.hintText, this.initialValue, this.setText, this.validator);
 }
 
 class TextFormFieldLongState extends State<TextFormFieldLong> {
   final String hintText, initialValue;
   final Function(String) setText, validator;
 
-  TextFormFieldLongState(this.hintText, this.initialValue, this.setText, this.validator);
+  TextFormFieldLongState(
+      this.hintText, this.initialValue, this.setText, this.validator);
 
   @override
   Widget build(BuildContext context) {

@@ -198,4 +198,14 @@ class DatabaseService {
     if (isLactoseFree) query = query.where('isLactoseFree', isEqualTo: true);
     return query.orderBy(order, descending: true).limit(10);
   }
+
+  //get the review of a certain user for a certain recipe (max 1 result)
+  Stream<QuerySnapshot> getReviewByAuthor(String recipeId, String authorId) {
+    return recipeCollection
+        .doc(recipeId)
+        .collection('review')
+        .where('author', isEqualTo: authorId)
+        .limit(1)
+        .snapshots();
+  }
 }

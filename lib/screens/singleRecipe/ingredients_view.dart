@@ -14,26 +14,23 @@ class IngredientsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: databaseService.getRecipeIngredients(recipeId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError)
-          return Text('Something went wrong');
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Loading();
-        
-        return new Column(
-          children: [
+        stream: databaseService.getRecipeIngredients(recipeId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Something went wrong');
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Loading();
+
+          return new Column(children: [
             Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Ingredients", style: titleStyle)
-            ),
+                alignment: Alignment.centerLeft,
+                child: Text("Ingredients", style: titleStyle)),
             SizedBox(height: 10),
-            ...snapshot.data.documents.map<Widget>((document) =>
-              IngredientView(databaseService.ingredientsDataFromSnapshot(document))).toList()
-          ]
-        );
-      }
-    );
+            ...snapshot.data.documents
+                .map<Widget>((document) => IngredientView(
+                    databaseService.ingredientsDataFromSnapshot(document)))
+                .toList()
+          ]);
+        });
   }
 }
 
@@ -44,17 +41,15 @@ class IngredientView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(Utils.truncateDouble(ingredientData.quantity) + " ", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(ingredientData.unit + " ", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(ingredientData.name),
-          ]
-        ),
-        SizedBox(height: 5),
-      ]
-    );
+    return Column(children: [
+      Row(children: [
+        Text(Utils.truncateDouble(ingredientData.quantity) + " ",
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(ingredientData.unit + " ",
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(ingredientData.name),
+      ]),
+      SizedBox(height: 5),
+    ]);
   }
 }

@@ -11,8 +11,10 @@ const textInputDecoration = InputDecoration(
 );
 
 // Text styles for different types of text widgets
-const TextStyle titleStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
-const TextStyle subtitleStyle = TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
+const TextStyle titleStyle =
+    TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+const TextStyle subtitleStyle =
+    TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
 const TextStyle descriptionStyle = TextStyle(fontSize: 17.5);
 final TextStyle errorStyle = TextStyle(fontSize: 12, color: Colors.red[700]);
 
@@ -27,8 +29,4 @@ const List<String> categories = [
 
 // Colors for the difficulties of a recipe
 const difficultyBaseColor = Colors.grey;
-const List<Color> difficultyColors = [
-  Colors.yellow,
-  Colors.orange,
-  Colors.red
-];
+const List<Color> difficultyColors = [Colors.yellow, Colors.orange, Colors.red];

@@ -17,17 +17,16 @@ class ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: databaseService.getUser(reviewData.authorId),
-      builder: (context, snapshot) {
-        if (snapshot.hasError)
-          return Text('Something went wrong');
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Loading();
+        stream: databaseService.getUser(reviewData.authorId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) return Text('Something went wrong');
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Loading();
 
-        final UserData user = databaseService.userDataFromSnapshot(snapshot.data);
-        
-        return Column(
-          children: [
+          final UserData user =
+              databaseService.userDataFromSnapshot(snapshot.data);
+
+          return Column(children: [
             Row(
               children: [
                 CircleAvatar(
@@ -37,20 +36,19 @@ class ReviewCard extends StatelessWidget {
                 SizedBox(width: 12.5),
                 Text(user.username, style: subtitleStyle),
                 Spacer(),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        getStar(1),
-                        getStar(2),
-                        getStar(3),
-                        getStar(4),
-                        getStar(5),
-                      ],
-                    ),
-                    Text(DateFormat('dd/MM/yyyy').format(reviewData.submissionTime.toDate())),
-                  ]
-                )
+                Column(children: [
+                  Row(
+                    children: [
+                      getStar(1),
+                      getStar(2),
+                      getStar(3),
+                      getStar(4),
+                      getStar(5),
+                    ],
+                  ),
+                  Text(DateFormat('dd/MM/yyyy')
+                      .format(reviewData.submissionTime.toDate())),
+                ])
               ],
             ),
             SizedBox(height: 5),
@@ -62,10 +60,8 @@ class ReviewCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-          ]
-        );
-      }
-    );
+          ]);
+        });
   }
 
   Icon getStar(int index) {
