@@ -56,4 +56,9 @@ void main() {
     var result = NumberFieldValidator.validate('23.8946');
     expect(result, null);
   });
+
+  test('12 - Number field with a negative number returns error string', () {
+    var result = NumberFieldValidator.validate('-23.8946');
+    expect(result, 'Enter a number');
+  });
 }

@@ -1,7 +1,6 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/shared/form_validators.dart';
-import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
 class WriteIngredientView extends StatelessWidget {

@@ -23,9 +23,9 @@ class DatabaseService {
 
   Future insertUserData(
       String username,
-      String recipeNum,
-      String rating,
-      String reviewNum,
+      int recipeNum,
+      double rating,
+      int reviewNum,
       String profilePhotoURL,
       bool userRegisteredWithMail) async {
     return await userCollection.doc(uid).set({
@@ -48,9 +48,9 @@ class DatabaseService {
     return UserData(
       uid: snapshot.id,
       username: snapshot.get('username'),
-      recipeNumber: int.parse(snapshot.get('recipeNumber')),
-      rating: double.parse(snapshot.get('rating')),
-      reviewNumber: int.parse(snapshot.get('reviewNumber')),
+      recipeNumber: snapshot.get('recipeNumber'),
+      rating: snapshot.get('rating').toDouble(),
+      reviewNumber: snapshot.get('reviewNumber'),
       profilePhotoURL: snapshot.get('profilePhotoURL'),
       userRegisteredWithMail: snapshot.get('userRegisteredWithMail'),
     );
@@ -64,6 +64,25 @@ class DatabaseService {
   //get user stream from a user id
   Stream<DocumentSnapshot> getUser(String userId) {
     return userCollection.doc(userId).snapshots();
+  }
+
+  // Update a user recipeNumber when a new recipe is inserted
+  Future<void> updateUserRecipe() async {
+    UserData userData = await getUser(uid).map(userDataFromSnapshot).first;
+    return await userCollection.doc(uid).update({
+      'recipeNumber': userData.recipeNumber + 1,
+    });
+  }
+
+  // Update a user rating and reviewNumber when a new review is inserted
+  Future<void> updateUserRating(String userId, int userRating) async {
+    UserData userData = await getUser(userId).map(userDataFromSnapshot).first;
+    double newRating = (userData.rating * userData.reviewNumber + userRating) /
+        (userData.reviewNumber + 1);
+    return await userCollection.doc(userId).update({
+      'rating': newRating,
+      'reviewNumber': userData.reviewNumber + 1,
+    });
   }
 
   //get recipe stream
@@ -93,6 +112,28 @@ class DatabaseService {
     );
   }
 
+  // Add a recipe document to Cloud Firestore
+  Future<String> addRecipe(RecipeData recipeData) async {
+    DocumentReference docRef = await recipeCollection.add({
+      'author': recipeData.authorId,
+      'title': recipeData.title,
+      'subtitle': recipeData.subtitle,
+      'description': recipeData.description,
+      'imageURL': recipeData.imageURL,
+      'rating': recipeData.rating,
+      'time': recipeData.time,
+      'servings': recipeData.servings,
+      'submissionTime': recipeData.submissionTime,
+      'difficulty': recipeData.difficulty,
+      'category': recipeData.category,
+      'isVegan': recipeData.isVegan,
+      'isVegetarian': recipeData.isVegetarian,
+      'isGlutenFree': recipeData.isGlutenFree,
+      'isLactoseFree': recipeData.isLactoseFree,
+    });
+    return docRef.id;
+  }
+
   //get query of last num recipes
   Query getLastRecipes(int num) {
     return recipeCollection
@@ -106,6 +147,16 @@ class DatabaseService {
         .orderBy('submissionTime', descending: true)
         .where('submissionTime', isLessThan: submissionTime)
         .limit(num);
+  }
+
+  Future<void> updateRecipeRating(RecipeData recipeData, int userRating) async {
+    double newRating =
+        (recipeData.rating * recipeData.reviewNumber + userRating) /
+            (recipeData.reviewNumber + 1);
+    return await recipeCollection.doc(recipeData.recipeId).update({
+      'rating': newRating,
+      'reviewNumber': recipeData.reviewNumber + 1,
+    });
   }
 
   //get ingredients stream from a recipe id
@@ -124,6 +175,20 @@ class DatabaseService {
     );
   }
 
+  // Add a ingredient document, under a recipe, to Cloud Firestore
+  Future<void> addIngredient(
+      IngredientData ingredientData, String recipeId) async {
+    recipeCollection
+        .doc(recipeId)
+        .collection('ingredient')
+        .doc(ingredientData.id.toString())
+        .set({
+      'quantity': ingredientData.quantity,
+      'unit': ingredientData.unit,
+      'name': ingredientData.name,
+    });
+  }
+
   //get steps stream from a recipe id
   Stream<QuerySnapshot> getRecipeSteps(String recipeId) {
     return recipeCollection.doc(recipeId).collection('step').snapshots();
@@ -137,6 +202,19 @@ class DatabaseService {
       description: documentSnapshot.data()['description'],
       imageURL: documentSnapshot.data()['imageURL'],
     );
+  }
+
+  // Add a step document, under a recipe, to Cloud Firestore
+  Future<void> addStep(StepData stepData, String recipeId) async {
+    recipeCollection
+        .doc(recipeId)
+        .collection('step')
+        .doc(stepData.id.toString())
+        .set({
+      'title': stepData.title,
+      'description': stepData.description,
+      'imageURL': stepData.imageURL,
+    });
   }
 
   //get stream of last num recipes
@@ -163,6 +241,16 @@ class DatabaseService {
     );
   }
 
+  // Add a review document, under a recipe, to Cloud Firestore
+  Future<void> addReview(ReviewData reviewData, String recipeId) async {
+    recipeCollection.doc(recipeId).collection('review').add({
+      'author': uid,
+      'comment': reviewData.comment,
+      'rating': reviewData.rating,
+      'submissionTime': FieldValue.serverTimestamp(),
+    });
+  }
+
   //get query of last num reviews
   Query getLastReviews(String recipeId, int num) {
     return recipeCollection
@@ -182,6 +270,16 @@ class DatabaseService {
         .limit(num);
   }
 
+  //get the review of a certain user for a certain recipe (max 1 result)
+  Stream<QuerySnapshot> getReviewByAuthor(String recipeId, String authorId) {
+    return recipeCollection
+        .doc(recipeId)
+        .collection('review')
+        .where('author', isEqualTo: authorId)
+        .limit(1)
+        .snapshots();
+  }
+
   Query getFilteredRecipe(String order, RangeValues timing, String course,
       bool isVegan, bool isVegetarian, bool isGlutenFree, bool isLactoseFree) {
     Query query = recipeCollection;
@@ -197,15 +295,5 @@ class DatabaseService {
     if (isGlutenFree) query = query.where('isGlutenFree', isEqualTo: true);
     if (isLactoseFree) query = query.where('isLactoseFree', isEqualTo: true);
     return query.orderBy(order, descending: true).limit(10);
-  }
-
-  //get the review of a certain user for a certain recipe (max 1 result)
-  Stream<QuerySnapshot> getReviewByAuthor(String recipeId, String authorId) {
-    return recipeCollection
-        .doc(recipeId)
-        .collection('review')
-        .where('author', isEqualTo: authorId)
-        .limit(1)
-        .snapshots();
   }
 }

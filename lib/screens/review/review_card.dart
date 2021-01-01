@@ -66,7 +66,7 @@ class ReviewCard extends StatelessWidget {
 
   Icon getStar(int index) {
     if (reviewData.rating >= index)
-      return Icon(Icons.star, color: Colors.orange[500]);
-    return Icon(Icons.star_border, color: Colors.orange[500]);
+      return Icon(Icons.star, color: ratingStarColor);
+    return Icon(Icons.star_border, color: ratingStarColor);
   }
 }

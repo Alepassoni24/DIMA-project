@@ -27,6 +27,7 @@ const List<String> categories = [
   "Dessert",
 ];
 
-// Colors for the difficulties of a recipe
+// Colors for the recipe fields
 const difficultyBaseColor = Colors.grey;
 const List<Color> difficultyColors = [Colors.yellow, Colors.orange, Colors.red];
+final Color ratingStarColor = Colors.orange[500];

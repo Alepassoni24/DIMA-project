@@ -26,7 +26,8 @@ class UsernameFieldValidator {
 //validator for number fields in order to check that they are a valid number
 class NumberFieldValidator {
   static String validate(String value) {
-    return int.tryParse(value) == null && double.tryParse(value) == null
+    return (int.tryParse(value) == null || int.parse(value) <= 0) &&
+            (double.tryParse(value) == null || double.parse(value) <= 0)
         ? 'Enter a number'
         : null;
   }

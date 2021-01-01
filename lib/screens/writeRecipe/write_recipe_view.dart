@@ -6,6 +6,7 @@ import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
 import 'package:dima_project/screens/writeRecipe/write_step_view.dart';
 import 'package:dima_project/screens/writeRecipe/add_image_button.dart';
+import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/app_icons.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
@@ -21,10 +22,12 @@ class WriteRecipeView extends StatefulWidget {
 }
 
 class WriteRecipeViewState extends State<WriteRecipeView> {
-  RecipeData _recipeData = RecipeData(difficulty: 0);
+  RecipeData _recipeData = RecipeData();
   List<IngredientData> _ingredientsData = [IngredientData(id: 1)];
   List<StepData> _stepsData = [StepData(id: 1)];
   final _formKey = GlobalKey<FormState>();
+  final DatabaseService databaseService =
+      DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                       FlatButton(
                           child: Text("SUBMIT RECIPE", style: titleStyle),
                           color: Colors.orange[300],
+                          minWidth: double.infinity,
                           onPressed: submitRecipe),
                     ])))));
   }
@@ -152,18 +156,26 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     }
     if (_formKey.currentState.validate() && canSubmit) {
       // Submit recipe
+      _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
+      _recipeData.submissionTime = Timestamp.fromDate(DateTime.now());
       _recipeData.imageURL =
           await uploadImage(_recipeData.imageFile, 'recipe/');
-      _recipeData.recipeId = await sendRecipe(_recipeData);
+      _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
+
       // Submit all ingredients
       for (IngredientData ingredientData in _ingredientsData) {
-        sendIngredient(ingredientData, _recipeData.recipeId);
+        databaseService.addIngredient(ingredientData, _recipeData.recipeId);
       }
+
       // Submit all steps
       for (StepData stepData in _stepsData) {
         stepData.imageURL = await uploadImage(stepData.imageFile, 'step/');
-        sendStep(stepData, _recipeData.recipeId);
+        databaseService.addStep(stepData, _recipeData.recipeId);
       }
+
+      // Update author recipeNumber
+      databaseService.updateUserRecipe();
+
       // Show the view of the recipe and then reset the form
       Navigator.pushNamed(context, '/recipeView', arguments: _recipeData)
           .then((_) => resetData());
@@ -176,58 +188,6 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         FirebaseStorage.instance.ref().child(path + Path.basename(image.path));
     await storageReference.putFile(image);
     return await storageReference.getDownloadURL();
-  }
-
-  // Add a recipe document to Cloud Firestore
-  Future<String> sendRecipe(RecipeData recipeData) async {
-    DocumentReference docRef =
-        await FirebaseFirestore.instance.collection('recipe').add({
-      'author': FirebaseAuth.instance.currentUser.uid,
-      'title': recipeData.title,
-      'subtitle': recipeData.subtitle,
-      'description': recipeData.description,
-      'imageURL': recipeData.imageURL,
-      'rating': 0,
-      'time': recipeData.time,
-      'servings': recipeData.servings,
-      'submissionTime': FieldValue.serverTimestamp(),
-      'difficulty': recipeData.difficulty,
-      'category': recipeData.category,
-      'isVegan': recipeData.isVegan,
-      'isVegetarian': recipeData.isVegetarian,
-      'isGlutenFree': recipeData.isGlutenFree,
-      'isLactoseFree': recipeData.isLactoseFree,
-    });
-    return docRef.id;
-  }
-
-  // Add a ingredient document, under a recipe, to Cloud Firestore
-  Future<void> sendIngredient(
-      IngredientData ingredientData, String recipeId) async {
-    FirebaseFirestore.instance
-        .collection('recipe')
-        .doc(recipeId)
-        .collection('ingredient')
-        .doc(ingredientData.id.toString())
-        .set({
-      'quantity': ingredientData.quantity,
-      'unit': ingredientData.unit,
-      'name': ingredientData.name,
-    });
-  }
-
-  // Add a step document, under a recipe, to Cloud Firestore
-  Future<void> sendStep(StepData stepData, String recipeId) async {
-    FirebaseFirestore.instance
-        .collection('recipe')
-        .doc(recipeId)
-        .collection('step')
-        .doc(stepData.id.toString())
-        .set({
-      'title': stepData.title,
-      'description': stepData.description,
-      'imageURL': stepData.imageURL,
-    });
   }
 
   // Reset form data after submitting a recipe
@@ -387,12 +347,12 @@ class Difficulty extends StatelessWidget {
           Flexible(
             flex: 1,
             fit: FlexFit.tight,
-            child: RawMaterialButton(
+            child: IconButton(
               onPressed: () => setDifficulty(0),
-              shape: CircleBorder(),
-              child: Image(
-                image: AssetImage("assets/chef_hat.png"),
-                height: 50,
+              iconSize: 38,
+              splashRadius: 35,
+              icon: Icon(
+                AppIcons.chef_hat,
                 color: difficultyColors[recipeData.difficulty],
               ),
             ),
@@ -400,12 +360,12 @@ class Difficulty extends StatelessWidget {
           Flexible(
             flex: 1,
             fit: FlexFit.tight,
-            child: RawMaterialButton(
+            child: IconButton(
               onPressed: () => setDifficulty(1),
-              shape: CircleBorder(),
-              child: Image(
-                image: AssetImage("assets/chef_hat.png"),
-                height: 50,
+              iconSize: 38,
+              splashRadius: 35,
+              icon: Icon(
+                AppIcons.chef_hat,
                 color: recipeData.difficulty >= 1
                     ? difficultyColors[recipeData.difficulty]
                     : difficultyBaseColor,
@@ -415,12 +375,12 @@ class Difficulty extends StatelessWidget {
           Flexible(
             flex: 1,
             fit: FlexFit.tight,
-            child: RawMaterialButton(
+            child: IconButton(
               onPressed: () => setDifficulty(2),
-              shape: CircleBorder(),
-              child: Image(
-                image: AssetImage("assets/chef_hat.png"),
-                height: 50,
+              iconSize: 38,
+              splashRadius: 33,
+              icon: Icon(
+                AppIcons.chef_hat,
                 color: recipeData.difficulty >= 2
                     ? difficultyColors[recipeData.difficulty]
                     : difficultyBaseColor,

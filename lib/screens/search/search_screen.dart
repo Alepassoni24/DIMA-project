@@ -1,6 +1,7 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/homeRecipes/recipe_card.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dima_project/shared/constants.dart';
 
@@ -64,17 +65,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         Flexible(
                           flex: 1,
                           fit: FlexFit.tight,
-                          child: RawMaterialButton(
+                          child: IconButton(
                             onPressed: () {
                               setState(() => _difficulty = 0);
                               setModalState(() {
                                 _difficulty = 0;
                               });
                             },
-                            shape: CircleBorder(),
-                            child: Image(
-                              image: AssetImage("assets/chef_hat.png"),
-                              height: 40,
+                            iconSize: 30,
+                            splashRadius: 35,
+                            icon: Icon(
+                              AppIcons.chef_hat,
                               color: difficultyColors[_difficulty],
                             ),
                           ),
@@ -82,17 +83,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         Flexible(
                           flex: 1,
                           fit: FlexFit.tight,
-                          child: RawMaterialButton(
+                          child: IconButton(
                             onPressed: () {
                               setState(() => _difficulty = 1);
                               setModalState(() {
                                 _difficulty = 1;
                               });
                             },
-                            shape: CircleBorder(),
-                            child: Image(
-                              image: AssetImage("assets/chef_hat.png"),
-                              height: 40,
+                            iconSize: 30,
+                            splashRadius: 35,
+                            icon: Icon(
+                              AppIcons.chef_hat,
                               color: _difficulty >= 1
                                   ? difficultyColors[_difficulty]
                                   : difficultyBaseColor,
@@ -102,17 +103,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         Flexible(
                           flex: 1,
                           fit: FlexFit.tight,
-                          child: RawMaterialButton(
+                          child: IconButton(
                             onPressed: () {
-                              setState(() => _difficulty = 2);
+                              setState(() => _difficulty = 0);
                               setModalState(() {
                                 _difficulty = 2;
                               });
                             },
-                            shape: CircleBorder(),
-                            child: Image(
-                              image: AssetImage("assets/chef_hat.png"),
-                              height: 40,
+                            iconSize: 30,
+                            splashRadius: 35,
+                            icon: Icon(
+                              AppIcons.chef_hat,
                               color: _difficulty >= 2
                                   ? difficultyColors[_difficulty]
                                   : difficultyBaseColor,

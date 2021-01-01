@@ -11,7 +11,7 @@ class ReviewData {
     this.reviewId,
     this.authorId,
     this.comment,
-    this.rating,
+    this.rating = 0,
     this.submissionTime,
   });
 }

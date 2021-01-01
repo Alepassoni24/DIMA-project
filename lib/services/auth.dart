@@ -34,7 +34,7 @@ class AuthService {
       User user = result.user;
       //create a new document for the user with th uid
       await DatabaseService(uid: user.uid)
-          .insertUserData(username, '0', '0.0', '0', null, true);
+          .insertUserData(username, 0, 0.0, 0, null, true);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -92,7 +92,7 @@ class AuthService {
             if (!doc.exists)
               {
                 await DatabaseService(uid: user.uid).insertUserData(
-                    user.displayName, '0', '0.0', '0', user.photoURL, false)
+                    user.displayName, 0, 0.0, 0, user.photoURL, false)
               }
           });
 
@@ -125,7 +125,7 @@ class AuthService {
               if (!doc.exists)
                 {
                   await DatabaseService(uid: user.uid).insertUserData(
-                      user.displayName, '0', '0.0', '0', user.photoURL, false)
+                      user.displayName, 0, 0.0, 0, user.photoURL, false)
                 }
             });
         return _userFromFirebaseUser(user);
