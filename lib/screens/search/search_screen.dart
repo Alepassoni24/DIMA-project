@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/homeRecipes/recipe_card.dart';
 import 'package:dima_project/services/database.dart';
@@ -19,9 +20,18 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     scrollController.addListener(() {
-      if (scrollController.position.atEdge &&
-          scrollController.position.pixels != 0) {
-        //TODO fetchNextDocuments();
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        fetchNextDocuments(
+            _orderBy,
+            _currentRangeValues,
+            _category,
+            _isVegan,
+            _isVegetarian,
+            _isGlutenFree,
+            _isLactoseFree,
+            recipesList.last.submissionTime,
+            recipesList.last.rating);
       }
     });
   }
@@ -328,18 +338,56 @@ class _SearchScreenState extends State<SearchScreen> {
       recipesList.clear();
     });
     databaseService
-        .getFilteredRecipe(order, timing, course, isVegan, isVegetarian,
-            isGlutenFree, isLactoseFree)
+        .getFilteredRecipe(
+            order, course, isVegan, isVegetarian, isGlutenFree, isLactoseFree)
         .get()
         .then((value) {
       value.docs.forEach((element) {
         RecipeData recipe = databaseService.recipeDataFromSnapshot(element);
-        if (recipe.difficulty <= _difficulty) {
+        if (recipe.difficulty <= _difficulty &&
+            recipe.time >= timing.start &&
+            recipe.time <= timing.end) {
           setState(() {
             recipesList.add(recipe);
           });
         }
       });
     });
+  }
+
+  Future<void> fetchNextDocuments(
+      String order,
+      RangeValues timing,
+      String course,
+      bool isVegan,
+      bool isVegetarian,
+      bool isGlutenFree,
+      bool isLactoseFree,
+      Timestamp submissionTime,
+      double rating) async {
+    databaseService
+        .getNextFilteredRecipes(order, course, isVegan, isVegetarian,
+            isGlutenFree, isLactoseFree, submissionTime, rating)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        RecipeData recipe = databaseService.recipeDataFromSnapshot(element);
+        if (recipe.difficulty <= _difficulty &&
+            recipe.time >= timing.start &&
+            recipe.time <= timing.end &&
+            notInList(recipe.recipeId)) {
+          setState(() {
+            recipesList.add(recipe);
+          });
+        }
+      });
+    });
+  }
+
+  bool notInList(String id) {
+    for (var recipe in recipesList) {
+      if (recipe.recipeId == id) return false;
+    }
+    return true;
   }
 }
