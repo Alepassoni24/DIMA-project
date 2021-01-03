@@ -47,7 +47,7 @@ class ReviewCard extends StatelessWidget {
                     ],
                   ),
                   Text(DateFormat('dd/MM/yyyy')
-                      .format(reviewData.submissionTime.toDate())),
+                      .format(reviewData.submissionTime)),
                 ])
               ],
             ),

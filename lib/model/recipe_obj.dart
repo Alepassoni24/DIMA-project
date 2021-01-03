@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class RecipeData {
   String recipeId;
   String authorId;
@@ -12,7 +10,7 @@ class RecipeData {
   double rating;
   int time;
   int servings;
-  Timestamp submissionTime;
+  DateTime submissionTime;
   int difficulty;
   String category;
   bool isVegan;

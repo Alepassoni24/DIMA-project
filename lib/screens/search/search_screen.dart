@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/homeRecipes/recipe_card.dart';
 import 'package:dima_project/services/database.dart';
@@ -363,7 +362,7 @@ class _SearchScreenState extends State<SearchScreen> {
       bool isVegetarian,
       bool isGlutenFree,
       bool isLactoseFree,
-      Timestamp submissionTime,
+      DateTime submissionTime,
       double rating) async {
     databaseService
         .getNextFilteredRecipes(order, course, isVegan, isVegetarian,

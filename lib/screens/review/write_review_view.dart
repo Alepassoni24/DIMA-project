@@ -165,6 +165,8 @@ class ReviewFormState extends State<ReviewForm> {
     setState(() => _errorMessage = _reviewData.rating == 0);
     if (_formKey.currentState.validate() && _reviewData.rating > 0) {
       // Submit review
+      _reviewData.authorId = FirebaseAuth.instance.currentUser.uid;
+      _reviewData.submissionTime = DateTime.now();
       await databaseService.addReview(_reviewData, recipeData.recipeId);
 
       // Update recipe and author ratings

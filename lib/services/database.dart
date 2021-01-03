@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/model/review_obj.dart';
 import 'package:dima_project/model/user_obj.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
   //unique id of the current user
@@ -81,7 +80,7 @@ class DatabaseService {
         (userData.reviewNumber + 1);
     return await userCollection.doc(userId).update({
       'rating': newRating,
-      'reviewNumber': userData.reviewNumber + 1,
+      'reviewNumber': FieldValue.increment(1),
     });
   }
 
@@ -102,7 +101,7 @@ class DatabaseService {
       rating: documentSnapshot.data()['rating'].toDouble(),
       time: documentSnapshot.data()['time'],
       servings: documentSnapshot.data()['servings'],
-      submissionTime: documentSnapshot.data()['submissionTime'],
+      submissionTime: documentSnapshot.data()['submissionTime'].toDate(),
       difficulty: documentSnapshot.data()['difficulty'],
       isVegan: documentSnapshot.data()['isVegan'],
       isVegetarian: documentSnapshot.data()['isVegetarian'],
@@ -123,13 +122,14 @@ class DatabaseService {
       'rating': recipeData.rating,
       'time': recipeData.time,
       'servings': recipeData.servings,
-      'submissionTime': recipeData.submissionTime,
+      'submissionTime': Timestamp.fromDate(recipeData.submissionTime),
       'difficulty': recipeData.difficulty,
       'category': recipeData.category,
       'isVegan': recipeData.isVegan,
       'isVegetarian': recipeData.isVegetarian,
       'isGlutenFree': recipeData.isGlutenFree,
       'isLactoseFree': recipeData.isLactoseFree,
+      'reviewNumber': recipeData.reviewNumber,
     });
     return docRef.id;
   }
@@ -142,10 +142,10 @@ class DatabaseService {
   }
 
   //get query of last num recipes after submissionTime
-  Query getNextLastRecipes(int num, Timestamp submissionTime) {
+  Query getNextLastRecipes(int num, DateTime submissionTime) {
     return recipeCollection
         .orderBy('submissionTime', descending: true)
-        .where('submissionTime', isLessThan: submissionTime)
+        .where('submissionTime', isLessThan: Timestamp.fromDate(submissionTime))
         .limit(num);
   }
 
@@ -155,7 +155,7 @@ class DatabaseService {
             (recipeData.reviewNumber + 1);
     return await recipeCollection.doc(recipeData.recipeId).update({
       'rating': newRating,
-      'reviewNumber': recipeData.reviewNumber + 1,
+      'reviewNumber': FieldValue.increment(1),
     });
   }
 
@@ -237,17 +237,17 @@ class DatabaseService {
       authorId: documentSnapshot.data()['author'],
       comment: documentSnapshot.data()['comment'],
       rating: documentSnapshot.data()['rating'],
-      submissionTime: documentSnapshot.data()['submissionTime'],
+      submissionTime: documentSnapshot.data()['submissionTime'].toDate(),
     );
   }
 
   // Add a review document, under a recipe, to Cloud Firestore
   Future<void> addReview(ReviewData reviewData, String recipeId) async {
     recipeCollection.doc(recipeId).collection('review').add({
-      'author': uid,
+      'author': reviewData.authorId,
       'comment': reviewData.comment,
       'rating': reviewData.rating,
-      'submissionTime': FieldValue.serverTimestamp(),
+      'submissionTime': Timestamp.fromDate(reviewData.submissionTime),
     });
   }
 
@@ -261,12 +261,12 @@ class DatabaseService {
   }
 
   //get query of last num reviews after submissionTime
-  Query getNextLastReviews(String recipeId, int num, Timestamp submissionTime) {
+  Query getNextLastReviews(String recipeId, int num, DateTime submissionTime) {
     return recipeCollection
         .doc(recipeId)
         .collection('review')
         .orderBy('submissionTime', descending: true)
-        .where('submissionTime', isLessThan: submissionTime)
+        .where('submissionTime', isLessThan: Timestamp.fromDate(submissionTime))
         .limit(num);
   }
 
@@ -304,11 +304,12 @@ class DatabaseService {
       bool isVegetarian,
       bool isGlutenFree,
       bool isLactoseFree,
-      Timestamp submissionTime,
+      DateTime submissionTime,
       double rating) {
     Query query = recipeCollection;
     if (order == "submissionTime")
-      query = query.where('submissionTime', isLessThan: submissionTime);
+      query = query.where('submissionTime',
+          isLessThan: Timestamp.fromDate(submissionTime));
     if (order == "rating")
       //TODO improve
       query = query.where('rating', isLessThanOrEqualTo: rating);

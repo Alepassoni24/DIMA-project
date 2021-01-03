@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
@@ -157,7 +156,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     if (_formKey.currentState.validate() && canSubmit) {
       // Submit recipe
       _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
-      _recipeData.submissionTime = Timestamp.fromDate(DateTime.now());
+      _recipeData.submissionTime = DateTime.now();
       _recipeData.imageURL =
           await uploadImage(_recipeData.imageFile, 'recipe/');
       _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
