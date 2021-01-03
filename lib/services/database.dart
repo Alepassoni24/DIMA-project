@@ -103,6 +103,7 @@ class DatabaseService {
       servings: documentSnapshot.data()['servings'],
       submissionTime: documentSnapshot.data()['submissionTime'].toDate(),
       difficulty: documentSnapshot.data()['difficulty'],
+      category: documentSnapshot.data()['category'],
       isVegan: documentSnapshot.data()['isVegan'],
       isVegetarian: documentSnapshot.data()['isVegetarian'],
       isGlutenFree: documentSnapshot.data()['isGlutenFree'],
