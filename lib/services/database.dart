@@ -287,13 +287,20 @@ class DatabaseService {
     if (order == "submissionTime")
       query =
           query.where('submissionTime', isLessThanOrEqualTo: Timestamp.now());
-    if (order == "rating")
+    if (order == "rating") {
       query = query.where('rating', isLessThanOrEqualTo: 5);
+    }
     if (course != "Any") query = query.where('category', isEqualTo: course);
     if (isVegan) query = query.where('isVegan', isEqualTo: true);
     if (isVegetarian) query = query.where('isVegetarian', isEqualTo: true);
     if (isGlutenFree) query = query.where('isGlutenFree', isEqualTo: true);
     if (isLactoseFree) query = query.where('isLactoseFree', isEqualTo: true);
+    if (order == "rating") {
+      return query
+          .orderBy('rating', descending: true)
+          .orderBy('submissionTime', descending: true)
+          .limit(10);
+    }
     return query.orderBy(order, descending: true).limit(10);
   }
 
@@ -311,14 +318,22 @@ class DatabaseService {
     if (order == "submissionTime")
       query = query.where('submissionTime',
           isLessThan: Timestamp.fromDate(submissionTime));
-    if (order == "rating")
-      //TODO improve
-      query = query.where('rating', isLessThanOrEqualTo: rating);
+    if (order == "rating") {
+      //query = query.where('rating', isLessThanOrEqualTo: rating);
+      query = query.where('submissionTime',
+          isLessThan: Timestamp.fromDate(submissionTime));
+    }
     if (course != "Any") query = query.where('category', isEqualTo: course);
     if (isVegan) query = query.where('isVegan', isEqualTo: true);
     if (isVegetarian) query = query.where('isVegetarian', isEqualTo: true);
     if (isGlutenFree) query = query.where('isGlutenFree', isEqualTo: true);
     if (isLactoseFree) query = query.where('isLactoseFree', isEqualTo: true);
-    return query.orderBy(order, descending: true).limit(15);
+    if (order == "rating") {
+      return query
+          .orderBy('rating', descending: true)
+          .orderBy('submissionTime', descending: true)
+          .limit(10);
+    }
+    return query.orderBy(order, descending: true).limit(10);
   }
 }

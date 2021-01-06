@@ -35,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  RangeValues _currentRangeValues = const RangeValues(0, 240);
+  double _currentRangeValues = 240;
   final List<String> course = [
     "Any",
     "First course",
@@ -154,23 +154,20 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 10,
                     ),
                     Text('Preparing time range (minutes):'),
-                    RangeSlider(
-                      values: _currentRangeValues,
+                    Slider(
+                      value: _currentRangeValues,
                       min: 0,
                       max: 240,
                       divisions: 240,
                       activeColor: Colors.orange[400],
                       inactiveColor: Colors.orange[100],
-                      labels: RangeLabels(
-                        _currentRangeValues.start.round().toString(),
-                        _currentRangeValues.end.round().toString(),
-                      ),
-                      onChanged: (RangeValues values) {
+                      label: _currentRangeValues.toString(),
+                      onChanged: (value) {
                         setState(() {
-                          _currentRangeValues = values;
+                          _currentRangeValues = value;
                         });
                         setModalState(() {
-                          _currentRangeValues = values;
+                          _currentRangeValues = value;
                         });
                       },
                     ),
@@ -248,6 +245,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     FlatButton(
                       color: Colors.orange[400],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: BorderSide(color: Colors.orange[400])),
                       onPressed: () {
                         Navigator.of(context).pop();
                         fetchFirstDocuments(
@@ -258,7 +258,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             _isVegetarian,
                             _isGlutenFree,
                             _isLactoseFree);
-                      }, //TODO function to query
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -327,7 +327,7 @@ class _SearchScreenState extends State<SearchScreen> {
   // Fetch first 10 documents
   Future<void> fetchFirstDocuments(
       String order,
-      RangeValues timing,
+      double timing,
       String course,
       bool isVegan,
       bool isVegetarian,
@@ -343,9 +343,7 @@ class _SearchScreenState extends State<SearchScreen> {
         .then((value) {
       value.docs.forEach((element) {
         RecipeData recipe = databaseService.recipeDataFromSnapshot(element);
-        if (recipe.difficulty <= _difficulty &&
-            recipe.time >= timing.start &&
-            recipe.time <= timing.end) {
+        if (recipe.difficulty <= _difficulty && recipe.time <= timing) {
           setState(() {
             recipesList.add(recipe);
           });
@@ -354,9 +352,10 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+//fetch 10 document when reached the end of the list
   Future<void> fetchNextDocuments(
       String order,
-      RangeValues timing,
+      double timing,
       String course,
       bool isVegan,
       bool isVegetarian,
@@ -371,22 +370,12 @@ class _SearchScreenState extends State<SearchScreen> {
         .then((value) {
       value.docs.forEach((element) {
         RecipeData recipe = databaseService.recipeDataFromSnapshot(element);
-        if (recipe.difficulty <= _difficulty &&
-            recipe.time >= timing.start &&
-            recipe.time <= timing.end &&
-            notInList(recipe.recipeId)) {
+        if (recipe.difficulty <= _difficulty && recipe.time <= timing) {
           setState(() {
             recipesList.add(recipe);
           });
         }
       });
     });
-  }
-
-  bool notInList(String id) {
-    for (var recipe in recipesList) {
-      if (recipe.recipeId == id) return false;
-    }
-    return true;
   }
 }
