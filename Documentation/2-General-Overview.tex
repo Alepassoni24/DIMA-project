@@ -74,23 +74,74 @@
 
 
 \section{Functional Requirements}
+	In this section we present the functional requirements necessary to the correct behavior of the system.
+
+	\subsection{General Requirements}
+		\begin{itemize}
+			\item The application should be comprehensible by as many people as possible, so we decided to use the English language.
+		\end{itemize}
+
 	\subsection{Authentication Requirements}
+		\begin{itemize}
+			\item The \textit{Login screen} should be accessible only to users not currently logged in.
+			\item The \textit{Login screen} should allow the user to login using email and password, or Facebook, or Google.
+			\item The \textit{Register screen} should allow users to register using email and password. 
+			\item \textit{Authentication screens} should redirect the user to the Home screen if the authentication is successful.
+		\end{itemize}
 
 	\subsection{Home Requirements}
+		\begin{itemize}
+			\item The \textit{Home screen} should provide access to the user to all the application functionalities.
+			\item The \textit{Home screen} should show to the user the latest recipes published by all the users.
+			\item The \textit{Home screen} should provide access to the \textit{Recipe screens} by pressing on a specific recipe.
+		\end{itemize}
+
+	\subsection{Recipe View Requirements}
+	\begin{itemize}
+		\item The \textit{Recipe screen} should all information about the requested recipe, which comprehend: title, subtitle, author, description, image, rating, difficulty, category, intolerance, servings, time required, ingredients, steps and users's reviews.
+		\item The \textit{Recipe screen} should also provide the \textit{Write a Review widget}.
+		\item The \textit{Recipe screen} should allow the user to save the recipe in his saved recipes list.
+	\end{itemize}
 
 	\subsection{Write a Recipe Requirements}
+		\begin{itemize}
+			\item The \textit{Write a Recipe screen} should allow the user to provide all the necessary information needed to publish a recipe.
+			\item The \textit{Write a Recipe screen} should allow the user to add images from both the gallery and the camera.
+			\item The \textit{Write a Recipe scree}n should tell the user if some information are missing.
+			\item After a recipe has been submitted it should be shown at the top of the \textit{Home screen}.
+		\end{itemize}
 
 	\subsection{Search for Recipes Requirements}
+		\begin{itemize}
+			\item The \textit{Search a Recipe screen} should allow all user to filter the recipes in the database based on difficulty, category, preparation time and intolerance.
+			\item The \textit{Search a Recipe screen} should allow all user to sort the recipes in the database based on rating or submission time.
+		\end{itemize}
 
-	\subsection{Write a Review Requirements}
+	\subsection{Review Requirements}
+		\begin{itemize}
+			\item The \textit{Reviews widget} should allow the user to read the most recent reviews about the current recipe in the screen.
+			\item The \textit{Write a Review widget} should allow the user to rate and write a review about the current recipe in the screen.
+			\item The \textit{Write a Review widget} should forbid the user to write a second review for the same recipe.
+			\item The \textit{Write a Review widget} should forbid the author of the recipe to write a review for that recipe.
+		\end{itemize}
 
 	\subsection{Saved Recipes List Requirements}
+		\begin{itemize}
+			\item The \textit{Saved Recipes screen} should allow the user to access all the recipes previously saved.
+			\item The \textit{Saved Recipes screen} should allow the user to remove some of the saved recipes.
+		\end{itemize}
 
 	\subsection{Account Settings Requirements}
+		\begin{itemize}
+			\item The \textit{Settings screen} should allow the user to change his username, profile image and password.
+			\item The \textit{Setting screen} should allow the user to log out from his account.
+			\item The \textit{Setting screen} should display the user's total recipes, reviews received, rating among his recipes and latest recipes written.
+		\end{itemize}
 
 
 \section{Non-Functional Requirements}
-TODO introduction to this section
+	These are the non-functional requirements that are necessary to guarantee a functional application:
+
 \begin{itemize}
 	\item \textbf{Portability}: Using a cross-platform implementation allows the application to run both in Android and iOS systems. The application could be run on different sized devices as well.
 	
