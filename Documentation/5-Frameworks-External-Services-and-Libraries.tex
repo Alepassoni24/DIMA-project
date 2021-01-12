@@ -1,10 +1,21 @@
 \chapter{Frameworks, External Services and Libraries}
 
 \section{Flutter}
+To develop CookingTime application we decided to use flutter plattform, which allows to build cross-plattform application basing on Dart programming language. 
+%TODO improve description of flutter
+In order to exploit all the feature of the application as a team we needed to use some other external services that could be easily impoerted as dependeces into out project enviroment. 
+The usage of all that kind of services helped in terms of reducing the complexity of the implementation and to enforce non-functional requirements like security or authentication tasks.
 
 \section{Google Firebase}
+Google Firebase is a service offered by google in order to provide some easily accessible service and to manage critical tasks like authentication in a simpler and smarter way from the perspective of the programmer.
 \subsection{Authentication}
+The service allowed us to have a unique container for all accounts from the different channel of authentication we offer as email, Facebook and Google account. 
+Moreover it is able to manage all the operation without putting in plain text confidencial information about user enforced by a SHA encryption. %TODO put the specific SHA
 
 \subsection{Cloud Firestore}
+Cloud firestore is part of Firebase, it's basically a database with a document based structure (so NoSQL). We need it as we have to store data about user and recipes.
+Moreover we use the storage space with the aim  
+Even if the model is NoSQL, we have some instruction provided by the Firebase interface to query the collection of data very similar to SQL one.
 
 \section{Social Media}
+As mentioned before we implemented the suport to authenticate using Facebook or Google account, this is easily achievable through the API of the plattform, basically the API convert the credential of the social media account into a token which can be used and stored by firebase.
