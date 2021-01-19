@@ -27,6 +27,8 @@ class RecipeView extends StatelessWidget {
         elevation: 0.0,
         title: Text(recipeData.title),
         actions: [
+          if (recipeData.authorId == FirebaseAuth.instance.currentUser.uid)
+            EditIcon(recipeData),
           SaveIcon(),
           ShareIcon(),
         ],
@@ -71,6 +73,22 @@ class RecipeView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class EditIcon extends StatelessWidget {
+  final RecipeData recipeData;
+
+  EditIcon(this.recipeData);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      onPressed: () {
+        Navigator.pushNamed(context, '/writeRecipe', arguments: recipeData);
+      },
     );
   }
 }

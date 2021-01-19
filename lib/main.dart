@@ -4,6 +4,7 @@ import 'package:dima_project/screens/authenticate/reset_password.dart';
 import 'package:dima_project/screens/singleRecipe/recipe_view.dart';
 import 'package:dima_project/screens/userProfile/user_setting.dart';
 import 'package:dima_project/screens/wrapper.dart';
+import 'package:dima_project/screens/writeRecipe/write_recipe_view.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
                 '/': (context) => Wrapper(),
                 '/register': (context) => Register(),
                 '/recipeView': (context) => RecipeView(),
+                '/writeRecipe': (context) => WriteRecipeView(),
                 '/resetPsw': (context) => ResetPassword(),
                 '/settings': (context) => UserSettings(),
               },

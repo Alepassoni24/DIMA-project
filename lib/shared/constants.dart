@@ -16,7 +16,7 @@ const TextStyle titleStyle =
 const TextStyle subtitleStyle =
     TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
 const TextStyle descriptionStyle = TextStyle(fontSize: 17.5);
-final TextStyle errorStyle = TextStyle(fontSize: 12, color: Colors.red[700]);
+final TextStyle errorStyle = TextStyle(fontSize: 12, color: errorColor);
 
 // List of possible categories for a recipe
 const List<String> categories = [
@@ -31,3 +31,5 @@ const List<String> categories = [
 const difficultyBaseColor = Colors.grey;
 const List<Color> difficultyColors = [Colors.yellow, Colors.orange, Colors.red];
 final Color ratingStarColor = Colors.orange[500];
+
+final Color errorColor = Colors.red[700];

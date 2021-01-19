@@ -21,21 +21,52 @@ class WriteRecipeView extends StatefulWidget {
 }
 
 class WriteRecipeViewState extends State<WriteRecipeView> {
-  RecipeData _recipeData = RecipeData();
-  List<IngredientData> _ingredientsData = [IngredientData(id: 1)];
-  List<StepData> _stepsData = [StepData(id: 1)];
+  RecipeData _recipeData;
+  List<IngredientData> _ingredientsData;
+  List<StepData> _stepsData;
   final _formKey = GlobalKey<FormState>();
   final DatabaseService databaseService =
       DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
 
   @override
   Widget build(BuildContext context) {
+    // The first time this widget is called check if it is a new recipe...
+    if (_recipeData == null &&
+        ModalRoute.of(context).settings.arguments == null) {
+      _recipeData = RecipeData();
+      _ingredientsData = [IngredientData(id: 1)];
+      _stepsData = [StepData(id: 1)];
+    }
+    // ... or if a  recipe is beeing edited, in this case query the data
+    else if (_recipeData == null) {
+      _recipeData = ModalRoute.of(context).settings.arguments;
+      _ingredientsData = [];
+      databaseService
+          .getRecipeIngredients(_recipeData.recipeId)
+          .forEach((query) {
+        query.docs.forEach((doc) => setState(() {
+              _ingredientsData
+                  .add(databaseService.ingredientsDataFromSnapshot(doc));
+            }));
+      });
+      _stepsData = [];
+      databaseService.getRecipeSteps(_recipeData.recipeId).forEach((query) {
+        query.docs.forEach((doc) => setState(() {
+              _stepsData.add(databaseService.stepsDataFromSnapshot(doc));
+            }));
+      });
+    }
+
+    // Return the widget
     return Scaffold(
         backgroundColor: Colors.orange[50],
         appBar: AppBar(
           backgroundColor: Colors.orange[400],
           elevation: 0,
           title: Text('Write a recipe'),
+          actions: [
+            DeleteIcon(deleteRecipe),
+          ],
         ),
         body: Center(
             child: Form(
@@ -45,12 +76,15 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                     child: Column(children: [
                       AddImageButton(
                           setFatherImage: setRecipeImage,
-                          image: _recipeData.imageFile,
+                          imageFile: _recipeData.imageFile,
+                          imageURL: _recipeData.imageURL,
                           height: 300,
                           width: double.infinity,
                           elevation: 5,
                           borderRadius: 5),
-                      if (_recipeData.validate && _recipeData.imageFile == null)
+                      if (_recipeData.validate &&
+                          _recipeData.imageFile == null &&
+                          _recipeData.imageURL == null)
                         Container(
                             child: Text("Enter an image", style: errorStyle),
                             alignment: Alignment.centerLeft,
@@ -148,18 +182,32 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   void submitRecipe() async {
     // Check if all forms and imagepicker are not empty
     setRecipeValidate();
-    bool canSubmit = _recipeData.imageFile != null;
+    bool canSubmit =
+        _recipeData.imageFile != null || _recipeData.imageURL != null;
     for (StepData stepData in _stepsData) {
       setStepValidate(stepData.id);
-      canSubmit &= stepData.imageFile != null;
+      canSubmit &= (stepData.imageFile != null || stepData.imageURL != null);
     }
     if (_formKey.currentState.validate() && canSubmit) {
       // Submit recipe
       _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
       _recipeData.submissionTime = DateTime.now();
-      _recipeData.imageURL =
-          await uploadImage(_recipeData.imageFile, 'recipe/');
-      _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
+      if (_recipeData.imageFile != null) {
+        // Delete the old recipe image if updating
+        if (_recipeData.imageURL != null) {
+          deleteImage(_recipeData.imageURL);
+        }
+        _recipeData.imageURL =
+            await uploadImage(_recipeData.imageFile, 'recipe/');
+      }
+      // If the user is writing a new recipe add it to the database...
+      if (_recipeData.recipeId == null) {
+        _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
+      }
+      // ... otherwise if the user is editing update the recipe
+      else {
+        await databaseService.updateRecipe(_recipeData);
+      }
 
       // Submit all ingredients
       for (IngredientData ingredientData in _ingredientsData) {
@@ -168,7 +216,13 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
       // Submit all steps
       for (StepData stepData in _stepsData) {
-        stepData.imageURL = await uploadImage(stepData.imageFile, 'step/');
+        if (stepData.imageFile != null) {
+          // Delete the old step image if updating
+          if (stepData.imageURL != null) {
+            deleteImage(stepData.imageURL);
+          }
+          stepData.imageURL = await uploadImage(stepData.imageFile, 'step/');
+        }
         databaseService.addStep(stepData, _recipeData.recipeId);
       }
 
@@ -189,12 +243,30 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     return await storageReference.getDownloadURL();
   }
 
+  // Delete an image from Firebase Storage
+  Future<void> deleteImage(String imageURL) async {
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    return await firebaseStorage.refFromURL(imageURL).delete();
+  }
+
   // Reset form data after submitting a recipe
   void resetData() {
     setState(() => _recipeData = RecipeData(difficulty: 0));
     setState(() => _ingredientsData = [IngredientData(id: 1)]);
     setState(() => _stepsData = [StepData(id: 1)]);
     _formKey.currentState.reset();
+  }
+
+  // Delete recipe from Firebase Firestore if the user was editing one and reset the forms data
+  void deleteRecipe() {
+    if (_recipeData.recipeId != null) {
+      deleteImage(_recipeData.imageURL);
+      for (StepData stepData in _stepsData) {
+        deleteImage(stepData.imageURL);
+      }
+      databaseService.recipeCollection.doc(_recipeData.recipeId).delete();
+    }
+    resetData();
   }
 
   // Recipe setters
@@ -245,6 +317,47 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       (File image) => setState(() => _stepsData[id].imageFile = image);
   void setStepValidate(int id) =>
       setState(() => _stepsData[id - 1].validate = true);
+}
+
+class DeleteIcon extends StatelessWidget {
+  final Function() deleteRecipe;
+
+  DeleteIcon(this.deleteRecipe);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete, color: errorColor),
+      onPressed: () {
+        showDeleteDialog(context);
+      },
+    );
+  }
+
+  // Show a popup to ask confirmation of the deletion of the recipe
+  Future<void> showDeleteDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure you want to delete this recipe?'),
+          actions: <Widget>[
+            TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            TextButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  deleteRecipe();
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                }),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class TimeRow extends StatelessWidget {

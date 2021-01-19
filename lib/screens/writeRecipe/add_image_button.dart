@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddImageButton extends StatelessWidget {
-  final File image;
+  final File imageFile;
+  final String imageURL;
   final ImagePicker _picker = ImagePicker();
   final Function(File) setFatherImage;
   final double height, width, elevation, borderRadius;
 
   AddImageButton({
     this.setFatherImage,
-    this.image,
+    this.imageFile,
+    this.imageURL,
     this.height,
     this.width,
     this.elevation,
@@ -36,9 +38,11 @@ class AddImageButton extends StatelessWidget {
         color: Colors.grey[50],
         child: InkWell(
             borderRadius: BorderRadius.circular(borderRadius),
-            child: image == null
-                ? Icon(Icons.add_a_photo_outlined)
-                : ImageContainer(image, borderRadius),
+            child: imageFile != null
+                ? ImageContainer(FileImage(imageFile), borderRadius)
+                : (imageURL != null
+                    ? ImageContainer(NetworkImage(imageURL), borderRadius)
+                    : Icon(Icons.add_a_photo_outlined)),
             onTap: getImage),
       ),
     );
@@ -46,7 +50,7 @@ class AddImageButton extends StatelessWidget {
 }
 
 class ImageContainer extends StatelessWidget {
-  final File _image;
+  final ImageProvider _image;
   final double borderRadius;
 
   ImageContainer(this._image, this.borderRadius);
@@ -57,10 +61,7 @@ class ImageContainer extends StatelessWidget {
       decoration: new BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
           image: new DecorationImage(
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            image: FileImage(_image),
-          )),
+              fit: BoxFit.cover, alignment: Alignment.center, image: _image)),
     );
   }
 }

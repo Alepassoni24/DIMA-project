@@ -44,12 +44,15 @@ class WriteStepView extends StatelessWidget {
         // Imagepicker for image
         AddImageButton(
             setFatherImage: setImageFile,
-            image: stepData.imageFile,
+            imageFile: stepData.imageFile,
+            imageURL: stepData.imageURL,
             height: 200,
             width: double.infinity,
             elevation: 5,
             borderRadius: 2),
-        if (stepData.validate && stepData.imageFile == null)
+        if (stepData.validate &&
+            stepData.imageFile == null &&
+            stepData.imageURL == null)
           Container(
               child: Text("Enter an image", style: errorStyle),
               alignment: Alignment.centerLeft,

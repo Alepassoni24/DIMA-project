@@ -112,7 +112,7 @@ class DatabaseService {
     );
   }
 
-  // Add a recipe document to Cloud Firestore
+  // Add a recipe document to Cloud Firestore and return the recipe id
   Future<String> addRecipe(RecipeData recipeData) async {
     DocumentReference docRef = await recipeCollection.add({
       'author': recipeData.authorId,
@@ -133,6 +133,28 @@ class DatabaseService {
       'reviewNumber': recipeData.reviewNumber,
     });
     return docRef.id;
+  }
+
+  // Update a recipe document to Cloud Firestore
+  Future<void> updateRecipe(RecipeData recipeData) async {
+    await recipeCollection.doc(recipeData.recipeId).update({
+      'author': recipeData.authorId,
+      'title': recipeData.title,
+      'subtitle': recipeData.subtitle,
+      'description': recipeData.description,
+      'imageURL': recipeData.imageURL,
+      'rating': recipeData.rating,
+      'time': recipeData.time,
+      'servings': recipeData.servings,
+      'submissionTime': Timestamp.fromDate(recipeData.submissionTime),
+      'difficulty': recipeData.difficulty,
+      'category': recipeData.category,
+      'isVegan': recipeData.isVegan,
+      'isVegetarian': recipeData.isVegetarian,
+      'isGlutenFree': recipeData.isGlutenFree,
+      'isLactoseFree': recipeData.isLactoseFree,
+      'reviewNumber': recipeData.reviewNumber,
+    });
   }
 
   //get query of last num recipes
