@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'package:uuid/uuid.dart';
+import 'package:flutter/material.dart';
 
 class RecipeData {
-  final String key = Uuid().v4();
   String recipeId;
   String authorId;
   String title;
@@ -45,7 +44,7 @@ class RecipeData {
 }
 
 class IngredientData {
-  final String key = Uuid().v4();
+  final Key key = UniqueKey();
   int id;
   double quantity;
   String unit;
@@ -55,7 +54,7 @@ class IngredientData {
 }
 
 class StepData {
-  final String key = Uuid().v4();
+  final Key key = UniqueKey();
   int id;
   String title;
   String description;
@@ -67,7 +66,6 @@ class StepData {
 }
 
 class ReviewData {
-  final String key = Uuid().v4();
   String reviewId;
   String authorId;
   String comment;

@@ -16,7 +16,7 @@ class WriteIngredientView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      key: Key(ingredientData.key),
+      key: ingredientData.key,
       children: [
         // Form for quantity
         Flexible(
