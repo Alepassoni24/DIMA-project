@@ -138,10 +138,19 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
     // All ingredients
     for (int i = 0; i < _ingredientsData.length; i++) {
-      _ingredients.add(WriteIngredientView(_ingredientsData[i],
-          setIngredientQuantity, setIngredientUnit, setIngredientName));
+      _ingredients.add(WriteIngredientView(
+          _ingredientsData[i],
+          setIngredientQuantity,
+          setIngredientUnit,
+          setIngredientName,
+          deleteIngredient));
     }
     _ingredients.add(SizedBox(height: 5));
+    if (_ingredientsData.length == 0) {
+      _ingredients.add(Container(
+          child: Text("Enter at least one ingredient", style: errorStyle),
+          alignment: Alignment.center));
+    }
 
     // Add button
     _ingredients.add(Padding(
@@ -164,8 +173,14 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     // All steps with a divider but the last
     for (int i = 0; i < _stepsData.length; i++) {
       _steps.add(WriteStepView(_stepsData[i], setStepTitle, setStepDescription,
-          setStepImageFile(i)));
+          setStepImageFile(i), deleteStep));
       _steps.add(SizedBox(height: 5));
+    }
+    if (_stepsData.length == 0) {
+      _steps.add(SizedBox(height: 5));
+      _steps.add(Container(
+          child: Text("Enter at least one step", style: errorStyle),
+          alignment: Alignment.center));
     }
 
     // Add button
@@ -183,7 +198,9 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     // Check if all forms and imagepicker are not empty
     setRecipeValidate();
     bool canSubmit =
-        _recipeData.imageFile != null || _recipeData.imageURL != null;
+        (_recipeData.imageFile != null || _recipeData.imageURL != null) &&
+            _ingredientsData.length > 0 &&
+            _stepsData.length > 0;
     for (StepData stepData in _stepsData) {
       setStepValidate(stepData.id);
       canSubmit &= (stepData.imageFile != null || stepData.imageURL != null);
@@ -204,9 +221,13 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       if (_recipeData.recipeId == null) {
         _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
       }
-      // ... otherwise if the user is editing update the recipe
+      // ... otherwise if the user is editing update the recipe and remove extra ingredients
       else {
         await databaseService.updateRecipe(_recipeData);
+        databaseService.removeIngredientsAfter(
+            _recipeData.recipeId, _ingredientsData.length);
+        databaseService.removeStepsAfter(
+            _recipeData.recipeId, _stepsData.length);
       }
 
       // Submit all ingredients
@@ -251,9 +272,11 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
   // Reset form data after submitting a recipe
   void resetData() {
-    setState(() => _recipeData = RecipeData(difficulty: 0));
-    setState(() => _ingredientsData = [IngredientData(id: 1)]);
-    setState(() => _stepsData = [StepData(id: 1)]);
+    setState(() {
+      _recipeData = RecipeData(difficulty: 0);
+      _ingredientsData = [IngredientData(id: 1)];
+      _stepsData = [StepData(id: 1)];
+    });
     _formKey.currentState.reset();
   }
 
@@ -305,6 +328,15 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       setState(() => _ingredientsData[id - 1].unit = text);
   void setIngredientName(int id, String text) =>
       setState(() => _ingredientsData[id - 1].name = text);
+  void deleteIngredient(int id) => setState(() {
+        // Remove the specified ingredient and update the other ids
+        for (int i = id; i < _ingredientsData.length; i++) {
+          _ingredientsData[i].id -= 1;
+        }
+        _ingredientsData.removeAt(id - 1);
+        FocusScope.of(context)
+            .unfocus(); // Remove text focus, focus the wrong element otherwise
+      });
 
   // Step setters
   void addStep() =>
@@ -317,6 +349,15 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       (File image) => setState(() => _stepsData[id].imageFile = image);
   void setStepValidate(int id) =>
       setState(() => _stepsData[id - 1].validate = true);
+  void deleteStep(int id) => setState(() {
+        // Remove the specified ingredient and update the other ids
+        for (int i = id; i < _stepsData.length; i++) {
+          _stepsData[i].id -= 1;
+        }
+        _stepsData.removeAt(id - 1);
+        FocusScope.of(context)
+            .unfocus(); // Remove text focus, focus the wrong element otherwise
+      });
 }
 
 class DeleteIcon extends StatelessWidget {
@@ -384,7 +425,8 @@ class TimeRow extends StatelessWidget {
                 "30",
                 recipeData.time == null ? "" : recipeData.time.toString(),
                 setRecipeTime,
-                NumberFieldValidator.validate),
+                NumberFieldValidator.validate,
+                keyboardType: TextInputType.number),
             fit: FlexFit.tight,
           ),
           Flexible(
@@ -424,7 +466,8 @@ class ServingsRow extends StatelessWidget {
                     ? ""
                     : recipeData.servings.toString(),
                 setRecipeServings,
-                NumberFieldValidator.validate),
+                NumberFieldValidator.validate,
+                keyboardType: TextInputType.number),
             fit: FlexFit.tight,
           ),
           Flexible(

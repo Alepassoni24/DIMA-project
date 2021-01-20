@@ -1,18 +1,22 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
+import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
 class WriteIngredientView extends StatelessWidget {
   final IngredientData ingredientData;
   final Function(int, String) setQuantity, setUnit, setName;
+  final Function(int) deleteIngredient;
 
-  WriteIngredientView(
-      this.ingredientData, this.setQuantity, this.setUnit, this.setName);
+  WriteIngredientView(this.ingredientData, this.setQuantity, this.setUnit,
+      this.setName, this.deleteIngredient);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key(ingredientData.key),
       children: [
         // Form for quantity
         Flexible(
@@ -21,9 +25,10 @@ class WriteIngredientView extends StatelessWidget {
               "100",
               ingredientData.quantity == null
                   ? ""
-                  : ingredientData.quantity.toString(),
+                  : Utils.truncateDouble(ingredientData.quantity),
               (val) => setQuantity(ingredientData.id, val),
-              NumberFieldValidator.validate),
+              NumberFieldValidator.validate,
+              keyboardType: TextInputType.number),
           fit: FlexFit.tight,
         ),
         SizedBox(width: 10),
@@ -40,7 +45,7 @@ class WriteIngredientView extends StatelessWidget {
         SizedBox(width: 10),
         // Form for ingredient
         Flexible(
-          flex: 12,
+          flex: 10,
           child: TextFormFieldShort(
               "flour",
               ingredientData.name,
@@ -48,6 +53,12 @@ class WriteIngredientView extends StatelessWidget {
               IngredientFieldValidator.validate),
           fit: FlexFit.tight,
         ),
+        Flexible(
+            flex: 2,
+            child: IconButton(
+              icon: Icon(Icons.delete, color: errorColor),
+              onPressed: () => deleteIngredient(ingredientData.id),
+            )),
       ],
     );
   }

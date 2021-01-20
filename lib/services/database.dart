@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dima_project/model/recipe_obj.dart';
-import 'package:dima_project/model/review_obj.dart';
 import 'package:dima_project/model/user_obj.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService {
   //unique id of the current user
@@ -212,6 +212,18 @@ class DatabaseService {
     });
   }
 
+  // When updating a recipe, remove any additional unchanged ingredient
+  Future<void> removeIngredientsAfter(String recipeId, int afterIndex) async {
+    return await recipeCollection
+        .doc(recipeId)
+        .collection('ingredient')
+        .where(FieldPath.documentId, isGreaterThan: afterIndex.toString())
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference.delete();
+            }));
+  }
+
   //get steps stream from a recipe id
   Stream<QuerySnapshot> getRecipeSteps(String recipeId) {
     return recipeCollection.doc(recipeId).collection('step').snapshots();
@@ -238,6 +250,21 @@ class DatabaseService {
       'description': stepData.description,
       'imageURL': stepData.imageURL,
     });
+  }
+
+  // When updating a recipe, remove any additional unchanged step
+  Future<void> removeStepsAfter(String recipeId, int afterIndex) async {
+    return await recipeCollection
+        .doc(recipeId)
+        .collection('step')
+        .where(FieldPath.documentId, isGreaterThan: afterIndex.toString())
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              FirebaseStorage.instance
+                  .refFromURL(element.data()['imageURL'])
+                  .delete();
+              element.reference.delete();
+            }));
   }
 
   //get stream of last num recipes

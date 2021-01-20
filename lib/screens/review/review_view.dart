@@ -1,5 +1,4 @@
 import 'package:dima_project/model/recipe_obj.dart';
-import 'package:dima_project/model/review_obj.dart';
 import 'package:dima_project/screens/review/review_card.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';

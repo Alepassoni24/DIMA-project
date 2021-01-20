@@ -2,24 +2,14 @@
 import 'package:dima_project/shared/constants.dart';
 import 'package:flutter/material.dart';
 
-class TextFormFieldShort extends StatefulWidget {
+class TextFormFieldShort extends StatelessWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;
+  final TextInputType keyboardType;
 
   TextFormFieldShort(
-      this.hintText, this.initialValue, this.setText, this.validator);
-
-  @override
-  TextFormFieldShortState createState() => new TextFormFieldShortState(
-      this.hintText, this.initialValue, this.setText, this.validator);
-}
-
-class TextFormFieldShortState extends State<TextFormFieldShort> {
-  final String hintText, initialValue;
-  final Function(String) setText, validator;
-
-  TextFormFieldShortState(
-      this.hintText, this.initialValue, this.setText, this.validator);
+      this.hintText, this.initialValue, this.setText, this.validator,
+      {this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +20,7 @@ class TextFormFieldShortState extends State<TextFormFieldShort> {
           hintText: hintText,
           contentPadding: EdgeInsets.only(left: 2.5, right: 2.5),
         ),
+        keyboardType: keyboardType,
         initialValue: initialValue,
         onChanged: setText,
         validator: validator,
@@ -39,23 +30,11 @@ class TextFormFieldShortState extends State<TextFormFieldShort> {
 }
 
 // Generic multi line text form field
-class TextFormFieldLong extends StatefulWidget {
+class TextFormFieldLong extends StatelessWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;
 
   TextFormFieldLong(
-      this.hintText, this.initialValue, this.setText, this.validator);
-
-  @override
-  TextFormFieldLongState createState() => new TextFormFieldLongState(
-      this.hintText, this.initialValue, this.setText, this.validator);
-}
-
-class TextFormFieldLongState extends State<TextFormFieldLong> {
-  final String hintText, initialValue;
-  final Function(String) setText, validator;
-
-  TextFormFieldLongState(
       this.hintText, this.initialValue, this.setText, this.validator);
 
   @override

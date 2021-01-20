@@ -12,13 +12,15 @@ class WriteStepView extends StatelessWidget {
   final StepData stepData;
   final Function(int, String) setTitle, setDescription;
   final Function(File) setImageFile;
+  final Function(int) deleteStep;
 
-  WriteStepView(
-      this.stepData, this.setTitle, this.setDescription, this.setImageFile);
+  WriteStepView(this.stepData, this.setTitle, this.setDescription,
+      this.setImageFile, this.deleteStep);
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: Key(stepData.key),
       children: [
         Row(
           children: [
@@ -30,7 +32,7 @@ class WriteStepView extends StatelessWidget {
             SizedBox(width: 5),
             // Form for title
             Flexible(
-              flex: 9,
+              flex: 8,
               fit: FlexFit.tight,
               child: TextFormFieldShort(
                   "Step title",
@@ -38,6 +40,12 @@ class WriteStepView extends StatelessWidget {
                   (val) => setTitle(stepData.id, val),
                   TitleFieldValidator.validate),
             ),
+            Flexible(
+                flex: 1,
+                child: IconButton(
+                  icon: Icon(Icons.delete, color: errorColor),
+                  onPressed: () => deleteStep(stepData.id),
+                )),
           ],
         ),
         SizedBox(width: 5),
