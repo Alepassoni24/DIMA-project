@@ -56,7 +56,7 @@ class WriteIngredientView extends StatelessWidget {
         Flexible(
             flex: 2,
             child: IconButton(
-              icon: Icon(Icons.delete, color: errorColor),
+              icon: Icon(Icons.cancel, color: errorColor),
               onPressed: () => deleteIngredient(ingredientData.id),
             )),
       ],

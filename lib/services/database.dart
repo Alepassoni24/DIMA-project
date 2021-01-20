@@ -66,21 +66,22 @@ class DatabaseService {
   }
 
   // Update a user recipeNumber when a new recipe is inserted
-  Future<void> updateUserRecipe() async {
-    UserData userData = await getUser(uid).map(userDataFromSnapshot).first;
+  Future<void> updateUserRecipe(int value) async {
     return await userCollection.doc(uid).update({
-      'recipeNumber': userData.recipeNumber + 1,
+      'recipeNumber': FieldValue.increment(value),
     });
   }
 
   // Update a user rating and reviewNumber when a new review is inserted
   Future<void> updateUserRating(String userId, int userRating) async {
     UserData userData = await getUser(userId).map(userDataFromSnapshot).first;
-    double newRating = (userData.rating * userData.reviewNumber + userRating) /
-        (userData.reviewNumber + 1);
+    double newRating = userData.reviewNumber == 1
+        ? 0
+        : (userData.rating * userData.reviewNumber + userRating) /
+            (userData.reviewNumber + userRating > 0 ? 1 : -1);
     return await userCollection.doc(userId).update({
       'rating': newRating,
-      'reviewNumber': FieldValue.increment(1),
+      'reviewNumber': FieldValue.increment(userRating > 0 ? 1 : -1),
     });
   }
 
@@ -173,12 +174,13 @@ class DatabaseService {
   }
 
   Future<void> updateRecipeRating(RecipeData recipeData, int userRating) async {
-    double newRating =
-        (recipeData.rating * recipeData.reviewNumber + userRating) /
-            (recipeData.reviewNumber + 1);
+    double newRating = recipeData.reviewNumber == 1
+        ? 0
+        : (recipeData.rating * recipeData.reviewNumber + userRating) /
+            (recipeData.reviewNumber + userRating > 0 ? 1 : -1);
     return await recipeCollection.doc(recipeData.recipeId).update({
       'rating': newRating,
-      'reviewNumber': FieldValue.increment(1),
+      'reviewNumber': FieldValue.increment(userRating > 0 ? 1 : -1),
     });
   }
 

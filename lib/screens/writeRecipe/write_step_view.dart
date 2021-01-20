@@ -43,7 +43,7 @@ class WriteStepView extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: IconButton(
-                  icon: Icon(Icons.delete, color: errorColor),
+                  icon: Icon(Icons.cancel, color: errorColor),
                   onPressed: () => deleteStep(stepData.id),
                 )),
           ],

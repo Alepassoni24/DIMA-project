@@ -36,8 +36,10 @@ class WriteReviewViewState extends State<WriteReviewView> {
             return Loading();
 
           if (snapshot.data.docs.isNotEmpty)
-            return YourReviewView(databaseService
-                .reviewDataFromSnapshot(snapshot.data.docs.first));
+            return YourReviewView(
+                databaseService
+                    .reviewDataFromSnapshot(snapshot.data.docs.first),
+                deleteReview);
           else
             return ReviewForm(recipeData, refreshReview, databaseService);
         });
@@ -46,20 +48,35 @@ class WriteReviewViewState extends State<WriteReviewView> {
   void refreshReview() {
     setState(() {});
   }
+
+  // Delete review from Firebase Firestore and update rating
+  void deleteReview(ReviewData reviewData) {
+    databaseService.updateRecipeRating(recipeData, -reviewData.rating);
+    databaseService.updateUserRating(recipeData.authorId, -reviewData.rating);
+    databaseService.recipeCollection
+        .doc(recipeData.recipeId)
+        .collection('review')
+        .doc(reviewData.reviewId)
+        .delete();
+    refreshReview();
+  }
 }
 
 class YourReviewView extends StatelessWidget {
   final ReviewData reviewData;
+  final Function(ReviewData) deleteReview;
 
-  YourReviewView(this.reviewData);
+  YourReviewView(this.reviewData, this.deleteReview);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-            alignment: Alignment.centerLeft,
-            child: Text("Your review", style: titleStyle)),
+        Row(children: [
+          Text("Your review", style: titleStyle),
+          Spacer(),
+          DeleteIcon(() => deleteReview(reviewData)),
+        ]),
         Padding(
           padding: const EdgeInsets.all(5),
           child: ReviewCard(reviewData),
@@ -175,5 +192,46 @@ class ReviewFormState extends State<ReviewForm> {
       // Refresh recipe view with the new review
       refreshReview();
     }
+  }
+}
+
+class DeleteIcon extends StatelessWidget {
+  final Function() deleteReview;
+
+  DeleteIcon(this.deleteReview);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete, color: errorColor),
+      onPressed: () {
+        showDeleteDialog(context);
+      },
+    );
+  }
+
+  // Show a popup to ask confirmation of the deletion of the review
+  Future<void> showDeleteDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure you want to delete this review?'),
+          actions: <Widget>[
+            TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            TextButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  deleteReview();
+                  Navigator.of(context).pop();
+                }),
+          ],
+        );
+      },
+    );
   }
 }

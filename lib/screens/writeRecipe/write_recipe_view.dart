@@ -248,7 +248,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       }
 
       // Update author recipeNumber
-      databaseService.updateUserRecipe();
+      databaseService.updateUserRecipe(1);
 
       // Show the view of the recipe and then reset the form
       Navigator.pushNamed(context, '/recipeView', arguments: _recipeData)
@@ -288,6 +288,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         deleteImage(stepData.imageURL);
       }
       databaseService.recipeCollection.doc(_recipeData.recipeId).delete();
+      databaseService.updateUserRecipe(-1);
     }
     resetData();
   }
