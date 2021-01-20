@@ -153,12 +153,14 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     }
 
     // Add button
-    _ingredients.add(Padding(
-        padding: EdgeInsets.only(left: 2.5, right: 2.5),
-        child: FlatButton(
-            child: Icon(Icons.add_outlined),
-            minWidth: double.infinity,
-            onPressed: addIngredient)));
+    if (_ingredientsData.length < 30) {
+      _ingredients.add(Padding(
+          padding: EdgeInsets.only(left: 2.5, right: 2.5),
+          child: FlatButton(
+              child: Icon(Icons.add_outlined),
+              minWidth: double.infinity,
+              onPressed: addIngredient)));
+    }
     return _ingredients;
   }
 
@@ -184,13 +186,14 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     }
 
     // Add button
-    _steps.add(Padding(
-      padding: EdgeInsets.only(left: 2.5, right: 2.5),
-      child: FlatButton(
-          child: Icon(Icons.add_outlined),
-          minWidth: double.infinity,
-          onPressed: addStep),
-    ));
+    if (_stepsData.length < 20) {
+      _steps.add(Padding(
+          padding: EdgeInsets.only(left: 2.5, right: 2.5),
+          child: FlatButton(
+              child: Icon(Icons.add_outlined),
+              minWidth: double.infinity,
+              onPressed: addStep)));
+    }
     return _steps;
   }
 
