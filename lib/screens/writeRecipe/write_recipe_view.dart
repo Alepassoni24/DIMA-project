@@ -29,6 +29,13 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
 
   @override
+  void setState(function) {
+    if (mounted) {
+      super.setState(function);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     // The first time this widget is called check if it is a new recipe...
     if (_recipeData == null &&
@@ -210,8 +217,6 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     }
     if (_formKey.currentState.validate() && canSubmit) {
       // Submit recipe
-      _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
-      _recipeData.submissionTime = DateTime.now();
       if (_recipeData.imageFile != null) {
         // Delete the old recipe image if updating
         if (_recipeData.imageURL != null) {
@@ -222,6 +227,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       }
       // If the user is writing a new recipe add it to the database...
       if (_recipeData.recipeId == null) {
+        _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
+        _recipeData.submissionTime = DateTime.now();
         _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
       }
       // ... otherwise if the user is editing update the recipe and remove extra ingredients
@@ -254,8 +261,11 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       databaseService.updateUserRecipe(1);
 
       // Show the view of the recipe and then reset the form
-      Navigator.pushNamed(context, '/recipeView', arguments: _recipeData)
-          .then((_) => resetData());
+      RecipeData recipeCopy = _recipeData;
+      resetData();
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/recipeView', (route) => route.isFirst,
+          arguments: recipeCopy);
     }
   }
 
@@ -279,19 +289,19 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       _recipeData = RecipeData(difficulty: 0);
       _ingredientsData = [IngredientData(id: 1)];
       _stepsData = [StepData(id: 1)];
+      _formKey.currentState.reset();
     });
-    _formKey.currentState.reset();
   }
 
   // Delete recipe from Firebase Firestore if the user was editing one and reset the forms data
-  void deleteRecipe() {
+  void deleteRecipe() async {
     if (_recipeData.recipeId != null) {
       deleteImage(_recipeData.imageURL);
       for (StepData stepData in _stepsData) {
         deleteImage(stepData.imageURL);
       }
-      databaseService.recipeCollection.doc(_recipeData.recipeId).delete();
       databaseService.updateUserRecipe(-1);
+      await databaseService.deleteRecipe(_recipeData);
     }
     resetData();
   }

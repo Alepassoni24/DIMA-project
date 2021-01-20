@@ -158,6 +158,33 @@ class DatabaseService {
     });
   }
 
+// Remove ingredients, steps, reviews (with ratings rollback) and recipe from Firebase Firestore
+  Future<void> deleteRecipe(RecipeData recipeData) async {
+    await recipeCollection
+        .doc(recipeData.recipeId)
+        .collection('ingredient')
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference.delete();
+            }));
+    await recipeCollection
+        .doc(recipeData.recipeId)
+        .collection('step')
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              element.reference.delete();
+            }));
+    await recipeCollection
+        .doc(recipeData.recipeId)
+        .collection('review')
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              updateUserRating(recipeData.authorId, -element.data()['rating']);
+              element.reference.delete();
+            }));
+    return await recipeCollection.doc(recipeData.recipeId).delete();
+  }
+
   //get query of last num recipes
   Query getLastRecipes(int num) {
     return recipeCollection
