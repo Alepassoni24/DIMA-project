@@ -33,6 +33,7 @@ class DatabaseService {
       'rating': rating,
       'reviewNumber': reviewNum,
       'profilePhotoURL': profilePhotoURL,
+      'savedRecipes': List<String>(),
       'userRegisteredWithMail': userRegisteredWithMail,
     });
   }
@@ -51,6 +52,7 @@ class DatabaseService {
       rating: snapshot.get('rating').toDouble(),
       reviewNumber: snapshot.get('reviewNumber'),
       profilePhotoURL: snapshot.get('profilePhotoURL'),
+      savedRecipes: snapshot.get('savedRecipes').cast<String>(),
       userRegisteredWithMail: snapshot.get('userRegisteredWithMail'),
     );
   }
@@ -65,14 +67,14 @@ class DatabaseService {
     return userCollection.doc(userId).snapshots();
   }
 
-  // Update a user recipeNumber when a new recipe is inserted
+  // Update a user recipeNumber when a new recipe is inserted or deleted
   Future<void> updateUserRecipe(int value) async {
     return await userCollection.doc(uid).update({
       'recipeNumber': FieldValue.increment(value),
     });
   }
 
-  // Update a user rating and reviewNumber when a new review is inserted
+  // Update a user rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateUserRating(String userId, int userRating) async {
     UserData userData = await getUser(userId).map(userDataFromSnapshot).first;
     double newRating = userData.reviewNumber == 1
@@ -82,6 +84,20 @@ class DatabaseService {
     return await userCollection.doc(userId).update({
       'rating': newRating,
       'reviewNumber': FieldValue.increment(userRating > 0 ? 1 : -1),
+    });
+  }
+
+  // Add saved recipe
+  void addSavedRecipe(String recipeId) {
+    userCollection.doc(uid).update({
+      'savedRecipes': FieldValue.arrayUnion([recipeId])
+    });
+  }
+
+  // Remove saved recipe
+  void removeSavedRecipe(String recipeId) {
+    userCollection.doc(uid).update({
+      'savedRecipes': FieldValue.arrayRemove([recipeId])
     });
   }
 
@@ -200,6 +216,7 @@ class DatabaseService {
         .limit(num);
   }
 
+  // Update a recipe rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateRecipeRating(RecipeData recipeData, int userRating) async {
     double newRating = recipeData.reviewNumber == 1
         ? 0
