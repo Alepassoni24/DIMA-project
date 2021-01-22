@@ -12,6 +12,7 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/section_divider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class RecipeView extends StatelessWidget {
   final DatabaseService databaseService =
@@ -31,7 +32,7 @@ class RecipeView extends StatelessWidget {
           if (recipeData.authorId == FirebaseAuth.instance.currentUser.uid)
             EditIcon(recipeData),
           SaveIcon(databaseService, recipeData.recipeId),
-          ShareIcon(),
+          ShareIcon(recipeData.title),
         ],
       ),
       body: Center(
@@ -138,12 +139,16 @@ class SaveIconState extends State<SaveIcon> {
 }
 
 class ShareIcon extends StatelessWidget {
+  final String recipeTitle;
+
+  ShareIcon(this.recipeTitle);
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.share),
       onPressed: () {
-        // TODO: Add actual behavior of the Share icon
+        Share.share("Check out " + recipeTitle + " on CookingTime!");
       },
     );
   }

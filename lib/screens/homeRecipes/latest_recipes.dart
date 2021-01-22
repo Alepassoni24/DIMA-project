@@ -10,7 +10,7 @@ class LatestRecipes extends StatefulWidget {
 }
 
 class LatestRecipesState extends State<LatestRecipes> {
-  List<RecipeData> recipesList;
+  List<RecipeData> recipesList = List();
   final DatabaseService databaseService = new DatabaseService();
   final ScrollController scrollController = ScrollController();
 
