@@ -7,8 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Cooking Time"
-        android:icon="@mipmap/ic_launcher">
+        android:label="CookingTime"
+        android:icon="@mipmap/laucher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -46,7 +46,7 @@
 
         <!--Facebook login requirements-->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/> 
-        <activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" /> 
+        <activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="CookingTime" /> 
         <activity android:name="com.facebook.CustomTabActivity" android:exported="true"> 
           <intent-filter> 
             <action android:name="android.intent.action.VIEW" /> 
@@ -62,3 +62,4 @@
   <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
+

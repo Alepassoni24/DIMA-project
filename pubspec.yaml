@@ -41,13 +41,19 @@ dependencies:
   intl: ^0.16.1
   flutter_launcher_name: ^0.0.1
   share: ^0.6.5+4
+  flutter_launcher_icons: ^0.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "laucher_icon"
+  ios: true
+  image_path: "assets/cookingTime_logo.png"
+
 flutter_launcher_name:
-  name: "Cooking Time"
+  name: "CookingTime"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
