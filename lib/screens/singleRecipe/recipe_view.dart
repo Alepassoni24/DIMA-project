@@ -12,9 +12,11 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/section_divider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class RecipeView extends StatelessWidget {
-  final DatabaseService databaseService = new DatabaseService();
+  final DatabaseService databaseService =
+      new DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
   final ScrollController scrollController = new ScrollController();
 
   @override
@@ -29,8 +31,8 @@ class RecipeView extends StatelessWidget {
         actions: [
           if (recipeData.authorId == FirebaseAuth.instance.currentUser.uid)
             EditIcon(recipeData),
-          SaveIcon(),
-          ShareIcon(),
+          SaveIcon(databaseService, recipeData.recipeId),
+          ShareIcon(recipeData.title),
         ],
       ),
       body: Center(
@@ -94,37 +96,59 @@ class EditIcon extends StatelessWidget {
 }
 
 class SaveIcon extends StatefulWidget {
+  final DatabaseService databaseService;
+  final String recipeId;
+
+  SaveIcon(this.databaseService, this.recipeId);
+
   @override
-  SaveIconState createState() => SaveIconState();
+  SaveIconState createState() => SaveIconState(databaseService, recipeId);
 }
 
 class SaveIconState extends State<SaveIcon> {
-  IconData icon = Icons.bookmark_outline;
+  final DatabaseService databaseService;
+  final String recipeId;
+  bool isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    databaseService.userData.first.then((value) =>
+        setState(() => isSaved = value.savedRecipes.contains(recipeId)));
+  }
+
+  SaveIconState(this.databaseService, this.recipeId);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(icon),
+      icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_outline),
       onPressed: () {
-        // TODO: Add actual behavior of the Save icon
-        setState(() => {
-              if (icon == Icons.bookmark_outline)
-                icon = Icons.bookmark
-              else
-                icon = Icons.bookmark_outline
-            });
+        setState(() {
+          if (isSaved) {
+            isSaved = false;
+            databaseService.removeSavedRecipe(recipeId);
+          } else {
+            isSaved = true;
+            databaseService.addSavedRecipe(recipeId);
+          }
+        });
       },
     );
   }
 }
 
 class ShareIcon extends StatelessWidget {
+  final String recipeTitle;
+
+  ShareIcon(this.recipeTitle);
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.share),
       onPressed: () {
-        // TODO: Add actual behavior of the Share icon
+        Share.share("Check out " + recipeTitle + " on CookingTime!");
       },
     );
   }

@@ -20,7 +20,7 @@ class WriteStepView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      key: Key(stepData.key),
+      key: stepData.key,
       children: [
         Row(
           children: [

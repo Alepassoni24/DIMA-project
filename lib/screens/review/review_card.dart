@@ -4,7 +4,6 @@ import 'package:dima_project/model/user_obj.dart';
 import 'package:dima_project/services/database.dart';
 import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
