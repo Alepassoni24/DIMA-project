@@ -9,9 +9,9 @@ class CircleNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        child: Text(number, style: titleStyle),
+        child: Text(number, style: textButtonStyle),
         radius: 15,
-        backgroundColor: Colors.orange[500],
+        backgroundColor: mainAppColor,
         foregroundColor: Colors.black);
   }
 }

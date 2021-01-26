@@ -294,9 +294,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.orange[400],
+        backgroundColor: mainAppColor,
         elevation: 0.0,
         title: Text('Search for recipes'),
         actions: [

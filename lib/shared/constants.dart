@@ -17,6 +17,23 @@ const TextStyle subtitleStyle =
     TextStyle(fontSize: 17.5, fontWeight: FontWeight.bold);
 const TextStyle descriptionStyle = TextStyle(fontSize: 17.5);
 final TextStyle errorStyle = TextStyle(fontSize: 12, color: errorColor);
+//main button text style
+final TextStyle textButtonStyle = TextStyle(
+  fontSize: 16.0,
+  color: Colors.white,
+  fontWeight: FontWeight.w500,
+);
+//text style for user page
+final TextStyle numberDataStyle = TextStyle(
+  color: Colors.grey[600],
+  fontSize: 20,
+);
+
+final TextStyle informationDataStyle = TextStyle(
+  color: Colors.grey[600],
+  fontSize: 17,
+  fontWeight: FontWeight.bold,
+);
 
 // List of possible categories for a recipe
 const List<String> categories = [
@@ -40,25 +57,6 @@ final Color mainAppColor = Colors.orange[400];
 final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(15.0),
     side: BorderSide(color: mainAppColor));
-
-//main button text style
-final TextStyle textButtonStyle = TextStyle(
-  fontSize: 16.0,
-  color: Colors.white,
-  fontWeight: FontWeight.w500,
-);
-
-//text style for user page
-final TextStyle numberDataStyle = TextStyle(
-  color: Colors.grey[600],
-  fontSize: 20,
-);
-
-final TextStyle informationDataStyle = TextStyle(
-  color: Colors.grey[600],
-  fontSize: 17,
-  fontWeight: FontWeight.bold,
-);
 
 //orange divider for profile page
 final Divider orangeDivider = Divider(

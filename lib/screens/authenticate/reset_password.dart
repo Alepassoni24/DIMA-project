@@ -26,10 +26,10 @@ class _ResetPasswordState extends State<ResetPassword> {
         : Scaffold(
             appBar: AppBar(
               title: Text('Forgot password'),
-              backgroundColor: Colors.orange[400],
+              backgroundColor: mainAppColor,
               elevation: 0.0,
             ),
-            backgroundColor: Colors.orange[50],
+            backgroundColor: backgroundColor,
             body: Container(
               padding: EdgeInsets.symmetric(
                 vertical: 20.0,
@@ -42,15 +42,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 2.0,
-                      ),
+                      SizedBox(height: 2.0),
                       WarningAlert(
                         warning: message,
                       ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
+                      SizedBox(height: 20.0),
                       //field for email
                       TextFormField(
                         validator: EmailFieldValidator.validate,
@@ -62,21 +58,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                           setState(() => email = val);
                         },
                       ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
+                      SizedBox(height: 15.0),
                       //button to activate the forgotten password procedure
                       RaisedButton(
                         color: Colors.orange[400],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            side: BorderSide(color: Colors.orange[400])),
+                        shape: roundedBorder,
                         child: Text(
                           'Send reset password email',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
+                          style: textButtonStyle,
                         ),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dima_project/main.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
@@ -66,9 +67,9 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
     // Return the widget
     return Scaffold(
-        backgroundColor: Colors.orange[50],
+        backgroundColor: backgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.orange[400],
+          backgroundColor: mainAppColor,
           elevation: 0,
           title: Text('Write a recipe'),
           actions: [
@@ -128,8 +129,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                       ...getStepsWidgetList(),
                       SectionDivider(),
                       FlatButton(
-                          child: Text("SUBMIT RECIPE", style: titleStyle),
-                          color: Colors.orange[300],
+                          child: Text("Submit", style: textButtonStyle),
+                          color: mainAppColor,
                           minWidth: double.infinity,
                           onPressed: submitRecipe),
                     ])))));

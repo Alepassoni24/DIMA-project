@@ -1,6 +1,7 @@
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/homeRecipes/recipe_card.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,9 @@ class LatestRecipesState extends State<LatestRecipes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.orange[50],
+        backgroundColor: backgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.orange[400],
+          backgroundColor: mainAppColor,
           elevation: 0.0,
           title: Text('Home'),
         ),

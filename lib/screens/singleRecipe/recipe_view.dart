@@ -23,9 +23,9 @@ class RecipeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final RecipeData recipeData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.orange[400],
+        backgroundColor: mainAppColor,
         elevation: 0.0,
         title: Text(recipeData.title),
         actions: [
