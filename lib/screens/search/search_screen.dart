@@ -142,9 +142,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     //selection of the course category
                     Text('Select course:'),
                     DropdownButtonFormField(
@@ -172,7 +170,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       min: 0,
                       max: 240,
                       divisions: 240,
-                      activeColor: Colors.orange[400],
+                      activeColor: mainAppColor,
                       inactiveColor: Colors.orange[100],
                       label: _currentRangeValues.toString(),
                       onChanged: (value) {
@@ -190,7 +188,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         Checkbox(
                             value: _isVegan,
-                            activeColor: Colors.orange[400],
+                            activeColor: mainAppColor,
                             onChanged: (value) {
                               setState(() => _isVegan = value);
                               setModalState(() {
@@ -200,7 +198,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         Text('Vegan'),
                         Checkbox(
                             value: _isVegetarian,
-                            activeColor: Colors.orange[400],
+                            activeColor: mainAppColor,
                             onChanged: (value) {
                               setState(() => _isVegetarian = value);
                               setModalState(() {
@@ -215,7 +213,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         Checkbox(
                             value: _isGlutenFree,
-                            activeColor: Colors.orange[400],
+                            activeColor: mainAppColor,
                             onChanged: (value) {
                               setState(() => _isGlutenFree = value);
                               setModalState(() {
@@ -225,7 +223,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         Text('Gluten free'),
                         Checkbox(
                             value: _isLactoseFree,
-                            activeColor: Colors.orange[400],
+                            activeColor: mainAppColor,
                             onChanged: (value) {
                               setState(() => _isLactoseFree = value);
                               setModalState(() {
@@ -235,9 +233,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         Text('Lactose free'),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     //menu for ordering parameter
                     Text('Ordered by:'),
                     DropdownButtonFormField(
@@ -255,14 +251,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     FlatButton(
-                      color: Colors.orange[400],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          side: BorderSide(color: Colors.orange[400])),
+                      color: mainAppColor,
+                      shape: roundedBorder,
                       onPressed: () {
                         Navigator.of(context).pop();
                         fetchFirstDocuments(
@@ -279,13 +271,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         children: [
                           Icon(
                             Icons.filter_alt,
-                            color: Colors.grey[800],
+                            color: Colors.white,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text(
                               'Filter',
-                              style: TextStyle(color: Colors.grey[800]),
+                              style: textButtonStyle,
                             ),
                           ),
                         ],

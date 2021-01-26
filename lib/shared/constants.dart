@@ -33,3 +33,37 @@ const List<Color> difficultyColors = [Colors.yellow, Colors.orange, Colors.red];
 final Color ratingStarColor = Colors.orange[500];
 
 final Color errorColor = Colors.red[700];
+
+//Colors of main app component
+final Color backgroundColor = Colors.orange[50];
+final Color mainAppColor = Colors.orange[400];
+final RoundedRectangleBorder roundedBorder = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15.0),
+    side: BorderSide(color: mainAppColor));
+
+//main button text style
+final TextStyle textButtonStyle = TextStyle(
+  fontSize: 16.0,
+  color: Colors.white,
+  fontWeight: FontWeight.w500,
+);
+
+//text style for user page
+final TextStyle numberDataStyle = TextStyle(
+  color: Colors.grey[600],
+  fontSize: 20,
+);
+
+final TextStyle informationDataStyle = TextStyle(
+  color: Colors.grey[600],
+  fontSize: 17,
+  fontWeight: FontWeight.bold,
+);
+
+//orange divider for profile page
+final Divider orangeDivider = Divider(
+  color: mainAppColor,
+  thickness: 1.5,
+  indent: 15,
+  endIndent: 15,
+);

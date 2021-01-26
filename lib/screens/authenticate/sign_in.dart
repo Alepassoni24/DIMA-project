@@ -27,7 +27,7 @@ class _SignInState extends State<SignIn> {
         ? Loading()
         : SafeArea(
             child: Scaffold(
-                backgroundColor: Colors.orange[50],
+                backgroundColor: backgroundColor,
                 body: Center(
                   child: Container(
                       padding: EdgeInsets.symmetric(
@@ -41,24 +41,18 @@ class _SignInState extends State<SignIn> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 2.0,
-                              ),
+                              SizedBox(height: 2.0),
                               WarningAlert(
                                 warning: error,
                               ),
-                              SizedBox(
-                                height: 2.0,
-                              ),
+                              SizedBox(height: 2.0),
                               //logo of the application
                               Image(
                                 image:
                                     AssetImage("assets/cookingTime_logo.png"),
                                 height: 150.0,
                               ),
-                              SizedBox(
-                                height: 20.0,
-                              ),
+                              SizedBox(height: 20.0),
                               //field for email
                               TextFormField(
                                 validator: EmailFieldValidator.validate,
@@ -70,9 +64,7 @@ class _SignInState extends State<SignIn> {
                                   setState(() => email = val);
                                 },
                               ),
-                              SizedBox(
-                                height: 15.0,
-                              ),
+                              SizedBox(height: 15.0),
                               //field for password
                               TextFormField(
                                 validator: PasswordFieldValidator.validate,
@@ -85,22 +77,14 @@ class _SignInState extends State<SignIn> {
                                   setState(() => password = val);
                                 },
                               ),
-                              SizedBox(
-                                height: 15.0,
-                              ),
+                              SizedBox(height: 15.0),
                               //button of the login routine
                               RaisedButton(
                                 color: Colors.orange[400],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side:
-                                        BorderSide(color: Colors.orange[400])),
+                                shape: roundedBorder,
                                 child: Text(
                                   'Sign in',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                  ),
+                                  style: textButtonStyle,
                                 ),
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
@@ -143,9 +127,7 @@ class _SignInState extends State<SignIn> {
                                   Navigator.pushNamed(context, '/register');
                                 },
                               ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
+                              SizedBox(height: 5.0),
                               Row(
                                 children: [
                                   Expanded(
@@ -177,9 +159,7 @@ class _SignInState extends State<SignIn> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
+                              SizedBox(height: 5.0),
                               //button for facebook login
                               ButtonTheme(
                                 minWidth: 225.0,
@@ -202,10 +182,7 @@ class _SignInState extends State<SignIn> {
                                             const EdgeInsets.only(left: 10.0),
                                         child: Text(
                                           'Sign in with Facebook',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                          ),
+                                          style: textButtonStyle,
                                         ),
                                       ),
                                     ],
@@ -224,9 +201,7 @@ class _SignInState extends State<SignIn> {
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
+                              SizedBox(height: 5.0),
                               //button for google login
                               ButtonTheme(
                                 minWidth: 225.0,
@@ -252,11 +227,7 @@ class _SignInState extends State<SignIn> {
                                           ),
                                           child: Text(
                                             'Sign in with Google',
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            style: textButtonStyle,
                                           ),
                                         ),
                                       ]),

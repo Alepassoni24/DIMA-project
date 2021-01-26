@@ -3,6 +3,7 @@ import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
 import 'package:dima_project/screens/userProfile/user_setting.dart';
 import 'package:dima_project/services/auth.dart';
 import 'package:dima_project/services/database.dart';
+import 'package:dima_project/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +24,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Provider<DatabaseService>.value(
       value: databaseService,
       child: Scaffold(
-        backgroundColor: Colors.orange[50],
+        backgroundColor: backgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.orange[400],
+          backgroundColor: mainAppColor,
           title: Text('User profile page'),
           elevation: 0,
           actions: [
@@ -57,29 +58,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 25.0,
-                ),
+                SizedBox(height: 25.0),
                 UserProfileInfo(),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Divider(
-                  color: Colors.orange[400],
-                  thickness: 1.5,
-                  indent: 15,
-                  endIndent: 15,
-                ),
+                SizedBox(height: 10.0),
+                orangeDivider,
                 UserStatistics(),
-                Divider(
-                  color: Colors.orange[400],
-                  thickness: 1.5,
-                  indent: 15,
-                  endIndent: 15,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
+                orangeDivider,
+                SizedBox(height: 5),
                 Text(
                   'Your recipes:',
                   style: TextStyle(
@@ -121,9 +106,7 @@ class UserProfileInfo extends StatelessWidget {
                     backgroundImage:
                         NetworkImage(snapshot.data.profilePhotoURL),
                   ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                SizedBox(height: 10.0),
                 Text(
                   '${snapshot.data.username}',
                   style: TextStyle(
@@ -160,18 +143,11 @@ class UserStatistics extends StatelessWidget {
                   children: [
                     Text(
                       'Recipes',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: informationDataStyle,
                     ),
                     Text(
                       '${snapshot.data.recipeNumber}',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+                      style: numberDataStyle,
                     ),
                   ],
                 ),
@@ -180,18 +156,11 @@ class UserStatistics extends StatelessWidget {
                   children: [
                     Text(
                       'Reviews',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: informationDataStyle,
                     ),
                     Text(
                       '${snapshot.data.reviewNumber}',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 20,
-                      ),
+                      style: numberDataStyle,
                     ),
                   ],
                 ),
@@ -200,25 +169,18 @@ class UserStatistics extends StatelessWidget {
                   children: [
                     Text(
                       'Rating',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: informationDataStyle,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           '${snapshot.data.rating}',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 20,
-                          ),
+                          style: numberDataStyle,
                         ),
                         Icon(
                           Icons.star_half,
-                          color: Colors.orange[400],
+                          color: mainAppColor,
                         ),
                       ],
                     ),

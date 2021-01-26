@@ -28,9 +28,9 @@ class _RegisterState extends State<Register> {
         ? Loading()
         : SafeArea(
             child: Scaffold(
-                backgroundColor: Colors.orange[50],
+                backgroundColor: backgroundColor,
                 appBar: AppBar(
-                  backgroundColor: Colors.orange[400],
+                  backgroundColor: mainAppColor,
                   elevation: 0.0,
                   title: Text('Register to CookingTime'),
                 ),
@@ -43,21 +43,16 @@ class _RegisterState extends State<Register> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            SizedBox(
-                              height: 2.0,
-                            ),
+                            SizedBox(height: 2.0),
                             WarningAlert(
                               warning: error,
                             ),
-                            SizedBox(
-                              height: 2.0,
+                            SizedBox(height: 2.0),
+                            Image(
+                              image: AssetImage("assets/cookingTime_logo.png"),
+                              height: 150.0,
                             ),
-                            FlutterLogo(
-                              size: 125,
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
+                            SizedBox(height: 20.0),
                             //field for username
                             TextFormField(
                               decoration: textInputDecoration.copyWith(
@@ -69,9 +64,7 @@ class _RegisterState extends State<Register> {
                                 setState(() => username = val);
                               },
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
+                            SizedBox(height: 15.0),
                             //field for email
                             TextFormField(
                               decoration: textInputDecoration.copyWith(
@@ -83,9 +76,7 @@ class _RegisterState extends State<Register> {
                                 setState(() => email = val);
                               },
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
+                            SizedBox(height: 15.0),
                             //field for password
                             TextFormField(
                               decoration: textInputDecoration.copyWith(
@@ -98,15 +89,11 @@ class _RegisterState extends State<Register> {
                                 setState(() => password = val);
                               },
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
+                            SizedBox(height: 15.0),
                             //button for the registration routine
                             RaisedButton(
-                              color: Colors.orange[400],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  side: BorderSide(color: Colors.orangeAccent)),
+                              color: mainAppColor,
+                              shape: roundedBorder,
                               child: Text(
                                 'Register',
                                 style: TextStyle(

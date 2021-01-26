@@ -93,9 +93,9 @@ class _UserSettingsState extends State<UserSettings> {
               firstBuilt = false;
             }
             return Scaffold(
-              backgroundColor: Colors.orange[50],
+              backgroundColor: backgroundColor,
               appBar: AppBar(
-                backgroundColor: Colors.orange[400],
+                backgroundColor: mainAppColor,
                 title: Text('User settings'),
                 elevation: 0,
                 actions: [
@@ -137,15 +137,11 @@ class _UserSettingsState extends State<UserSettings> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 2.0,
-                        ),
+                        SizedBox(height: 2.0),
                         WarningAlert(
                           warning: error,
                         ),
-                        SizedBox(
-                          height: 2.0,
-                        ),
+                        SizedBox(height: 2.0),
                         //box which contains the user profile picture
                         InkWell(
                           child:
@@ -167,9 +163,7 @@ class _UserSettingsState extends State<UserSettings> {
                                         ),
                           onTap: () => _showChoosingPanel(),
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
+                        SizedBox(height: 10.0),
                         //field for username
                         TextFormField(
                           validator: UsernameFieldValidator.validate,
@@ -182,9 +176,7 @@ class _UserSettingsState extends State<UserSettings> {
                             setState(() => username = val);
                           },
                         ),
-                        SizedBox(
-                          height: 50,
-                        ),
+                        SizedBox(height: 50),
                         //optional part for password changes
                         if (snapshot.data.userRegisteredWithMail)
                           Text(
