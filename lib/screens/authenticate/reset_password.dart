@@ -65,6 +65,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       SizedBox(
                         height: 15.0,
                       ),
+                      //button to activate the forgotten password procedure
                       RaisedButton(
                         color: Colors.orange[400],
                         shape: RoundedRectangleBorder(

@@ -13,6 +13,7 @@ class DatabaseService {
   final CollectionReference recipeCollection =
       FirebaseFirestore.instance.collection('recipe');
 
+  //function which updates the username and the URL of the user profile on the database
   Future updateUserData(String username, String profilePhotoURL) async {
     return await userCollection.doc(uid).update({
       'username': username,
@@ -20,6 +21,7 @@ class DatabaseService {
     });
   }
 
+  //funtion which inserts information about a user at the fist login
   Future insertUserData(
       String username,
       int recipeNum,

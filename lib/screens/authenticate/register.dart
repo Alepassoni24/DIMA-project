@@ -101,6 +101,7 @@ class _RegisterState extends State<Register> {
                             SizedBox(
                               height: 15.0,
                             ),
+                            //button for the registration routine
                             RaisedButton(
                               color: Colors.orange[400],
                               shape: RoundedRectangleBorder(

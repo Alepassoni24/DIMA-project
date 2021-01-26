@@ -18,6 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
+    //adding a scroll controller in order to implement incremental sscrolling and query of recipes
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
@@ -35,7 +36,10 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  //variable to represent maximum of the range time for a recipe
   double _currentRangeValues = 240;
+
+  //list of courses available
   final List<String> course = [
     "Any",
     "First course",
@@ -44,15 +48,22 @@ class _SearchScreenState extends State<SearchScreen> {
     "Side dish",
     "Dessert"
   ];
+
+  //list of possible ordering parameters
   final List<String> ordering = ["submissionTime", "rating"];
+
+  //boolean value of dish categories
   bool _isVegan = false;
   bool _isVegetarian = false;
   bool _isGlutenFree = false;
   bool _isLactoseFree = false;
+
+  //initial vale of filter variable
   String _category = "Any";
   String _orderBy = "submissionTime";
   int _difficulty = 2;
 
+  //bottom panel in order to provide all the filter parameters selection
   void _showFilterPanel() {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -134,6 +145,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    //selection of the course category
                     Text('Select course:'),
                     DropdownButtonFormField(
                       value: _category,
@@ -153,6 +165,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    //slider of the maximum preparing time
                     Text('Preparing time range (minutes):'),
                     Slider(
                       value: _currentRangeValues,
@@ -171,6 +184,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
+                    //check boxes for type of dishes
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -224,6 +238,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    //menu for ordering parameter
                     Text('Ordered by:'),
                     DropdownButtonFormField(
                       value: _orderBy,
@@ -299,6 +314,7 @@ class _SearchScreenState extends State<SearchScreen> {
           )
         ],
       ),
+      //the widget show a default message if no recipes are filtered
       body: recipesList.isEmpty
           ? Center(
               child: Row(
@@ -324,7 +340,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  // Fetch first 10 documents
+  // Fetch first 10 documents basing on filter parameter
   Future<void> fetchFirstDocuments(
       String order,
       double timing,

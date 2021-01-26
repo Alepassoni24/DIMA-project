@@ -50,6 +50,7 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 2.0,
                               ),
+                              //logo of the application
                               Image(
                                 image:
                                     AssetImage("assets/cookingTime_logo.png"),
@@ -87,6 +88,7 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 15.0,
                               ),
+                              //button of the login routine
                               RaisedButton(
                                 color: Colors.orange[400],
                                 shape: RoundedRectangleBorder(
@@ -117,6 +119,7 @@ class _SignInState extends State<SignIn> {
                                   }
                                 },
                               ),
+                              //button for user which want ot reset the forgotten password
                               FlatButton(
                                 child: Text(
                                   'Forgot password?',
@@ -128,6 +131,7 @@ class _SignInState extends State<SignIn> {
                                   Navigator.pushNamed(context, '/resetPsw');
                                 },
                               ),
+                              //button for user who wants to create a new account
                               FlatButton(
                                 child: Text(
                                   'If do not have an account register here',
@@ -176,6 +180,7 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 5.0,
                               ),
+                              //button for facebook login
                               ButtonTheme(
                                 minWidth: 225.0,
                                 child: RaisedButton(
@@ -222,6 +227,7 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 5.0,
                               ),
+                              //button for google login
                               ButtonTheme(
                                 minWidth: 225.0,
                                 child: RaisedButton(

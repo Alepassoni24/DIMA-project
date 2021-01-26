@@ -29,6 +29,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           title: Text('User profile page'),
           elevation: 0,
           actions: [
+            //setting page button
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
@@ -41,6 +42,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             )));
               },
             ),
+            //signout button
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {

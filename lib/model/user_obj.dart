@@ -9,13 +9,21 @@ class UserObj {
 }
 
 class UserData {
+  //user uid
   final String uid;
+  //user username
   final String username;
+  //URL of user profile picture
   String profilePhotoURL;
+  //number of recipes uploaded by the user
   int recipeNumber;
+  //number of reviews received by the user
   int reviewNumber;
+  //avarage of user recipe rating
   double rating;
+  //list of recipes which the user want to store
   List<String> savedRecipes;
+  //boolean to represent channel of registration
   final bool userRegisteredWithMail;
 
   UserData(

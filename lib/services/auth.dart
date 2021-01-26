@@ -16,6 +16,7 @@ class AuthService {
     return user != null ? UserObj(uid: user.uid) : null;
   }
 
+  //retrieve the current user
   Future getCurrentUser() async {
     return _auth.currentUser;
   }

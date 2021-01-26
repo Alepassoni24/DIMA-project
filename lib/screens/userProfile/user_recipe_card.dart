@@ -27,11 +27,12 @@ class UserRecipeCard extends StatelessWidget {
                     child: ImageContainer(recipeData.imageURL),
                   ),
                   TitleListTile(
-                      recipeData.title,
-                      recipeData.rating,
-                      DateTime.fromMicrosecondsSinceEpoch(
-                          recipeData.submissionTime.microsecondsSinceEpoch),
-                      'TODO'),
+                    recipeData.title,
+                    recipeData.rating,
+                    DateTime.fromMicrosecondsSinceEpoch(
+                        recipeData.submissionTime.microsecondsSinceEpoch),
+                    recipeData.reviewNumber.toString(),
+                  ),
                 ],
               )
             ],

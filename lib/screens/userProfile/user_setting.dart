@@ -37,6 +37,7 @@ class _UserSettingsState extends State<UserSettings> {
   Widget build(BuildContext context) {
     final databaseService = Provider.of<DatabaseService>(context);
 
+    //bottom menu in order to select the source of new profile picture
     void _showChoosingPanel() {
       showModalBottomSheet(
           context: context,
@@ -84,6 +85,7 @@ class _UserSettingsState extends State<UserSettings> {
         stream: databaseService.userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            //defualt procedure for the first built of the widget
             if (firstBuilt) {
               username = snapshot.data.username;
               profilePhotoURL = snapshot.data.profilePhotoURL;
@@ -100,17 +102,22 @@ class _UserSettingsState extends State<UserSettings> {
                   IconButton(
                     icon: Icon(Icons.save),
                     onPressed: () async {
+                      //if is present a new password the respective routine starts
                       if (newPassword != null) {
                         validateAndUpdatePassword();
                       }
 
+                      //if is present a new profile picture the respective routine starts
                       if (image != null) {
                         await uploadImage();
                         await deleteOldImage();
                       }
+
+                      //username and profile photo URL are updated
                       await databaseService.updateUserData(
                           username, profilePhotoURL);
 
+                      //if all the chages are made without error the page is pop
                       if (error == null) {
                         Navigator.of(context).pop();
                       }
@@ -139,6 +146,7 @@ class _UserSettingsState extends State<UserSettings> {
                         SizedBox(
                           height: 2.0,
                         ),
+                        //box which contains the user profile picture
                         InkWell(
                           child:
                               profilePhotoURL == null && profilePhotoURI == null
@@ -177,6 +185,7 @@ class _UserSettingsState extends State<UserSettings> {
                         SizedBox(
                           height: 50,
                         ),
+                        //optional part for password changes
                         if (snapshot.data.userRegisteredWithMail)
                           Text(
                             'change your password',
@@ -246,7 +255,6 @@ class _UserSettingsState extends State<UserSettings> {
     });
   }
 
-//TODO fix it
   //Function to upload the new profile photo onto the storage
   Future uploadImage() async {
     //create a referenco fot the image into the storage
