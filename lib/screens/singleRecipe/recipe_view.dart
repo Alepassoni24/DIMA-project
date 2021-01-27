@@ -197,10 +197,16 @@ class AuthorImage extends StatelessWidget {
             children: [
               Text(user.username, style: titleStyle),
               Spacer(),
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(user.profilePhotoURL),
-              ),
+              user.profilePhotoURL != null
+                  ? CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(user.profilePhotoURL),
+                    )
+                  : Icon(
+                      Icons.account_circle_outlined,
+                      size: 60,
+                      color: Colors.grey[600],
+                    ),
             ],
           );
         });

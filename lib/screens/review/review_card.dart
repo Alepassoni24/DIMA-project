@@ -28,10 +28,16 @@ class ReviewCard extends StatelessWidget {
           return Column(children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: NetworkImage(user.profilePhotoURL),
-                ),
+                user.profilePhotoURL != null
+                    ? CircleAvatar(
+                        radius: 25,
+                        backgroundImage: NetworkImage(user.profilePhotoURL),
+                      )
+                    : Icon(
+                        Icons.account_circle_outlined,
+                        size: 50,
+                        color: Colors.grey[600],
+                      ),
                 SizedBox(width: 12.5),
                 Text(user.username, style: subtitleStyle),
                 Spacer(),

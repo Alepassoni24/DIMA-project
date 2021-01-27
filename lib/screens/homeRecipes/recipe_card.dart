@@ -62,10 +62,16 @@ class TitleListTile extends StatelessWidget {
               databaseService.userDataFromSnapshot(snapshot.data);
 
           return ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(user.profilePhotoURL),
-            ),
+            leading: user.profilePhotoURL != null
+                ? CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(user.profilePhotoURL),
+                  )
+                : Icon(
+                    Icons.account_circle_outlined,
+                    size: 60,
+                    color: Colors.grey[600],
+                  ),
             title: Text(recipeData.title),
             subtitle: Text(recipeData.subtitle),
             trailing: Column(
