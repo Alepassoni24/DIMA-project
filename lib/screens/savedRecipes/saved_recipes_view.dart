@@ -33,6 +33,13 @@ class SavedRecipesViewState extends State<SavedRecipesView> {
   }
 
   @override
+  void setState(function) {
+    if (mounted) {
+      super.setState(function);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: backgroundColor,

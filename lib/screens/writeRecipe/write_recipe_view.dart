@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dima_project/main.dart';
 import 'package:dima_project/model/recipe_obj.dart';
 import 'package:dima_project/screens/writeRecipe/text_form_fields.dart';
 import 'package:dima_project/screens/writeRecipe/write_ingredient_view.dart';
