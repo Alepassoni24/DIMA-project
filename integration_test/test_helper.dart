@@ -13,10 +13,10 @@ Future<void> ensureIsLoggedInWithTestAccount(WidgetTester tester) async {
 
   // Then do the login with the tester account
   await tester.enterText(
-      find.byType(TextFormField).at(0), 'test@test.com'); // Enter email
+      find.byType(TextFormField).first, 'test@test.com'); // Enter email
   await tester.enterText(
       find.byType(TextFormField).at(1), '123456789'); // Enter password
-  await tester.tap(find.byType(RaisedButton).at(0)); // Sign in
+  await tester.tap(find.byType(RaisedButton).first); // Sign in
   await tester.pumpAndSettle(); // Wait for the animation to end
 
   // Now me must be in the homepage, in the LatestRecipes view

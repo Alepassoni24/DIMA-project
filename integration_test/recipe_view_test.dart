@@ -29,7 +29,7 @@ void main() {
     expect(find.byType(RecipeCard), findsWidgets);
 
     // Tap the first recipe card
-    await tester.tap(find.byType(RecipeCard).at(0));
+    await tester.tap(find.byType(RecipeCard).first);
     await tester.pumpAndSettle();
 
     // Check if it is in RecipeView
@@ -39,10 +39,10 @@ void main() {
     Finder scrollable = find.byType(Scrollable).first;
 
     // Check if the various sections are loaded
-    expect(find.byType(MainPhoto, skipOffstage: false), findsOneWidget);
-    expect(find.byType(AuthorImage, skipOffstage: false), findsOneWidget);
+    expect(find.byType(MainPhoto), findsOneWidget);
+    expect(find.byType(AuthorImage), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.byType(Servings, skipOffstage: false), 1,
+        find.byType(Servings, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(Category, skipOffstage: false), findsOneWidget);
@@ -50,25 +50,25 @@ void main() {
     expect(find.byType(Time, skipOffstage: false), findsOneWidget);
     expect(find.byType(Servings, skipOffstage: false), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.byType(IngredientsView, skipOffstage: false), 1,
+        find.byType(IngredientsView, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(IngredientsView, skipOffstage: false), findsOneWidget);
     expect(find.byType(IngredientView, skipOffstage: false), findsWidgets);
     await tester.scrollUntilVisible(
-        find.byType(StepsView, skipOffstage: false), 1,
+        find.byType(StepsView, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(StepsView, skipOffstage: false), findsOneWidget);
     expect(find.byType(StepView, skipOffstage: false), findsWidgets);
     await tester.scrollUntilVisible(
-        find.byType(WriteReviewView, skipOffstage: false), 1,
+        find.byType(WriteReviewView, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(WriteReviewView, skipOffstage: false), findsOneWidget);
     expect(find.byType(ReviewForm, skipOffstage: false), findsOneWidget);
     await tester.scrollUntilVisible(
-        find.byType(ReviewView, skipOffstage: false), 1,
+        find.byType(ReviewView, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(ReviewView, skipOffstage: false), findsOneWidget);
