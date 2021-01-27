@@ -133,8 +133,9 @@ class ReviewFormState extends State<ReviewForm> {
               DescriptionFieldValidator.validate),
         ),
         FlatButton(
-          child: Text("SUBMIT REVIEW", style: titleStyle),
-          color: Colors.orange[300],
+          child: Text("Submit", style: textButtonStyle),
+          color: mainAppColor,
+          shape: roundedBorder,
           minWidth: double.infinity,
           onPressed: submitReview,
         ),

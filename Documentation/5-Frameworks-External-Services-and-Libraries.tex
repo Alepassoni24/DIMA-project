@@ -10,12 +10,17 @@ The usage of all that kind of services helped in terms of reducing the complexit
 Google Firebase is a service offered by google in order to provide some easily accessible service and to manage critical tasks like authentication in a simpler and smarter way from the perspective of the programmer.
 \subsection{Authentication}
 The service allowed us to have a unique container for all accounts from the different channel of authentication we offer as email, Facebook and Google account. 
-Moreover it is able to manage all the operation without putting in plain text confidencial information about user enforced by a SHA encryption. %TODO put the specific SHA
+Moreover it is able to manage all the operation without putting in plain text confidencial information about user enforced by a SHA-1 encryption.
 
 \subsection{Cloud Firestore}
 Cloud firestore is part of Firebase, it's basically a database with a document based structure (so NoSQL). We need it as we have to store data about user and recipes.
 Moreover we use the storage space with the aim  
 Even if the model is NoSQL, we have some instruction provided by the Firebase interface to query the collection of data very similar to SQL one.
 
+\subsection{Firestore Storage}
+As the application has to store picture devoted to profile, dishes and recipe steps, the storage provided by Firestore is the best solution because we are able to access them, after uploading them through the generated URL within the project online space. 
+Of course has there are limitation of the amount of data we can upload, once we modify the pictures we delete the one no more in use.
+
 \section{Social Media}
-As mentioned before we implemented the suport to authenticate using Facebook or Google account, this is easily achievable through the API of the plattform, basically the API convert the credential of the social media account into a token which can be used and stored by firebase.
+As mentioned before we implemented the suport to authentication using Facebook or Google accounts, this is easily achievable through the API of the plattform, basically the API convert the credential of the social media account into a token which can be used and stored by firebase. 
+In addition the users are allowed to share a recipe on their preferred social media accounts.
