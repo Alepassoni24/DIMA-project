@@ -19,8 +19,20 @@ void main() {
     await tester.tap(find.byType(UserProfilePage).at(0));
     await tester.pumpAndSettle();
 
-    // Check if it is in User profile oage
+    // Check if it is in User profile page
     expect(find.byType(UserProfilePage), findsOneWidget);
+    await tester.pumpAndSettle();
+
+    // Check if the various sections are loaded
+    expect(find.byType(UserProfileInfo, skipOffstage: false), findsOneWidget);
+    expect(find.byType(UserStatistics, skipOffstage: false), findsOneWidget);
+    expect(find.byType(UserRecipeList, skipOffstage: false), findsOneWidget);
+    await tester.pumpAndSettle();
+
+    //try to open a recipe
+
+    // Return to the homepage
+    await tester.pageBack();
     await tester.pumpAndSettle();
 
     await ensureIsLoggedOut(tester); // Log out
