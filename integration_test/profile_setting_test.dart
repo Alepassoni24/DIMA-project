@@ -1,7 +1,7 @@
 import 'package:dima_project/screens/home/home.dart';
-import 'package:dima_project/screens/singleRecipe/recipe_view.dart';
 import 'package:dima_project/screens/userProfile/user_profile.dart';
-import 'package:dima_project/screens/userProfile/user_recipe_card.dart';
+import 'package:dima_project/screens/userProfile/user_setting.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:dima_project/main.dart' as app;
@@ -25,18 +25,17 @@ void main() {
     expect(find.byType(UserProfilePage), findsOneWidget);
     await tester.pumpAndSettle();
 
+    await tester.tap(find.byIcon(Icons.settings)); // Tap logout button
+    await tester.pumpAndSettle(); // Wait for the animation to end
+
+    // Now we must be in the user settings view
+    expect(find.byType(UserSettings), findsOneWidget);
+    await tester.pumpAndSettle();
+
     // Check if the various sections are loaded
-    expect(find.byType(UserProfileInfo, skipOffstage: false), findsOneWidget);
-    expect(find.byType(UserStatistics, skipOffstage: false), findsOneWidget);
-    expect(find.byType(UserRecipeList, skipOffstage: false), findsOneWidget);
+    expect(find.byType(InkWell, skipOffstage: false), findsNWidgets(2));
+    expect(find.byType(TextFormField, skipOffstage: false), findsNWidgets(3));
     await tester.pumpAndSettle();
-
-    //try to open a recipe
-    await tester.tap(find.byType(UserRecipeCard).at(0));
-    await tester.pumpAndSettle();
-
-    //Check if it is in RecipeView
-    expect(find.byType(RecipeView), findsOneWidget);
 
     //Return to the profile page
     await tester.pageBack();
