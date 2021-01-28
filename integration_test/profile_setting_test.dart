@@ -12,7 +12,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding
       .ensureInitialized(); // Must always be called at the start of the test
 
-  testWidgets('Home, UserProfilePage', (WidgetTester tester) async {
+  testWidgets('Home, UserProfileSettingPage', (WidgetTester tester) async {
     app.main(); // Load app
     await tester.pumpAndSettle(); // Wait for the animation to end
     await ensureIsLoggedInWithTestAccount(tester); // Log in
