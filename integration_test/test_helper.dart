@@ -1,6 +1,7 @@
 import 'package:dima_project/screens/authenticate/sign_in.dart';
 import 'package:dima_project/screens/home/home.dart';
 import 'package:dima_project/screens/homeRecipes/latest_recipes.dart';
+import 'package:dima_project/screens/userProfile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,6 +39,9 @@ Future<void> ensureIsLoggedOut(WidgetTester tester) async {
   catch (exception) {
     await tester.tap(find.text("Account")); // Tap write review button
     await tester.pumpAndSettle(); // Wait for the animation to end
+
+    // Now we must be in the UserProfilePage view
+    expect(find.byType(UserProfilePage), findsOneWidget);
     await tester.tap(find.byIcon(Icons.logout)); // Tap logout button
     await tester.pumpAndSettle(); // Wait for the animation to end
 

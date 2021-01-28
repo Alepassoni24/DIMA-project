@@ -113,7 +113,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                       SectionDivider(),
                       ServingsRow(_recipeData, setRecipeServings),
                       SectionDivider(),
-                      Difficulty(_recipeData, setRecipeDifficulty),
+                      DifficultyRow(_recipeData, setRecipeDifficulty),
                       SectionDivider(),
                       CategoryDropdown(
                           _recipeData,
@@ -309,6 +309,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   // Recipe setters
   void setRecipeImage(File _image) =>
       setState(() => _recipeData.imageFile = _image);
+  void setRecipeImageURL(String imageURL) => // For test only
+      setState(() => _recipeData.imageURL = imageURL);
   void setRecipeTitle(String text) => setState(() => _recipeData.title = text);
   void setRecipeSubtitle(String text) =>
       setState(() => _recipeData.subtitle = text);
@@ -361,6 +363,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       setState(() => _stepsData[id - 1].description = text);
   Function(File) setStepImageFile(int id) =>
       (File image) => setState(() => _stepsData[id].imageFile = image);
+  Function(String) setStepImageURL(int id) => // For test only
+      (String imageURL) => setState(() => _stepsData[id].imageURL = imageURL);
   void setStepValidate(int id) =>
       setState(() => _stepsData[id - 1].validate = true);
   void deleteStep(int id) => setState(() {
@@ -495,11 +499,11 @@ class ServingsRow extends StatelessWidget {
   }
 }
 
-class Difficulty extends StatelessWidget {
+class DifficultyRow extends StatelessWidget {
   final RecipeData recipeData;
   final Function(int) setDifficulty;
 
-  Difficulty(this.recipeData, this.setDifficulty);
+  DifficultyRow(this.recipeData, this.setDifficulty);
 
   @override
   Widget build(BuildContext context) {

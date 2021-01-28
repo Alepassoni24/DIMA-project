@@ -31,9 +31,9 @@ class AddImageButton extends StatelessWidget {
         child: InkWell(
             borderRadius: BorderRadius.circular(borderRadius),
             child: imageFile != null
-                ? ImageContainer(FileImage(imageFile), borderRadius)
+                ? PickedImageContainer(FileImage(imageFile), borderRadius)
                 : (imageURL != null
-                    ? ImageContainer(NetworkImage(imageURL), borderRadius)
+                    ? PickedImageContainer(NetworkImage(imageURL), borderRadius)
                     : Icon(Icons.add_a_photo_outlined)),
             onTap: () => showChoosingPanel(context)),
       ),
@@ -81,11 +81,11 @@ class AddImageButton extends StatelessWidget {
   }
 }
 
-class ImageContainer extends StatelessWidget {
+class PickedImageContainer extends StatelessWidget {
   final ImageProvider _image;
   final double borderRadius;
 
-  ImageContainer(this._image, this.borderRadius);
+  PickedImageContainer(this._image, this.borderRadius);
 
   @override
   Widget build(BuildContext context) {

@@ -26,7 +26,7 @@ class RecipeCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TitleListTile(recipeData),
-              ImageContainer(recipeData.imageURL),
+              RecipeImageContainer(recipeData.imageURL),
               SizedBox(height: 5),
               BottomRow(recipeData),
               SizedBox(height: 5),
@@ -90,10 +90,10 @@ class TitleListTile extends StatelessWidget {
 }
 
 // This image container shows the main image of the recipe
-class ImageContainer extends StatelessWidget {
+class RecipeImageContainer extends StatelessWidget {
   final String cardImageURL;
 
-  ImageContainer(this.cardImageURL);
+  RecipeImageContainer(this.cardImageURL);
 
   @override
   Widget build(BuildContext context) {

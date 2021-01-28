@@ -12,8 +12,8 @@ import 'package:dima_project/main.dart' as app;
 import 'test_helper.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding
-      .ensureInitialized(); // Must always be called at the start of the test
+  // Must always be called at the start of the test
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('WriteReviewView Test', (WidgetTester tester) async {
     app.main(); // Load app
@@ -33,13 +33,13 @@ void main() {
     expect(find.byType(RecipeView), findsOneWidget);
 
     // Go to WriteReviewView
-    Finder scrollable = find.byType(Scrollable).first;
+    final Finder scrollable = find.byType(Scrollable).first;
     await tester.scrollUntilVisible(
         find.byType(ReviewView, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byType(WriteReviewView, skipOffstage: false), findsOneWidget);
-    Finder reviewForm = find.byType(ReviewForm, skipOffstage: false);
+    final Finder reviewForm = find.byType(ReviewForm, skipOffstage: false);
     expect(reviewForm, findsOneWidget);
     expect(find.byType(YourReviewView, skipOffstage: false), findsNothing);
     expect(
@@ -61,7 +61,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // Check review just written
-    Finder yourReviewView = find.byType(YourReviewView, skipOffstage: false);
+    final Finder yourReviewView =
+        find.byType(YourReviewView, skipOffstage: false);
     expect(yourReviewView, findsOneWidget);
     expect(find.byType(ReviewForm, skipOffstage: false), findsNothing);
     expect(find.byIcon(Icons.star, skipOffstage: false), findsNWidgets(5));
