@@ -14,7 +14,7 @@ class SavedRecipesView extends StatefulWidget {
 
 class SavedRecipesViewState extends State<SavedRecipesView> {
   List<String> savedRecipeIds = List();
-  List<RecipeData> recipesList = List();
+  final List<RecipeData> recipesList = List();
   final DatabaseService databaseService =
       DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
   final ScrollController scrollController = ScrollController();
@@ -75,7 +75,7 @@ class SavedRecipesViewState extends State<SavedRecipesView> {
   // Fetch first 10 documents
   Future<void> fetchFirstDocuments() async {
     savedRecipeIds = (await databaseService.userData.first).savedRecipes;
-    recipesList = List();
+    setState(() => recipesList.clear());
     return await fetchNextDocuments();
   }
 

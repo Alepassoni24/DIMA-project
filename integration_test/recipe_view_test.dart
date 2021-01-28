@@ -14,8 +14,8 @@ import 'package:dima_project/main.dart' as app;
 import 'test_helper.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding
-      .ensureInitialized(); // Must always be called at the start of the test
+  // Must always be called at the start of the test
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Home, LatestRecipesView, RecipeView Test',
       (WidgetTester tester) async {

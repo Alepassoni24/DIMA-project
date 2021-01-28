@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:dima_project/main.dart' as app;
 
+import 'test_helper.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding
       .ensureInitialized(); // Must always be called at the start of the test
@@ -11,6 +13,7 @@ void main() {
   testWidgets('PasswordReset', (WidgetTester tester) async {
     app.main(); // Load app
     await tester.pumpAndSettle();
+    await ensureIsLoggedOut(tester); // Log out
 
     // Tap the User profile page card
     await tester.tap(find.text("Forgot password?"));
