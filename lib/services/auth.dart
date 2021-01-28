@@ -58,7 +58,7 @@ class AuthService {
 
   //sign in with google
   Future signInWithGoogle() async {
-    await Firebase.initializeApp(); //TODO: verify if it is necessary
+    await Firebase.initializeApp();
     User user;
 
     //authentication using google services
