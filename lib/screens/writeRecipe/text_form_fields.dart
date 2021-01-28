@@ -2,6 +2,8 @@
 import 'package:dima_project/shared/constants.dart';
 import 'package:flutter/material.dart';
 
+// Show a one line textformfield, personalizable with
+// hint, initial text, validator and text input type
 class TextFormFieldShort extends StatelessWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;
@@ -29,7 +31,8 @@ class TextFormFieldShort extends StatelessWidget {
   }
 }
 
-// Generic multi line text form field
+// Show a multi line textformfield, personalizable with
+// hint, initial text and validator
 class TextFormFieldLong extends StatelessWidget {
   final String hintText, initialValue;
   final Function(String) setText, validator;

@@ -50,6 +50,7 @@ class HomeState extends State<Home> {
     UserProfilePage(),
   ];
 
+  // Navigation bar that contains the button to access the five main widgets
   BottomNavigationBar getBottomNavigationBarItem() {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
@@ -81,12 +82,14 @@ class HomeState extends State<Home> {
     );
   }
 
+  // Update the state to show the correct highlighted BottomNavigationBarItem
   void onPageChanged(int index) {
     setState(() {
       this._pageIndex = index;
     });
   }
 
+  // Animate to the correct page when a BottomNavigationBarItem is tapped
   void onTabTapped(int index) {
     this._pageController.animateToPage(index,
         duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);

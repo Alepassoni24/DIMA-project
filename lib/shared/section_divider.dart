@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Generic divider to separate sections inside a widget
 class SectionDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

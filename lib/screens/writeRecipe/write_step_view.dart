@@ -8,6 +8,8 @@ import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/form_validators.dart';
 import 'package:flutter/material.dart';
 
+// Show a single step form of the recipe, that allows the user
+// to specify title, image and description of the step
 class WriteStepView extends StatelessWidget {
   final StepData stepData;
   final Function(int, String) setTitle, setDescription;

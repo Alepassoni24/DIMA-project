@@ -7,6 +7,7 @@ import 'package:dima_project/shared/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// Show the recipes saved by the user
 class SavedRecipesView extends StatefulWidget {
   @override
   SavedRecipesViewState createState() => new SavedRecipesViewState();
@@ -20,6 +21,7 @@ class SavedRecipesViewState extends State<SavedRecipesView> {
   final ScrollController scrollController = ScrollController();
   final _random = new Random();
 
+  // On startup, load 10 random saved recipes from Firebase Firestore
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,8 @@ class SavedRecipesViewState extends State<SavedRecipesView> {
           title: Text('Saved recipes'),
         ),
         body: recipesList.isEmpty
+            // If no recipes are saved yet, show a tooltip to tell the user
+            // he can save recipes with the bookmark icon
             ? Center(
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -59,6 +63,7 @@ class SavedRecipesViewState extends State<SavedRecipesView> {
                 ),
                 Text('to save recipes here'),
               ]))
+            // Otherwise show the list of saved recipes
             : RefreshIndicator(
                 onRefresh: () => fetchFirstDocuments(),
                 child: ListView.builder(

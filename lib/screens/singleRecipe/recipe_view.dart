@@ -14,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
+// Show all the details of a recipe to the user
 class RecipeView extends StatelessWidget {
   final DatabaseService databaseService =
       new DatabaseService(uid: FirebaseAuth.instance.currentUser.uid);
@@ -29,6 +30,8 @@ class RecipeView extends StatelessWidget {
         elevation: 0.0,
         title: Text(recipeData.title),
         actions: [
+          // The user can edit the recipe if he is the author, save it
+          // and share a link to it through these icons
           if (recipeData.authorId == FirebaseAuth.instance.currentUser.uid)
             EditIcon(recipeData),
           SaveIcon(databaseService, recipeData.recipeId),
@@ -79,6 +82,7 @@ class RecipeView extends StatelessWidget {
   }
 }
 
+// Icon that allows the author of the recipe to edit the recipe
 class EditIcon extends StatelessWidget {
   final RecipeData recipeData;
 
@@ -95,6 +99,7 @@ class EditIcon extends StatelessWidget {
   }
 }
 
+// Icon that allow the user to save this recipe to the SavedRecipesView
 class SaveIcon extends StatefulWidget {
   final DatabaseService databaseService;
   final String recipeId;
@@ -138,6 +143,7 @@ class SaveIconState extends State<SaveIcon> {
   }
 }
 
+// Icon that allow the user to share a link to the app
 class ShareIcon extends StatelessWidget {
   final String recipeTitle;
 
@@ -154,6 +160,7 @@ class ShareIcon extends StatelessWidget {
   }
 }
 
+// Show the main photo of the recipe
 class MainPhoto extends StatelessWidget {
   final String imageURL;
 
@@ -174,6 +181,7 @@ class MainPhoto extends StatelessWidget {
   }
 }
 
+// Show the username and profile image, if any, of the author of the recipe
 class AuthorImage extends StatelessWidget {
   final DatabaseService databaseService;
   final String authorId;
@@ -213,6 +221,7 @@ class AuthorImage extends StatelessWidget {
   }
 }
 
+// Show the description of the recipe
 class Description extends StatelessWidget {
   final String recipeDescription;
 
@@ -229,6 +238,7 @@ class Description extends StatelessWidget {
   }
 }
 
+// Show the category of the recipe
 class Category extends StatelessWidget {
   final String recipeCategory;
 
@@ -249,6 +259,7 @@ class Category extends StatelessWidget {
   }
 }
 
+// Show the checkmarks of the recipe, if any
 class Checkmarks extends StatelessWidget {
   final RecipeData recipeData;
 
@@ -281,6 +292,7 @@ class Checkmarks extends StatelessWidget {
   }
 }
 
+// Show the difficulty of the recipe
 class Difficulty extends StatelessWidget {
   final int recipeDifficulty;
 
@@ -314,6 +326,7 @@ class Difficulty extends StatelessWidget {
   }
 }
 
+// Show the average time required to cook this recipe
 class Time extends StatelessWidget {
   final int recipeTime;
 
@@ -334,6 +347,7 @@ class Time extends StatelessWidget {
   }
 }
 
+// Show the suggested amount of servings for this recipe
 class Servings extends StatelessWidget {
   final int servingNumber;
 

@@ -5,6 +5,7 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
+// Show the list of ingredients of the recipe, loaded from Firebase Firestore
 class IngredientsView extends StatelessWidget {
   final DatabaseService databaseService;
   final String recipeId;
@@ -34,6 +35,7 @@ class IngredientsView extends StatelessWidget {
   }
 }
 
+// Show a single ingredient of the recipe, with quantity, unit and name
 class IngredientView extends StatelessWidget {
   final IngredientData ingredientData;
 

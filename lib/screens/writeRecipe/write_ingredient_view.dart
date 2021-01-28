@@ -5,6 +5,8 @@ import 'package:dima_project/shared/form_validators.dart';
 import 'package:dima_project/shared/utils.dart';
 import 'package:flutter/material.dart';
 
+// Show a single ingredient form of the recipe, that allows the user
+// to specify quantity, unit and name of the ingredient
 class WriteIngredientView extends StatelessWidget {
   final IngredientData ingredientData;
   final Function(int, String) setQuantity, setUnit, setName;

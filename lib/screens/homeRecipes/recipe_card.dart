@@ -7,7 +7,8 @@ import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-//The recipe must be obtained from a query to the database
+// A card that show the basic informations of a recipe
+// The RecipeData must be obtained from a query to the database
 class RecipeCard extends StatelessWidget {
   final RecipeData recipeData;
 
@@ -41,7 +42,8 @@ class RecipeCard extends StatelessWidget {
   }
 }
 
-// This ListTile contains the author profile image and the recipe title, subtitle, rating
+// This ListTile contains the author profile image,
+// the recipe title, subtitle and rating
 class TitleListTile extends StatelessWidget {
   final DatabaseService databaseService = new DatabaseService();
   final RecipeData recipeData;
@@ -62,6 +64,7 @@ class TitleListTile extends StatelessWidget {
               databaseService.userDataFromSnapshot(snapshot.data);
 
           return ListTile(
+            // Profile picture of the author of the recipe, if it has one
             leading: user.profilePhotoURL != null
                 ? CircleAvatar(
                     radius: 30,
@@ -72,8 +75,11 @@ class TitleListTile extends StatelessWidget {
                     size: 60,
                     color: Colors.grey[600],
                   ),
+            // Title of the recipe
             title: Text(recipeData.title),
+            // Subtitle of the recipe
             subtitle: Text(recipeData.subtitle),
+            // Average rating of the recipe
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -119,6 +125,7 @@ class BottomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        // On the left, it shows the various checkmarks
         SizedBox(width: 10),
         recipeData.isVegan
             ? Icon(AppIcons.vegan, size: 25)
@@ -137,6 +144,7 @@ class BottomRow extends StatelessWidget {
             : SizedBox(width: 25),
         SizedBox(width: 10),
         Spacer(),
+        // On the right, it shows the difficulty
         Icon(AppIcons.chef_hat,
             size: 25, color: difficultyColors[recipeData.difficulty]),
         SizedBox(width: 10),

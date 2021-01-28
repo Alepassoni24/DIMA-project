@@ -5,6 +5,8 @@ import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
+// Homepage of the app
+// It contains the most recent recipes submitted by any user
 class LatestRecipes extends StatefulWidget {
   @override
   LatestRecipesState createState() => new LatestRecipesState();
@@ -15,6 +17,7 @@ class LatestRecipesState extends State<LatestRecipes> {
   final DatabaseService databaseService = new DatabaseService();
   final ScrollController scrollController = ScrollController();
 
+  // On startup, load the 10 most recent recipes from Firebase Firestore
   @override
   void initState() {
     super.initState();
@@ -28,6 +31,13 @@ class LatestRecipesState extends State<LatestRecipes> {
   }
 
   @override
+  void setState(function) {
+    if (mounted) {
+      super.setState(function);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: backgroundColor,
@@ -38,6 +48,7 @@ class LatestRecipesState extends State<LatestRecipes> {
         ),
         body: recipesList.isEmpty
             ? Loading()
+            // Allow manual refresh to show newer recipes
             : RefreshIndicator(
                 onRefresh: () => fetchFirstDocuments(),
                 child: ListView.builder(

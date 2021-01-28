@@ -9,6 +9,8 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// Show the review of the user of the current recipe if any
+// Otherwise show the form to submit a review
 class WriteReviewView extends StatefulWidget {
   final RecipeData recipeData;
 
@@ -62,6 +64,7 @@ class WriteReviewViewState extends State<WriteReviewView> {
   }
 }
 
+// If the current user has already submitted a review for this recipe show it
 class YourReviewView extends StatelessWidget {
   final ReviewData reviewData;
   final Function(ReviewData) deleteReview;
@@ -86,6 +89,8 @@ class YourReviewView extends StatelessWidget {
   }
 }
 
+// If the current user has not already submitted a review
+// for this recipe, show a form that allows to submit one
 class ReviewForm extends StatefulWidget {
   final RecipeData recipeData;
   final Function refreshReview;
@@ -143,6 +148,7 @@ class ReviewFormState extends State<ReviewForm> {
     );
   }
 
+  // Get the correctly colored stars based on the rating
   List<Widget> getStars() {
     List<Widget> stars = List<Widget>();
     for (int i = 1; i <= 5; i++) {
@@ -162,21 +168,25 @@ class ReviewFormState extends State<ReviewForm> {
     return stars;
   }
 
+  // Set the rating when a star is pressed
   void setRating(int value) {
     setState(() {
       _reviewData.rating = value;
     });
   }
 
+  // Get a correctly colored star based on the rating
   Icon getStar(int index) {
     if (_reviewData.rating >= index)
       return Icon(Icons.star, color: ratingStarColor);
     return Icon(Icons.star_border, color: ratingStarColor);
   }
 
+  // Set the comment when the user write one
   void setReviewComment(String text) =>
       setState(() => _reviewData.comment = text);
 
+  // Submit the review to Firebase Firestore
   void submitReview() async {
     // Check if rating and comment are inserted
     setState(() => _errorMessage = _reviewData.rating == 0);
@@ -196,6 +206,7 @@ class ReviewFormState extends State<ReviewForm> {
   }
 }
 
+// Icon that allows the author of the review to delete his review
 class DeleteIcon extends StatelessWidget {
   final Function() deleteReview;
 

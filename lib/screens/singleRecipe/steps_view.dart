@@ -5,6 +5,7 @@ import 'package:dima_project/shared/constants.dart';
 import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 
+// Show the list of steps of the recipe, loaded from Firebase Firestore
 class StepsView extends StatelessWidget {
   final DatabaseService databaseService;
   final String recipeId;
@@ -34,6 +35,7 @@ class StepsView extends StatelessWidget {
   }
 }
 
+// Show a single step of the recipe, with number, title, image and description
 class StepView extends StatelessWidget {
   final StepData stepData;
 
@@ -63,6 +65,7 @@ class StepView extends StatelessWidget {
   }
 }
 
+// Show the image of the step
 class StepImage extends StatelessWidget {
   final String imageURL;
 

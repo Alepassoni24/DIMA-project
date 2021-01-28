@@ -79,7 +79,7 @@ class DatabaseService {
   // Update a user rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateUserRating(String userId, int userRating) async {
     UserData userData = await getUser(userId).map(userDataFromSnapshot).first;
-    double newRating = userData.reviewNumber == 1
+    double newRating = userData.reviewNumber == 1 && userRating < 0
         ? 0
         : (userData.rating * userData.reviewNumber + userRating) /
             (userData.reviewNumber + userRating > 0 ? 1 : -1);
@@ -178,6 +178,7 @@ class DatabaseService {
 
 // Remove ingredients, steps, reviews (with ratings rollback) and recipe from Firebase Firestore
   Future<void> deleteRecipe(RecipeData recipeData) async {
+    // First remove all the ingredient documents
     await recipeCollection
         .doc(recipeData.recipeId)
         .collection('ingredient')
@@ -185,6 +186,7 @@ class DatabaseService {
         .then((value) => value.docs.forEach((element) {
               element.reference.delete();
             }));
+    // Then remove all the step documents
     await recipeCollection
         .doc(recipeData.recipeId)
         .collection('step')
@@ -192,6 +194,7 @@ class DatabaseService {
         .then((value) => value.docs.forEach((element) {
               element.reference.delete();
             }));
+    // Then remove all the review documents and update the user rating
     await recipeCollection
         .doc(recipeData.recipeId)
         .collection('review')
@@ -200,6 +203,7 @@ class DatabaseService {
               updateUserRating(recipeData.authorId, -element.data()['rating']);
               element.reference.delete();
             }));
+    // Finaly remove the recipe document
     return await recipeCollection.doc(recipeData.recipeId).delete();
   }
 
@@ -220,7 +224,7 @@ class DatabaseService {
 
   // Update a recipe rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateRecipeRating(RecipeData recipeData, int userRating) async {
-    double newRating = recipeData.reviewNumber == 1
+    double newRating = recipeData.reviewNumber == 1 && userRating < 0
         ? 0
         : (recipeData.rating * recipeData.reviewNumber + userRating) /
             (recipeData.reviewNumber + userRating > 0 ? 1 : -1);

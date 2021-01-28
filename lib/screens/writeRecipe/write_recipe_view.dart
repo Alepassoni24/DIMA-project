@@ -15,6 +15,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as Path;
 
+// Show the entire form to submit a recipe to the user
 class WriteRecipeView extends StatefulWidget {
   @override
   WriteRecipeViewState createState() => WriteRecipeViewState();
@@ -135,6 +136,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                     ])))));
   }
 
+  // Get the list of widget that allows the user to add ingredients,
+  // this include textformfields, add button and cancel button
   List<Widget> getIngredientsWidgetList() {
     List<Widget> _ingredients = [];
 
@@ -171,6 +174,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     return _ingredients;
   }
 
+  // Get the list of widget that allows the user to add steps,
+  // this include textformfields, add image, add button and cancel button
   List<Widget> getStepsWidgetList() {
     List<Widget> _steps = [];
 
@@ -204,6 +209,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
     return _steps;
   }
 
+  // Button that allows the user to submit the full recipe to Firebase Firestore,
+  // than it redirect the user to the RecipeView of their recipe
   void submitRecipe() async {
     // Check if all forms and imagepicker are not empty
     setRecipeValidate();
@@ -378,6 +385,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
       });
 }
 
+// Icon that allow the user to delete his recipe and reset the form
 class DeleteIcon extends StatelessWidget {
   final Function() deleteRecipe;
 
@@ -419,6 +427,7 @@ class DeleteIcon extends StatelessWidget {
   }
 }
 
+// Allow the user to insert the average recipe preparation duration
 class TimeRow extends StatelessWidget {
   final RecipeData recipeData;
   final Function(String) setRecipeTime;
@@ -458,6 +467,7 @@ class TimeRow extends StatelessWidget {
   }
 }
 
+// Allow the user to insert the suggested number of servings
 class ServingsRow extends StatelessWidget {
   final RecipeData recipeData;
   final Function(String) setRecipeServings;
@@ -499,6 +509,7 @@ class ServingsRow extends StatelessWidget {
   }
 }
 
+// Allow the user to insert the difficulty of this recipe
 class DifficultyRow extends StatelessWidget {
   final RecipeData recipeData;
   final Function(int) setDifficulty;
@@ -566,6 +577,7 @@ class DifficultyRow extends StatelessWidget {
   }
 }
 
+// Allow the user to insert the category and the checkmarks of the recipe
 class CategoryDropdown extends StatelessWidget {
   final RecipeData recipeData;
   final Function(String) setCategory;

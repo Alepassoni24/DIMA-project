@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// Button that first show the option to choose where to get the image,
+// from Camera or Gallery, and then let the user take the photo
 class AddImageButton extends StatelessWidget {
   final File imageFile;
   final String imageURL;
@@ -30,6 +32,7 @@ class AddImageButton extends StatelessWidget {
         color: Colors.grey[50],
         child: InkWell(
             borderRadius: BorderRadius.circular(borderRadius),
+            // Check both file and url in case the user is editing the recipe
             child: imageFile != null
                 ? PickedImageContainer(FileImage(imageFile), borderRadius)
                 : (imageURL != null
@@ -40,6 +43,7 @@ class AddImageButton extends StatelessWidget {
     );
   }
 
+  // Show popup with the choice between Camera and Gallery
   void showChoosingPanel(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -72,6 +76,7 @@ class AddImageButton extends StatelessWidget {
         });
   }
 
+  // Get image from Camera or Gallery after the user choose
   Future<void> getImage(BuildContext context, ImageSource imageSource) async {
     Navigator.of(context).pop();
     final PickedFile pickedFile = await _picker.getImage(source: imageSource);
@@ -81,6 +86,7 @@ class AddImageButton extends StatelessWidget {
   }
 }
 
+// Show the choosen image to the user
 class PickedImageContainer extends StatelessWidget {
   final ImageProvider _image;
   final double borderRadius;

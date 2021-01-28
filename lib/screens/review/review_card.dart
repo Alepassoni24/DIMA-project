@@ -7,6 +7,8 @@ import 'package:dima_project/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// A card that show the rating and comment of a user under a RecipeView
+// The ReviewData must be obtained from a query to the database
 class ReviewCard extends StatelessWidget {
   final ReviewData reviewData;
   final DatabaseService databaseService = new DatabaseService();
@@ -28,6 +30,7 @@ class ReviewCard extends StatelessWidget {
           return Column(children: [
             Row(
               children: [
+                // Profile picture of the author of the review, if it has one
                 user.profilePhotoURL != null
                     ? CircleAvatar(
                         radius: 25,
@@ -39,9 +42,11 @@ class ReviewCard extends StatelessWidget {
                         color: Colors.grey[600],
                       ),
                 SizedBox(width: 12.5),
+                // Name of the author of the review
                 Text(user.username, style: subtitleStyle),
                 Spacer(),
                 Column(children: [
+                  // Rating of the review
                   Row(
                     children: [
                       getStar(1),
@@ -51,12 +56,14 @@ class ReviewCard extends StatelessWidget {
                       getStar(5),
                     ],
                   ),
+                  // Date of the review
                   Text(DateFormat('dd/MM/yyyy')
                       .format(reviewData.submissionTime)),
                 ])
               ],
             ),
             SizedBox(height: 5),
+            // Comment of the review
             Padding(
               padding: EdgeInsets.only(left: 2.5, right: 2.5),
               child: Align(
@@ -69,6 +76,7 @@ class ReviewCard extends StatelessWidget {
         });
   }
 
+  // Get a correctly colored star based on the rating
   Icon getStar(int index) {
     if (reviewData.rating >= index)
       return Icon(Icons.star, color: ratingStarColor);

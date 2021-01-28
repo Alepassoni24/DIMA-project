@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+// Custom icons made with svg files and https://www.fluttericon.com/
 class AppIcons {
   AppIcons._();
 

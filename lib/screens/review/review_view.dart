@@ -4,6 +4,7 @@ import 'package:dima_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// Show the list of the reviews of a recipe at the bottom of a RecipeView
 class ReviewView extends StatefulWidget {
   final RecipeData recipeData;
   final ScrollController scrollController;
@@ -23,6 +24,7 @@ class ReviewViewState extends State<ReviewView> {
 
   ReviewViewState(this.recipeData, this.scrollController);
 
+  // On startup, load the 10 most recent review from Firebase Firestore
   @override
   void initState() {
     super.initState();
