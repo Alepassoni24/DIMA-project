@@ -76,7 +76,7 @@ void main() {
         find.byType(Servings, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
-    expect(find.byIcon(AppIcons.vegan), findsWidgets);
+    expect(find.byIcon(AppIcons.vegan, skipOffstage: false), findsWidgets);
 
     //Return to the filter page
     await tester.pageBack();
