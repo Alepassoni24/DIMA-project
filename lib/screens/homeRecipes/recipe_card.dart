@@ -128,11 +128,11 @@ class BottomRow extends StatelessWidget {
         // On the left, it shows the various checkmarks
         SizedBox(width: 10),
         recipeData.isVegetarian
-            ? Icon(AppIcons.vegan, size: 25)
+            ? Icon(AppIcons.vegetarian, size: 25)
             : SizedBox(width: 25),
         SizedBox(width: 10),
         recipeData.isVegan
-            ? Icon(AppIcons.vegetarian, size: 25)
+            ? Icon(AppIcons.vegan, size: 25)
             : SizedBox(width: 25),
         SizedBox(width: 10),
         recipeData.isGlutenFree
