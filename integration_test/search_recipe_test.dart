@@ -73,7 +73,7 @@ void main() {
 
     Finder scrollable = find.byType(Scrollable).first;
     await tester.scrollUntilVisible(
-        find.byType(Servings, skipOffstage: false), 50,
+        find.byType(Checkmarks, skipOffstage: false), 50,
         scrollable: scrollable);
     await tester.pumpAndSettle();
     expect(find.byIcon(AppIcons.vegan, skipOffstage: false), findsWidgets);

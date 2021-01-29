@@ -272,11 +272,11 @@ class Checkmarks extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           recipeData.isVegetarian
-              ? Icon(AppIcons.vegetarian, size: 25)
+              ? Icon(AppIcons.vegan, size: 25)
               : SizedBox(width: 25),
           SizedBox(width: 10),
           recipeData.isVegan
-              ? Icon(AppIcons.vegan, size: 25)
+              ? Icon(AppIcons.vegetarian, size: 25)
               : SizedBox(width: 25),
           SizedBox(width: 10),
           recipeData.isGlutenFree
