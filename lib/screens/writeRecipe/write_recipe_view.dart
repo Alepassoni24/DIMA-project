@@ -620,20 +620,20 @@ class CategoryDropdown extends StatelessWidget {
           ]),
           // Four checkbox for options
           CheckboxListTile(
-            title: Text("Vegan"),
-            secondary: Icon(AppIcons.vegan),
-            activeColor: Colors.orange,
-            value: recipeData.isVegan == null ? false : recipeData.isVegan,
-            onChanged: setVegan,
-          ),
-          CheckboxListTile(
             title: Text("Vegetarian"),
-            secondary: Icon(AppIcons.vegan),
+            secondary: Icon(AppIcons.vegetarian),
             activeColor: Colors.orange,
             value: recipeData.isVegetarian == null
                 ? false
                 : recipeData.isVegetarian,
             onChanged: setVegetarian,
+          ),
+          CheckboxListTile(
+            title: Text("Vegan"),
+            secondary: Icon(AppIcons.vegan),
+            activeColor: Colors.orange,
+            value: recipeData.isVegan == null ? false : recipeData.isVegan,
+            onChanged: setVegan,
           ),
           CheckboxListTile(
             title: Text("Gluten free"),
