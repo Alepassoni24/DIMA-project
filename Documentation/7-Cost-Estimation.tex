@@ -1,8 +1,17 @@
 \chapter{Cost Estimation}
 In this section we include a cost estimation for CookingTime application development. In order to exploit the estiaton we decided to use COCOMO (Constructive Cost Model) model. The usage of this analysis tool allow us to determine the time required for the developemnt of this type of appliaction.
-First of all we have to decide what type of project we are producing in order to take the right estimation parameters, according to the following table.
-%TODO table of coefficient
-The classes of COCOMO represent different difficulties of the product and experiences of developers, espelly:
+First of all we have to decide what type of project we are producing in order to take the right estimation parameters, according to the following table.\\
+\begin{table}
+	\centering
+	\begin{tabular}{|l|c|c|c|c|}
+	\textbf{Software Project}& \textbf{a}& \textbf{b}& \textbf{c}& \textbf{d}\\
+	Organic & 2.40 & 1.05 & 2.50 & 0.38 \\
+	Semi-detached & 3.00 & 1.12 & 2.50 & 0.35 \\
+	Embedded & 3.60 & 1.20 & 2.50 & 0.32 \\
+	\end{tabular}
+	\caption{COCOMO coefficients}
+\end{table}
+The classes of COCOMO represent different difficulties of the product and experiences of developers, especially:
 \begin{itemize}
 	\item \textbf{Organic} It means small project done by small teams with a good experience and low constraints.
 	\item \textbf{Semi-Detached} It means project with a significant large team with different experiences and medium constraints.
@@ -10,14 +19,29 @@ The classes of COCOMO represent different difficulties of the product and experi
 \end{itemize}
 Then we can consider the equation to represent the effort spent:\\
 \begin{center}
-%effort = a*(KLOC)^b
-$ effort = a * (KLOC)^{b}$\\
-%duration = c*effort^d
+$ effort = a * KLOC ^{b}$\\
 $ duration = c * effort^{d}$\\
 \end{center}
 where \textbf{KLOC} are the estiamted number of thousand lines of code, \textbf{effort} expressed in man-months and the duration is the time estimeted to be taken in order to develop the application.\\
-Even if it was the first time we developed a mobile application, we have good bases in coding moreover the project is simple and without tight constraints, so we can consider our project as organic, also because we have a team composed by two students.
+Even if it was the first time we developed a mobile application, we have good bases in coding moreover the project is simple and without tight constraints, so we can consider our project as organic, also because we have a team composed by two students.\\
+We can start retrieving from our Github repository the number of Kilo Line Of Code (KLOC) as shown in the following figure.\\
+%TODO figure from github
+Then according to Organic project coeffient we can evaluate the effor applied and the predicted development time:
+
+\begin{itemize}
+	\item \texbf{KLOC} = value
+	\item \textbf{a} = 2.40
+	\item \textbf{b} = 1.05
+	\item \textbf{c} = 2.50
+	\item \textbf{d} = 0.38
+\end{itemize}
 
 %TODO outcome of formulas
+\begin{center}
+%effort = a*(KLOC)^b
+$ effort = a * (KLOC)^{b} = 2.40 * KLOC^{1.05} = result $\\
+%duration = c*effort^d
+$ duration = c * effort^{d} 2.50 * effort ^{0.38} = result $\\
+\end{center}
 
 %TODO outcome related to each of us  
