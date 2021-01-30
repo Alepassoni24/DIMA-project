@@ -145,6 +145,78 @@ This type of testing was automated for all the feature that are repeatable over 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Test Case}& Correct Visualization of a Recipe\\
+		\hline
+		\textbf{Goal}& Check the correct loading and visualization of a recipe\\
+		\hline
+		\textbf{Input}& 
+		\begin{minipage}{.7\linewidth}
+			In the homepage screen the user taps on the first recipe card available and scroll down to the bottom.
+		\end{minipage}\\
+		\hline
+		\textbf{Expected Outcome}& All the elements of the recipe are correctly loaded and visualized.\\
+		\hline
+		\textbf{Actual Outcome}& 
+		\begin{minipage}{.7\linewidth}
+			CORRECT: The application provides the right screen after clicking on the recipe card button and then while scrolling through the bottom all widget that display the recipe attributes are displayed.
+		\end{minipage}\\
+		\hline	
+	\end{tabular}
+	\caption{Correct Visualization of a Recipe Test}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Test Case}& Successful Writing Updating and Deleting of a Recipe\\
+		\hline
+		\textbf{Goal}&Create, visualize, update and delete a recipe\\
+		\hline
+		\textbf{Input}& 
+		\begin{minipage}{.7\linewidth}
+			The user goes in the write a recipe screen by tapping the write button on the bottom menu, insert all the information necessary and submit the recipe. Than he verify the presence of the recipe in the user's profile, from there he first modify it and then delete it.
+		\end{minipage}\\
+		\hline
+		\textbf{Expected Outcome}& The user can create, visualize, update and delete a recipe.\\
+		\hline
+		\textbf{Actual Outcome}& 
+		\begin{minipage}{.7\linewidth}
+			CORRECT: The application allows the user to submit the recipe only when all the required data is inputted. Then the user can correctly visualize his recipe in both the homepage and user profile page, from which he can access it, modify it and delete it. After the deletion the recipe is correctly not visible anymore.
+		\end{minipage}\\
+		\hline	
+	\end{tabular}
+	\caption{Successful Writing Updating and Deleting of a Recipe Test}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Test Case}& Successful Writing and Deleting of a Review\\
+		\hline
+		\textbf{Goal}& Crete, visualize and delete a review\\
+		\hline
+		\textbf{Input}& 
+		\begin{minipage}{.7\linewidth}
+			From the home screen the user checks the first recipe available and scroll up to to the review form. He then write a review with rating and comment and submit it. After the review is correctly visualized the user deletes the review.
+		\end{minipage}\\
+		\hline
+		\textbf{Expected Outcome}& The user can properly create, visualize and delete their review.\\
+		\hline
+		\textbf{Actual Outcome}& 
+		\begin{minipage}{.7\linewidth}
+			CORRECT: The application allows the user to reach and write a review under a recipe. Then the user can correctly visualize his review and can correctly delete his review after a confirmation prompt. The review is then correctly no long available.
+		\end{minipage}\\
+		\hline	
+	\end{tabular}
+	\caption{Successful Writing and Deleting of a Review Test}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
 	\hline
 	\textbf{Test Case}& Filter Recipes\\
 	\hline
@@ -170,6 +242,33 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline	
 	\end{tabular}
 	\caption{Filter Recipes Test}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Test Case}& Show User Saved Recipes\\
+		\hline
+		\textbf{Goal}& See saved recipes in the saved recipe view\\
+		\hline
+		\textbf{Input}& 
+		\begin{minipage}{.7\linewidth}
+			From the homepage screen the user checks that the saved recipes view is empty. Then from the latest recipes view he saves the first two recipes and checks them in the saved recipes view, where they should be present. He then un-saves one of the two and controls that only the remaining one is still visible. He finally un-saves the other recipe and checks that there no saved recipes anymore.
+		\end{minipage}\\
+		\hline
+		\textbf{Expected Outcome}&
+		\begin{minipage}{.7\linewidth}
+		The user can properly add, visualize and remove recipes form the saved recipes view.
+		\end{minipage}\\
+		\hline
+		\textbf{Actual Outcome}& 
+		\begin{minipage}{.7\linewidth}
+			CORRECT: The application allows the user to save and visualize saved recipes in the correct widget on the homepage. He can then add further recipes and remove old one, after which they are no longer visualized.
+		\end{minipage}\\
+		\hline	
+	\end{tabular}
+	\caption{Show User Saved Recipes Test}
 \end{table}
 
 \begin{table}[H]
