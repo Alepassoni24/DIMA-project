@@ -237,6 +237,9 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         _recipeData.authorId = FirebaseAuth.instance.currentUser.uid;
         _recipeData.submissionTime = DateTime.now();
         _recipeData.recipeId = await databaseService.addRecipe(_recipeData);
+
+        // Update author recipeNumber
+        databaseService.updateUserRecipe(1);
       }
       // ... otherwise if the user is editing update the recipe and remove extra ingredients
       else {
@@ -263,9 +266,6 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
         }
         databaseService.addStep(stepData, _recipeData.recipeId);
       }
-
-      // Update author recipeNumber
-      databaseService.updateUserRecipe(1);
 
       // Show the view of the recipe and then reset the form
       RecipeData recipeCopy = _recipeData;

@@ -188,6 +188,36 @@ void main() {
     expect(find.text("2"), findsOneWidget);
     expect(find.byType(UserRecipeList), findsOneWidget);
 
+    // Update recipe title
+    await tester.tap(find.byType(UserRecipeCard).first);
+    await tester.pumpAndSettle();
+    expect(find.byType(RecipeView), findsOneWidget);
+    expect(find.text("Test recipe title"), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.edit));
+    await tester.pumpAndSettle();
+    expect(find.byType(WriteRecipeView), findsOneWidget);
+    expect(find.text("Test recipe title"), findsOneWidget);
+    await tester.enterText(textFormFields.at(2), "Test recipe description updated");
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+        find.text("Submit", skipOffstage: false), 50,
+        scrollable: scrollable);
+    await tester.tap(find.text("Submit"));
+    await tester.pumpAndSettle();
+    expect(find.byType(RecipeView), findsOneWidget);
+    expect(find.text("Test recipe description updated"), findsOneWidget);
+
+    // Check presence on user profile
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("Account"));
+    await tester.pumpAndSettle();
+    expect(find.byType(UserProfilePage), findsOneWidget);
+    expect(find.byType(UserStatistics), findsOneWidget);
+    expect(find.text("1"), findsNothing);
+    expect(find.text("2"), findsOneWidget);
+    expect(find.byType(UserRecipeList), findsOneWidget);
+
     // Delete the new recipe
     await tester.tap(find.byType(UserRecipeCard).first);
     await tester.pumpAndSettle();
