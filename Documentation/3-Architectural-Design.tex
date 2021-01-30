@@ -29,9 +29,67 @@
 	\textbf{Isolation} which means that every operation is executed isolated and independently from the other ones.
 	
 	\subsection{Database Structure}
-	In order to let the reader understand better the structure, here is provided a translated E/R schema of the database implemented by the application.
+	In order to let the reader understand better the structure, here is provided the structure of the NoSQL database used in Firebase, followed by a translated E/R schema of the same database implemented by the application.
 	
-	TODO: picture of simplified structure 
+	\begin{figure}[H]
+		\begin{minipage}{0.49\textwidth}
+			\dirtree{%
+				.1 USER: collection.
+				.2 profilePhotoURL: string.
+				.2 rating: number.
+				.2 recipeNumber: number.
+				.2 reviewNumber: number.
+				.2 savedRecipes: array<string>.
+				.2 userRegisteredWithMail: boolean.
+				.2 username: string.				
+			}
+			\caption{User collection}
+		\end{minipage}\hfill
+		\begin{minipage}{0.49\textwidth}
+			\dirtree{%
+				.1 RECIPE: collection.
+				.2 author: string.
+				.2 category: string.
+				.2 description: string.
+				.2 difficulty: number.
+				.2 imageURL: string.
+				.2 INGREDIENT: subcollection.
+				.3 name: string.
+				.3 quantity: number.
+				.3 unit: string.
+				.2 isGlutenFree: boolean.
+				.2 isLactoseFree: boolean.
+				.2 isVegan: boolean.
+				.2 isVegetarian: boolean.
+				.2 rating: number.
+				.2 REVIEW: subcollection.
+				.3 author: string.
+				.3 comment: string.
+				.3 rating: number.
+				.3 submissionTime: timestamp.
+				.2 reviewNumber: number.
+				.2 servings: number.
+				.2 STEP: subcollection.
+				.3 description: string.
+				.3 imageURL: string.
+				.3 title: string.
+				.2 submissionTime: timestamp.
+				.2 subtitle: string.
+				.2 time: number.
+				.2 title: string.
+			}
+			\caption{Recipe collection}
+		\end{minipage}
+	\end{figure}
+
+	\begin{figure}[H]
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\textwidth]{img/ERDiagram.png}
+			\caption{E/R Diagram}
+			\label{Fig:ERDiagram}
+		\end{center}
+	\end{figure}
 
 	\subsection{Database feature}
 	The application database allows to:
