@@ -1,18 +1,19 @@
 \chapter{Test Cases}
-The testing phase of CookingTime was splitted into two steps.
+The testing phase of CookingTime was split into two steps.
 
 \begin{itemize}
-	\item \textbf{Unit test:} In this step we tested some function like validators in order to see if they are behaving in the correct way.
-	\item \textbf{Integration-Widget test:} This was the last task performed, in which we automated the testing of the behaviour of widgets.
+	\item \textbf{Unit test:} In this step we tested some function, like text validators, in order to see if they are behaving in the correct way.
+	\item \textbf{Integration-Widget test:} Since all the functionalities of the application are strictly tied with Firebase, we skipped entirely the Widget testing phase and we did a deep integration testing.
+	This was the last task performed, in which we automated the testing of the behaviour across multiple widgets and Firebase's services.
 \end{itemize}
 
-Here are presented some example od the most realvant test we made:
+Here are presented some example of the most relevant test we made:
 
 \section{Unit test}
 %TODO 1 table of validators test
 
 \section{Integration-Widget test}
-This type of testing was automated for all the feature that are repeatable over the time, all the action non reversible were tested manually
+This type of testing was automated for all the feature that are repeatable over the time, while all the non reversible actions were tested manually.
 %TODO integration test tables
 
 \begin{table}[H]
@@ -25,7 +26,7 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the login screen the user provide a valid email and password. In the end he taps on login button.
+	In the login screen the user provides a valid email and password. In the end he taps on login button.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& The user is logged in the and he's routed to the home page.\\
@@ -49,17 +50,17 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the login screen the user tap on the regiresting button, then in the new page provide a valid username, email and password. In the end he taps on register button.
+	In the login screen the user tap on the registering button, then in the new page provide a valid username, email and password. In the end he taps on register button.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	The new user is registred and the application routes the user to the home page.
+	The new user is registered and the application routes the user to the home page.
 	\end{minipage}\\
 	\hline
 	\textbf{Actual Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	CORRECT: The application provide the right screen after clicking on the register button and allows the user to provide his credential, then tapping the registration button the user is registered and logged in the application.
+	CORRECT: The application provides the right screen after clicking on the register button and allows the user to provide his credential, then tapping the registration button the user is registered and logged in the application.
 	\end{minipage}\\
 	\hline	
 	\end{tabular}
@@ -76,17 +77,17 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the login screen the user tap on the regiresting button, then in the new page provide one or two among valid username, email and password. In the end he taps on register button.
+	In the login screen the user taps on the registration button, then in the new page provides one or two among valid username, email and password. In the end he taps on register button.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}&
 	\begin{minipage}{.7\linewidth}
-	The new user is not registred and tha application throw some alert on the screen.
+	The new user is not registered and the application throws some alert on the screen.
 	\end{minipage}\\
 	\hline
 	\textbf{Actual Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	CORRECT: The application provide the right screen after clicking on the register button and allows the user to provide his credential, then tapping the registration button the user is not registered and alerts are thrown.
+	CORRECT: The application provides the right screen after clicking on the register button and allows the user to provide his credential, then tapping the registration button the user is not registered and alerts are thrown.
 	\end{minipage}\\
 	\hline	
 	\end{tabular}
@@ -106,11 +107,11 @@ This type of testing was automated for all the feature that are repeatable over 
 	In the login screen the user tap on the forgot password button, then in the new page provide email of the account. In the end he taps on send reset email button.
 	\end{minipage}\\
 	\hline
-	\textbf{Expected Outcome}& The user get a mail to reset his password.\\
+	\textbf{Expected Outcome}& The user gets a mail to reset his password.\\
 	\hline
 	\textbf{Actual Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	CORRECT: The application provide the right screen after clicking on the forgot password button and allows the user to provide his email, then tapping the send reset email button the user recieves the reset email.
+	CORRECT: The application provides the right screen after clicking on the forgot password button and allows the user to provide his email, then tapping the send reset email button the user receives the reset email.
 	\end{minipage}\\
 	\hline	
 	\end{tabular}
@@ -127,14 +128,14 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the login screen the user tap on the forgot password button, then he taps on send reset email button without providing the email.
+	In the login screen the user taps on the forgot password button, then he taps on send reset email button without providing the email.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& The user doesn't get a mail to reset his password.\\
 	\hline
 	\textbf{Actual Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	CORRECT: The application provide the right screen after clicking on the forgot password button and then tapping the send reset email button the user doesn't recieve the reset email.
+	CORRECT: The application provides the right screen after clicking on the forgot password button and then tapping the send reset email button the user doesn't receive the reset email.
 	\end{minipage}\\
 	\hline	
 	\end{tabular}
@@ -154,7 +155,7 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the home screen the user tap on the search button on the bottom menù, then he taps the filter button and select some parameters.
+	In the home screen the user taps on the search button on the bottom menu, then he taps the filter button and select some parameters.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& 
@@ -164,7 +165,7 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Actual Outcome}& 
 	\begin{minipage}{.7\linewidth}
-	CORRECT: The application provide the right screen after clicking on the search button and tapping the filter the user in able to select some parameter in order to filter the recipes, after filtering the retrieved recipes are quieried according to the parameter specified before.
+	CORRECT: The application provides the right screen after clicking on the search button and tapping the filter the user in able to select some parameters in order to filter the recipes, after filtering the retrieved recipes are queried according to the parameter specified before.
 	\end{minipage}\\
 	\hline	
 	\end{tabular}
@@ -181,7 +182,7 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the home screen the user taps the account button in the bottom menù.
+	In the home screen the user taps the account button in the bottom menu.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& 
@@ -208,7 +209,7 @@ This type of testing was automated for all the feature that are repeatable over 
 	\hline
 	\textbf{Input}& 
 	\begin{minipage}{.7\linewidth}
-	In the home screen the user taps the account button in the bottom menù, then he goes in the setting page through the setting button and insert new information and press the save button.
+	In the home screen the user taps the account button in the bottom menu, then he goes in the setting page through the setting button and inserts new information and presses the save button.
 	\end{minipage}\\
 	\hline
 	\textbf{Expected Outcome}& The user is able to see his updated personal information.\\

@@ -1,7 +1,9 @@
 \chapter{Cost Estimation}
-In this section we include a cost estimation for CookingTime application development. In order to exploit the estiaton we decided to use COCOMO (Constructive Cost Model) model. The usage of this analysis tool allow us to determine the time required for the developemnt of this type of appliaction.
+In this section we include a cost estimation for CookingTime application development.
+In order to exploit the estimation we decided to use COCOMO (Constructive Cost Model) model.
+The usage of this analysis tool allow us to determine the time required for the development of this type of application.
 First of all we have to decide what type of project we are producing in order to take the right estimation parameters, according to the following table.\\
-\begin{table}
+\begin{table}[H]
 	\centering
 	\begin{tabular}{|l|c|c|c|c|}
 	\textbf{Software Project}& \textbf{a}& \textbf{b}& \textbf{c}& \textbf{d}\\
@@ -22,14 +24,15 @@ Then we can consider the equation to represent the effort spent:\\
 $ effort = a * KLOC ^{b}$\\
 $ duration = c * effort^{d}$\\
 \end{center}
-where \textbf{KLOC} are the estiamted number of thousand lines of code, \textbf{effort} expressed in man-months and the duration is the time estimeted to be taken in order to develop the application.\\
-Even if it was the first time we developed a mobile application, we have good bases in coding moreover the project is simple and without tight constraints, so we can consider our project as organic, also because we have a team composed by two students.\\
+where \textbf{KLOC} are the estimated number of thousand lines of code, \textbf{effort} expressed in man-months and the duration is the time estimated to be taken in order to develop the application.\\
+Even if it was the first time we developed a mobile application and the first time we used the Dart programming language, we already had good bases in coding.
+Moreover the project is simple and without tight constraints, so we can consider our project as organic, also because we have a team composed by only two students.\\
 We can start retrieving from our Github repository the number of Kilo Line Of Code (KLOC) as shown in the following figure.\\
 %TODO figure from github
-Then according to Organic project coeffient we can evaluate the effor applied and the predicted development time:
+Then according to Organic project coefficient we can evaluate the effort applied and the predicted development time:
 
 \begin{itemize}
-	\item \texbf{KLOC} = value
+	\item \textbf{KLOC} = value
 	\item \textbf{a} = 2.40
 	\item \textbf{b} = 1.05
 	\item \textbf{c} = 2.50
