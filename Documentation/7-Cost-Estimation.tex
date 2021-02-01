@@ -28,23 +28,26 @@ where \textbf{KLOC} are the estimated number of thousand lines of code, \textbf{
 Even if it was the first time we developed a mobile application and the first time we used the Dart programming language, we already had good bases in coding.
 Moreover the project is simple and without tight constraints, so we can consider our project as organic, also because we have a team composed by only two students.\\
 We can start retrieving from our Github repository the number of Kilo Line Of Code (KLOC) as shown in the following figure.\\
-%TODO figure from github
+\begin{figure}[H]
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\textwidth]{img/RepoInsights.png}
+			\caption{GitHub Contributions}
+		\end{center}
+	\end{figure}
 Then according to Organic project coefficient we can evaluate the effort applied and the predicted development time:
 
 \begin{itemize}
-	\item \textbf{KLOC} = value
+	\item \textbf{KLOC} = 10
 	\item \textbf{a} = 2.40
 	\item \textbf{b} = 1.05
 	\item \textbf{c} = 2.50
 	\item \textbf{d} = 0.38
 \end{itemize}
 
-%TODO outcome of formulas
 \begin{center}
-%effort = a*(KLOC)^b
-$ effort = a * (KLOC)^{b} = 2.40 * KLOC^{1.05} = result $\\
-%duration = c*effort^d
-$ duration = c * effort^{d} 2.50 * effort ^{0.38} = result $\\
+$ effort = a * (KLOC)^{b} = 2.40 * 9^{1.05} = 24.1 $\\
+$ duration = c * effort^{d} 2.50 * 24.1 ^{0.38} = 8.3 $\\
 \end{center}
 
-%TODO outcome related to each of us  
+The estimated development time by COCOMO is about 8 months that considering the time we spent and the size of the team is approximately right and coherent with our effort.  
