@@ -36,8 +36,8 @@ class NumberFieldValidator {
 //validator for title fields in order to check that they are not empty
 class TitleFieldValidator {
   static String validate(String value) {
-    return (value == null || value.isEmpty || value.length > 20)
-        ? 'Enter a title (max 20 char)'
+    return (value == null || value.isEmpty || value.length > 30)
+        ? 'Enter a title (max 30 char)'
         : null;
   }
 }

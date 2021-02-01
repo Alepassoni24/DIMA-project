@@ -79,10 +79,10 @@ class DatabaseService {
   // Update a user rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateUserRating(String userId, int userRating) async {
     UserData userData = await getUser(userId).map(userDataFromSnapshot).first;
-    double newRating = userData.reviewNumber == 1 && userRating < 0
+    double newRating = (userData.reviewNumber == 1 && userRating < 0)
         ? 0
         : (userData.rating * userData.reviewNumber + userRating) /
-            (userData.reviewNumber + userRating > 0 ? 1 : -1);
+            (userData.reviewNumber + (userRating > 0 ? 1 : -1));
     return await userCollection.doc(userId).update({
       'rating': newRating,
       'reviewNumber': FieldValue.increment(userRating > 0 ? 1 : -1),
@@ -207,6 +207,11 @@ class DatabaseService {
     return await recipeCollection.doc(recipeData.recipeId).delete();
   }
 
+  //get recipe stream from a recipe id
+  Stream<DocumentSnapshot> getRecipe(String recipeId) {
+    return recipeCollection.doc(recipeId).snapshots();
+  }
+
   //get query of last num recipes
   Query getLastRecipes(int num) {
     return recipeCollection
@@ -223,11 +228,12 @@ class DatabaseService {
   }
 
   // Update a recipe rating and reviewNumber when a new review is inserted or deleted
-  Future<void> updateRecipeRating(RecipeData recipeData, int userRating) async {
-    double newRating = recipeData.reviewNumber == 1 && userRating < 0
+  Future<void> updateRecipeRating(String recipeId, int userRating) async {
+    RecipeData recipeData = await getRecipe(recipeId).map(recipeDataFromSnapshot).first;
+    double newRating = (recipeData.reviewNumber == 1 && userRating < 0)
         ? 0
         : (recipeData.rating * recipeData.reviewNumber + userRating) /
-            (recipeData.reviewNumber + userRating > 0 ? 1 : -1);
+            (recipeData.reviewNumber + (userRating > 0 ? 1 : -1));
     return await recipeCollection.doc(recipeData.recipeId).update({
       'rating': newRating,
       'reviewNumber': FieldValue.increment(userRating > 0 ? 1 : -1),

@@ -36,7 +36,7 @@ class WriteIngredientView extends StatelessWidget {
         SizedBox(width: 10),
         // Form for unit
         Flexible(
-          flex: 2,
+          flex: 3,
           child: TextFormFieldShort(
               "g",
               ingredientData.unit,

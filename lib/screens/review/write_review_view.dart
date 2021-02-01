@@ -53,7 +53,7 @@ class WriteReviewViewState extends State<WriteReviewView> {
 
   // Delete review from Firebase Firestore and update rating
   void deleteReview(ReviewData reviewData) {
-    databaseService.updateRecipeRating(recipeData, -reviewData.rating);
+    databaseService.updateRecipeRating(recipeData.recipeId, -reviewData.rating);
     databaseService.updateUserRating(recipeData.authorId, -reviewData.rating);
     databaseService.recipeCollection
         .doc(recipeData.recipeId)
@@ -197,7 +197,7 @@ class ReviewFormState extends State<ReviewForm> {
       await databaseService.addReview(_reviewData, recipeData.recipeId);
 
       // Update recipe and author ratings
-      databaseService.updateRecipeRating(recipeData, _reviewData.rating);
+      databaseService.updateRecipeRating(recipeData.recipeId, _reviewData.rating);
       databaseService.updateUserRating(recipeData.authorId, _reviewData.rating);
 
       // Refresh recipe view with the new review
