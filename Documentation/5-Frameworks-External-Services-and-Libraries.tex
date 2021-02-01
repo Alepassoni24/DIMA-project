@@ -1,17 +1,29 @@
 \chapter{Frameworks, External Services and Libraries}
 
 \section{Flutter}
-To develop CookingTime application we decided to use Flutter platform, which allows to build cross-platform application basing on Dart programming language. 
-%TODO improve description of flutter
+To develop CookingTime application we decided to use Flutter platform, an open source framework, which allows to build cross-platform application basing on Dart programming language. It is developed by Google and allows also the support for web applications.
 In order to exploit all the feature of the application as a team we needed to use some other external services that could be easily imported as dependencies into out project environment. 
 The usage of all that kind of services helped in terms of reducing the complexity of the implementation and to enforce non-functional requirements like security or authentication tasks.
-
+\begin{figure}[H]
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\textwidth]{img/flutterLogo.png}
+			\caption{Flutter Logo}
+		\end{center}
+	\end{figure}
 \section{Google Firebase}
 Google Firebase is a service offered by Google in order to provide some easily accessible service and to manage critical tasks like authentication in a simpler and smarter way from the perspective of the programmer.
-
+\begin{figure}[H]
+		\begin{center}
+			\centering
+			\includegraphics[width=0.8\textwidth]{img/firebaseLogo.png}
+			\caption{Firebase Logo}
+		\end{center}
+	\end{figure}
 \subsection{Authentication}
 The service allowed us to have a unique container for all accounts from the different channel of authentication we offer as email, Facebook and Google account. 
-Moreover it is able to manage all the operation without putting in plain text confidential information about user enforced by a SHA-1 encryption.
+Moreover it is able to manage all the operation without putting in plain text confidential information about user enforced by a SHA-1 encryption. 
+The advantage is also the error management as there are specific error codes for each possible evenineces that allowed to provide a better handling of all the possible issues in these critical operations.
 
 \subsection{Cloud Firestore}
 Cloud Firestore is part of Firebase, it's basically a database with a document based structure (so NoSQL).
