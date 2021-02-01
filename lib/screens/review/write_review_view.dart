@@ -197,7 +197,8 @@ class ReviewFormState extends State<ReviewForm> {
       await databaseService.addReview(_reviewData, recipeData.recipeId);
 
       // Update recipe and author ratings
-      databaseService.updateRecipeRating(recipeData.recipeId, _reviewData.rating);
+      databaseService.updateRecipeRating(
+          recipeData.recipeId, _reviewData.rating);
       databaseService.updateUserRating(recipeData.authorId, _reviewData.rating);
 
       // Refresh recipe view with the new review

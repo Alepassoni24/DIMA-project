@@ -197,7 +197,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(WriteRecipeView), findsOneWidget);
     expect(find.text("Test recipe title"), findsOneWidget);
-    await tester.enterText(textFormFields.at(2), "Test recipe description updated");
+    await tester.enterText(
+        textFormFields.at(2), "Test recipe description updated");
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
         find.text("Submit", skipOffstage: false), 50,

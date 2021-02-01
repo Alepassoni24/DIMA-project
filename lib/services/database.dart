@@ -229,7 +229,8 @@ class DatabaseService {
 
   // Update a recipe rating and reviewNumber when a new review is inserted or deleted
   Future<void> updateRecipeRating(String recipeId, int userRating) async {
-    RecipeData recipeData = await getRecipe(recipeId).map(recipeDataFromSnapshot).first;
+    RecipeData recipeData =
+        await getRecipe(recipeId).map(recipeDataFromSnapshot).first;
     double newRating = (recipeData.reviewNumber == 1 && userRating < 0)
         ? 0
         : (recipeData.rating * recipeData.reviewNumber + userRating) /

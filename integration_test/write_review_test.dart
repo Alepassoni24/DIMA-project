@@ -36,14 +36,13 @@ void main() {
     final Finder scrollable = find.byType(Scrollable).first;
     await tester.scrollUntilVisible(
         find.byType(ReviewView, skipOffstage: false), 50,
-        scrollable: scrollable);
+        scrollable: scrollable, maxScrolls: 250);
     await tester.pumpAndSettle();
     expect(find.byType(WriteReviewView, skipOffstage: false), findsOneWidget);
     final Finder reviewForm = find.byType(ReviewForm, skipOffstage: false);
     expect(reviewForm, findsOneWidget);
     expect(find.byType(YourReviewView, skipOffstage: false), findsNothing);
-    expect(
-        find.byIcon(Icons.star_border, skipOffstage: false), findsNWidgets(5));
+    expect(find.byIcon(Icons.star_border, skipOffstage: false), findsWidgets);
 
     // Submit must fail
     await tester.tap(find.text("Submit", skipOffstage: false));
@@ -51,7 +50,7 @@ void main() {
     expect(find.byType(ReviewForm, skipOffstage: false), findsOneWidget);
 
     // Write and submit review
-    await tester.tap(find.byIcon(Icons.star_border, skipOffstage: false).last);
+    await tester.tap(find.byIcon(Icons.star_border, skipOffstage: false).at(3));
     await tester.enterText(
         find.descendant(
             of: reviewForm,
@@ -65,7 +64,7 @@ void main() {
         find.byType(YourReviewView, skipOffstage: false);
     expect(yourReviewView, findsOneWidget);
     expect(find.byType(ReviewForm, skipOffstage: false), findsNothing);
-    expect(find.byIcon(Icons.star, skipOffstage: false), findsNWidgets(5));
+    expect(find.byIcon(Icons.star, skipOffstage: false), findsWidgets);
     expect(find.text("Test review description"), findsWidgets);
 
     // Delete review
@@ -77,8 +76,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ReviewForm, skipOffstage: false), findsOneWidget);
     expect(find.byType(YourReviewView, skipOffstage: false), findsNothing);
-    expect(
-        find.byIcon(Icons.star_border, skipOffstage: false), findsNWidgets(5));
+    expect(find.byIcon(Icons.star_border, skipOffstage: false), findsWidgets);
 
     // Return to the homepage
     await tester.pageBack();

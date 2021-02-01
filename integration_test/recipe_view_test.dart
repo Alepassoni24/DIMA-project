@@ -63,7 +63,7 @@ void main() {
     expect(find.byType(StepView, skipOffstage: false), findsWidgets);
     await tester.scrollUntilVisible(
         find.byType(WriteReviewView, skipOffstage: false), 50,
-        scrollable: scrollable);
+        scrollable: scrollable, maxScrolls: 250);
     await tester.pumpAndSettle();
     expect(find.byType(WriteReviewView, skipOffstage: false), findsOneWidget);
     expect(find.byType(ReviewForm, skipOffstage: false), findsOneWidget);
