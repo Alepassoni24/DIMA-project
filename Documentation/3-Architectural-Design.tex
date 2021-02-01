@@ -97,19 +97,22 @@
 	\begin{itemize}
 		\item Login the application.
 		\item Read stored data in order to retrieve what was posted by other users.
-		\item Data manipulation (CRUD operation) depending on user permissions over data.
+		\item Data manipulation (CRUD operation) depending on user permissions over data, specified in the database rules.
+		\item Query data with different filter, helped by the presence of secondary indexes.
 	\end{itemize}
 	
 	
-\section{Significative design decision}
+\section{Significant design decisions}
 \subsection{Login Wrapper}
-In order to accomplish the whole implementation of the authentication features we decide to implement a wrapper which is hearing the stream associated to the user object sent by our external services for authetication named Firebase. The component basically provide to the user the signin screen if it is not logged and automatically change the view as soon as the authentication is occured, in this way we don't have to introduce more flags or checks into the code and the application runs more fluently.
+In order to accomplish the whole implementation of the authentication features we decide to implement a wrapper which is listening the stream associated to the user object sent by our external services for authentication named Firebase.
+The component basically provide to the user the SignIn screen if it is not logged and automatically change the view as soon as the authentication is occurred, in this way we don't have to introduce more flags or checks into the code and the application runs more fluently.
 \begin{figure}[H]
 		\begin{center}
 			\centering
-			\includegraphics[width=0.8\textwidth]{img/Wrapper.png}
+			\includegraphics[width=0.5\textwidth]{img/Wrapper.png}
 			\caption{Wrapper implementation}
 		\end{center}
 	\end{figure}
 \subsection{Incremental insertion and deletion}
-The user is able to modify and insert pictures both for recipe and profile, so in order to prevent having junk data in the databese we decided to implement a routine which is able to detect if a picture is updated with respect to another one, if it occurs then the application delete the picture not in use. That's is very useful as the storing service has limitation over the total amount of free stored data, moreover the performace of the applicatione would be better.
+The user is able to modify and insert pictures both for recipe and profile, so in order to prevent having junk data in the database we decided to implement a routine which is able to detect if a picture is updated with respect to another one, if it occurs then the application delete the picture not in use.
+That's is very useful as the storing service has limitation over the total amount of free stored data, moreover the performance of the application would be better.

@@ -1,7 +1,8 @@
 \chapter{User Interface Design}
 
 \section{Navigation Overview}
-In this section we are going to present the whole navigation structure of CookingTime application, the starting decision was to make a simple structure of application screen in order to let users finding all the requirede screen in few tap as presentend in the picture below.
+In this section we are going to present the whole navigation structure of CookingTime application.
+The starting decision was to make a simple structure of application screens in order to let users find all the required screen in few taps, as presented in the picture below.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = .5\linewidth]{img/CookingTimeNavigator.png}
@@ -14,7 +15,7 @@ In the following section there are some mockups of the application together with
 \subsection{Log In}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = .3\linewidth]{img/SignIn.png}
+	\includegraphics[width = .225\linewidth]{img/SignIn.png}
 	\caption{Login Screen}
 \end{figure}
 This is the first screen which the user sees after the opening of the application, here he can login using his credentials, moreover he can go to the registration page or the lost password page.
@@ -22,7 +23,7 @@ This is the first screen which the user sees after the opening of the applicatio
 \subsection{Registration}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = .3\linewidth]{img/Registration.png}
+	\includegraphics[width = .225\linewidth]{img/Registration.png}
 	\caption{Registration Screen}
 \end{figure}
 This screen allows the user to register in the application providing a username, email and password.
@@ -30,13 +31,17 @@ This screen allows the user to register in the application providing a username,
 \subsection{Password Reset}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = .3\linewidth]{img/PasswordReset.png}
+	\includegraphics[width = .225\linewidth]{img/PasswordReset.png}
 	\caption{Password Reset Screen}
 \end{figure}
 From this screen the user has the possibility to restore his lost password, providing the email by which he made the registration before.
 
 \subsection{Home}
-%TODO image
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = .225\linewidth]{img/Home.png}
+	\caption{Home Screen}
+\end{figure}
 This is the main screen of the application, from here the user is able to navigate to all the available screens and features of the application by using the navigation bar at the bottom.
 It retrieves the ten most recent uploaded recipes and if he keeps scrolling more recipes are shown.
 
@@ -44,12 +49,12 @@ It retrieves the ten most recent uploaded recipes and if he keeps scrolling more
 \begin{figure}[H]
 	\begin{minipage}{0.48\textwidth}
 		\centering
-		\includegraphics[width = .7\linewidth]{img/RecipeView.png}
+		\includegraphics[width = .45\linewidth]{img/RecipeView.png}
 		\caption{Recipe View 1 Screen}
 	\end{minipage}\hfill
 	\begin{minipage}{0.48\textwidth}
 		\centering
-		\includegraphics[width = .7\linewidth]{img/RecipeView_2.png}
+		\includegraphics[width = .45\linewidth]{img/RecipeView_2.png}
 		\caption{Recipe View 2 Screen}
 	\end{minipage}
 \end{figure}
@@ -62,53 +67,72 @@ At the bottom of this view there is also the list of reviews left by other users
 \begin{figure}[H]
 	\begin{minipage}{0.31\textwidth}
 		\centering
-		\includegraphics[width = .9\linewidth]{img/Write_1.png}
+		\includegraphics[width = .7\linewidth]{img/Write_1.png}
 		\caption{Write Recipe 1 Screen}
 	\end{minipage}\hfill
 	\begin{minipage}{0.31\textwidth}
 		\centering
-		\includegraphics[width = .9\linewidth]{img/Write_2.png}
+		\includegraphics[width = .7\linewidth]{img/Write_2.png}
 		\caption{Write Recipe 2 Screen}
 	\end{minipage}\hfill
 	\begin{minipage}{0.31\textwidth}
 		\centering
-		\includegraphics[width = .9\linewidth]{img/Write_3.png}
+		\includegraphics[width = .7\linewidth]{img/Write_3.png}
 		\caption{Write Recipe 3 Screen}
 	\end{minipage}
 \end{figure}
 This is the screen used in order to insert a new recipe, which it's reachable from the home page.
 Here the user can provide the name of the recipe, the picture of the dish, some information like preparation time, suggested number of serving and intolerances, and especially the ingredients and procedure steps.
+The submit button checks that all required information are inserted by the user before saving the recipe into the database.
 
 \subsection{Search Recipes}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = .3\linewidth]{img/Filter.png}
+	\includegraphics[width = .225\linewidth]{img/Filter.png}
 	\caption{Search Recipe Screen}
 \end{figure}
 This screen, reachable from the home one, gives the possibility to filter the whole database of recipes according to some parameter like duration, difficulty, characteristics...
 
-\subsection{Write a Review}
+\subsection{Write and Read Reviews}
 \begin{figure}[H]
-	\centering
-	\includegraphics[width = .3\linewidth]{img/Review.png}
-	\caption{Review Screen}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width = .45\linewidth]{img/Review.png}
+		\caption{Write Review Screen}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width = .45\linewidth]{img/Review_2.png}
+		\caption{Review View Screen}
+	\end{minipage}
 \end{figure}
+
 This screen allows the user to leave a review for the visualized recipe, by giving a rating and adding a comment.
+Here are also visible the reviews of other users for this recipe, with the authenticated user's review in a separate section.
 The review can also be deleted afterwards.
 
 \subsection{Saved Recipes}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = .3\linewidth]{img/Saved.png}
+	\includegraphics[width = .225\linewidth]{img/Saved.png}
 	\caption{Saved Recipe Screen}
 \end{figure}
 This screen is accessible from the home screen and it lists all the recipes saved by the user displayed in random order.
+Recipes can be saved and unsaved by tapping the bookmark icon inside the recipe view.
 
 \subsection{User Profile}
-%TODO image
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = .225\linewidth]{img/UserProfile.png}
+	\caption{User Profile Screen}
+\end{figure}
 This screen shows the user profile statistics, which are number of written recipes, number of received reviews and average rating, and the list of the user uploaded recipes.
 From here the user can also perform the log out from his/her account.
 
 \subsection{Settings}
-%TODO image
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = .225\linewidth]{img/Settings.png}
+	\caption{Settings Screen}
+\end{figure}
 This screen allows the user to modify his profile picture, username and the password (only if he is logged using the email).
