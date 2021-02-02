@@ -10,11 +10,32 @@ The testing phase of CookingTime was split into two steps.
 Here are presented some example of the most relevant test we made:
 
 \section{Unit test}
-%TODO 1 table of validators test
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Test Case}& Validator Test\\
+	\hline
+	\textbf{Goal}& input a valid parameter\\
+	\hline
+	\textbf{Input}& 
+	\begin{minipage}{.7\linewidth}
+	In one of the application screen,the user insert a valid parameter into a textfield.
+	\end{minipage}\\
+	\hline
+	\textbf{Expected Outcome}& The validator doesn't output any error message.\\
+	\hline
+	\textbf{Actual Outcome}& 
+	\begin{minipage}{.7\linewidth}
+	CORRECT: The validator process the input and send it to the requested routine without displaying any error message.
+	\end{minipage}\\
+	\hline	
+	\end{tabular}
+	\caption{Validator Test}
+\end{table}
 
 \section{Integration-Widget test}
 This type of testing was automated for all the feature that are repeatable over the time, while all the non reversible actions were tested manually.
-%TODO integration test tables
 
 \begin{table}[H]
 	\centering
