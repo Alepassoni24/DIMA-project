@@ -22,8 +22,8 @@ Google Firebase is a service offered by Google in order to provide some easily a
 	\end{figure}
 \subsection{Authentication}
 The service allowed us to have a unique container for all accounts from the different channel of authentication we offer as email, Facebook and Google account. 
-Moreover it is able to manage all the operation without putting in plain text confidential information about user enforced by a SHA-1 encryption. 
-The advantage is also the error management as there are specific error codes for each possible evenineces that allowed to provide a better handling of all the possible issues in these critical operations.
+Moreover, it is able to manage all the operation without putting in plain text confidential information about user enforced by a SHA-1 encryption. 
+The advantage is also the error management as there are specific error codes for each possible eventuality that allowed to provide a better handling of all the possible issues in these critical operations.
 
 \subsection{Cloud Firestore}
 Cloud Firestore is part of Firebase, it's basically a database with a document based structure (so NoSQL).
@@ -34,9 +34,9 @@ Finally, we added some secondary indexes to speed up the query done to the datab
 
 \subsection{Firebase Storage}
 As the application has to store picture devoted to profile, dishes and recipe steps, the storage provided by Firestore is the best solution because we are able to access them, after uploading them, through the generated URL within the project online space. 
-Of course has there are limitation of the amount of data we can upload, once we modify the pictures we delete the one no more in use.
+Of course, as there are limitation on the amount of data we can upload, once we modify the pictures we delete the one no more in use.
 
 \section{Social Media}
-As mentioned before we implemented the support to authentication using Facebook or Google accounts, this is easily achievable through the API of the platforms.
+As mentioned before, we implemented the support to authentication using Facebook or Google accounts, this is easily achievable through the API of the platforms.
 Basically the APIs convert the credential of the social media account into a token which can be used and stored by Firebase. 
-In addition the users are allowed to share a recipe on their preferred social media accounts.
+In addition, the users are allowed to share a recipe on their preferred social media accounts.

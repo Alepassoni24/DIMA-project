@@ -2,15 +2,15 @@
 
 \section{Concept}
 	CookingTime is a multi-platform application that allows users to share their homemade cooking recipes with others and to search for new ones among the variety of recipes posted by other people.
-	Furthermore users can save their favorite recipes in a personal recipe book in the app in order to always have them at hand and never lose them.
+	Furthermore, users can save their favorite recipes in a personal recipe book in the app in order to always have them at hand and never lose them.
 	Users will also be able to give suggestions by writing reviews and rate recipes of other users.
-	To access these functionalities, user are required to register to the server via mail and password, Google account or Facebook account.
+	To access these functionalities, users are required to register to the server via mail and password, Google account or Facebook account.
 	The main components of the project are:
 	\begin{itemize}
 		\item The client side part, the application itself, which is the first point of interaction with the user.
 		It allows the user to access all the functionalities of the app, the app will then automatically query the server-side database based on the user's requests.
 		
-		\item The server side part, fully made with the Firebase platform, contains the relational database used to store all the users data, which comprehend user's login information, recipes and reviews.
+		\item The server side part, fully made with the Firebase platform, contains the relational database used to store all the users' data, which comprehend user's login information, recipes and reviews.
 	\end{itemize}
 
 
@@ -63,7 +63,7 @@
 
 	\subsection{Account Settings Screen}
 		\begin{itemize}
-			\item Allows the user modify his/her personal information.
+			\item Allows the user to modify his/her personal information.
 			
 			\item Allows the user to see all his/her posted recipes.
 			
@@ -98,7 +98,7 @@
 
 	\subsection{Recipe View Requirements}
 	\begin{itemize}
-		\item The \textit{Recipe screen} should all information about the requested recipe, which comprehend: title, subtitle, author, description, image, rating, difficulty, category, intolerance, servings, time required, ingredients, steps and users's reviews.
+		\item The \textit{Recipe screen} should all information about the requested recipe, which comprehend: title, subtitle, author, description, image, rating, difficulty, category, intolerance, servings, time required, ingredients, steps and users' reviews.
 		\item The \textit{Recipe screen} should also provide the \textit{Write a Review widget}.
 		\item The \textit{Recipe screen} should allow the user to save the recipe in his saved recipes list.
 	\end{itemize}
@@ -107,7 +107,7 @@
 		\begin{itemize}
 			\item The \textit{Write a Recipe screen} should allow the user to provide all the necessary information needed to publish a recipe.
 			\item The \textit{Write a Recipe screen} should allow the user to add images from both the gallery and the camera.
-			\item The \textit{Write a Recipe scree}n should tell the user if some information are missing.
+			\item The \textit{Write a Recipe scree}n should tell the user if some information is missing.
 			\item After a recipe has been submitted it should be shown at the top of the \textit{Home screen}.
 		\end{itemize}
 
@@ -151,7 +151,7 @@
 	The downtime is strictly related to the one of Firebase, which is very low.
 	In case of any kind of failure the application must be restored to a correct state as soon as possible.
 	
-	\item \textbf {Security}: As the user have different way to sign in the application and they are providing some personal data, the app must be implement some security actions. For this reason the connection between the application and the Firebase server are done using and encrypted communication through SHA-1 keys.
+	\item \textbf {Security}: As the user have different way to sign in the application and they are providing some personal data, the app must implement some security actions. For this reason, the connection between the application and the Firebase server are done using and encrypted communication through SHA-1 keys.
 	
 	\item \textbf{Extensibility}: The application is developed for some basic feature which can be increased over the time.
 	

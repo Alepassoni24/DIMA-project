@@ -19,12 +19,12 @@
 
 \section{Application Server}
 	This layer is devoted to handle all the information and the request coming from the client side. 
-	Moreover it is a sort of bridge between the application and the database. 
+	Moreover, it is a sort of bridge between the application and the database. 
 	As this layer is hosted by the same provider of the database, the integration is easily implemented and so the communication will be more efficient and safer.
 
 \section{Database Design}
 	The database is the one provided by Firebase and it's a NoSQL database, so information are stored in a sort of semi-structured way.
-	Using Google solution we can achieve \textbf{Durability and persistence of data} in order to have them always available, 
+	Using Google solution, we can achieve \textbf{Durability and persistence of data} in order to have them always available, 
 	\textbf{Consistency} so the database is always in a consistent state, \textbf{Atomicity} in this way all the operation are completely executed and 
 	\textbf{Isolation} which means that every operation is executed isolated and independently from the other ones.
 	
@@ -105,7 +105,7 @@
 \section{Significant design decisions}
 \subsection{Login Wrapper}
 In order to accomplish the whole implementation of the authentication features we decide to implement a wrapper which is listening the stream associated to the user object sent by our external services for authentication named Firebase.
-The component basically provide to the user the SignIn screen if it is not logged and automatically change the view as soon as the authentication is occurred, in this way we don't have to introduce more flags or checks into the code and the application runs more fluently.
+The component basically provides to the user the SignIn screen if it is not logged and automatically change the view as soon as the authentication is occurred, in this way we don't have to introduce more flags or checks into the code and the application runs more fluently.
 \begin{figure}[H]
 		\begin{center}
 			\centering
@@ -114,5 +114,5 @@ The component basically provide to the user the SignIn screen if it is not logge
 		\end{center}
 	\end{figure}
 \subsection{Incremental insertion and deletion}
-The user is able to modify and insert pictures both for recipe and profile, so in order to prevent having junk data in the database we decided to implement a routine which is able to detect if a picture is updated with respect to another one, if it occurs then the application delete the picture not in use.
-That's is very useful as the storing service has limitation over the total amount of free stored data, moreover the performance of the application would be better.
+The user is able to modify and insert pictures both for recipe and profile, so in order to prevent having junk data in the database we decided to implement a routine which is able to detect if a picture is updated with respect to another one, if it occurs then the application deletes the picture not in use.
+That is very useful as the storing service has limitation over the total amount of free stored data, moreover the performance of the application would be better.
