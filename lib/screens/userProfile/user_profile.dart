@@ -175,7 +175,7 @@ class UserStatistics extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          '${snapshot.data.rating}',
+                          '${snapshot.data.rating.toStringAsFixed(1)}',
                           style: numberDataStyle,
                         ),
                         Icon(
