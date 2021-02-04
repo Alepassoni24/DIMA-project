@@ -267,18 +267,22 @@ class _UserSettingsState extends State<UserSettings> {
 
   //Function to delete the old profile picture of the user from the storage
   Future deleteOldImage() async {
-    if (oldProfilePhotoURL != null) {
-      //retrieve the path of the picture in the storage
-      var path =
-          '${Path.basename(oldProfilePhotoURL).replaceFirst("%2F", "/").split("?")[0]}';
-      //create a reference of the file
-      Reference fileRef = FirebaseStorage.instance.ref().child(path);
-      //delete the file from the storage
-      await fileRef.delete();
-      //set the widget state
-      setState(() {
-        oldProfilePhotoURL = profilePhotoURL;
-      });
+    try {
+      if (oldProfilePhotoURL != null) {
+        //retrieve the path of the picture in the storage
+        var path =
+            '${Path.basename(oldProfilePhotoURL).replaceFirst("%2F", "/").split("?")[0]}';
+        //create a reference of the file
+        Reference fileRef = FirebaseStorage.instance.ref().child(path);
+        //delete the file from the storage
+        await fileRef.delete();
+        //set the widget state
+        setState(() {
+          oldProfilePhotoURL = profilePhotoURL;
+        });
+      }
+    } catch (exception) {
+      print("Image not in Firebase Storage");
     }
   }
 

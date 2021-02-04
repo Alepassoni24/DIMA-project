@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // The RecipeData must be obtained from a query to the database
 class RecipeCard extends StatelessWidget {
   final RecipeData recipeData;
+  final DatabaseService databaseService = DatabaseService();
 
   RecipeCard(this.recipeData);
 
@@ -33,8 +34,15 @@ class RecipeCard extends StatelessWidget {
               SizedBox(height: 5),
             ],
           ),
-          onTap: () {
-            Navigator.pushNamed(context, '/recipeView', arguments: recipeData);
+          onTap: () async {
+            await databaseService.recipeCollection
+                .doc(recipeData.recipeId)
+                .get()
+                .then((doc) {
+              if (doc.exists)
+                Navigator.pushNamed(context, '/recipeView',
+                    arguments: recipeData);
+            });
           },
         ),
       ),

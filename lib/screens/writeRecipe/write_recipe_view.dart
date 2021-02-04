@@ -98,17 +98,28 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
                             alignment: Alignment.centerLeft,
                             padding: EdgeInsets.only(left: 5)),
                       SectionDivider(),
-                      TextFormFieldShort("Title", _recipeData.title,
-                          setRecipeTitle, TitleFieldValidator.validate),
+                      Container(
+                          key: ValueKey(_recipeData.key.toString() + "Title"),
+                          child: TextFormFieldShort("Title", _recipeData.title,
+                              setRecipeTitle, TitleFieldValidator.validate)),
                       SectionDivider(),
-                      TextFormFieldShort("Subtitle", _recipeData.subtitle,
-                          setRecipeSubtitle, SubtitleFieldValidator.validate),
+                      Container(
+                          key:
+                              ValueKey(_recipeData.key.toString() + "Subtitle"),
+                          child: TextFormFieldShort(
+                              "Subtitle",
+                              _recipeData.subtitle,
+                              setRecipeSubtitle,
+                              SubtitleFieldValidator.validate)),
                       SectionDivider(),
-                      TextFormFieldLong(
-                          "Description",
-                          _recipeData.description,
-                          setRecipeDescription,
-                          DescriptionFieldValidator.validate),
+                      Container(
+                          key: ValueKey(
+                              _recipeData.key.toString() + "Description"),
+                          child: TextFormFieldLong(
+                              "Description",
+                              _recipeData.description,
+                              setRecipeDescription,
+                              DescriptionFieldValidator.validate)),
                       SectionDivider(),
                       TimeRow(_recipeData, setRecipeTime),
                       SectionDivider(),
@@ -269,6 +280,7 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
 
       // Show the view of the recipe and then reset the form
       RecipeData recipeCopy = _recipeData;
+      FocusScope.of(context).unfocus();
       resetData();
       Navigator.pushNamedAndRemoveUntil(
           context, '/recipeView', (route) => route.isFirst,
@@ -293,10 +305,10 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
   // Reset form data after submitting a recipe
   void resetData() {
     setState(() {
+      _formKey.currentState.reset();
       _recipeData = RecipeData(difficulty: 0);
       _ingredientsData = [IngredientData(id: 1)];
       _stepsData = [StepData(id: 1)];
-      _formKey.currentState.reset();
     });
   }
 
@@ -357,8 +369,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
           _ingredientsData[i].id -= 1;
         }
         _ingredientsData.removeAt(id - 1);
-        FocusScope.of(context)
-            .unfocus(); // Remove text focus, focus the wrong element otherwise
+        // Remove text focus, focus the wrong element otherwise
+        FocusScope.of(context).unfocus();
       });
 
   // Step setters
@@ -380,8 +392,8 @@ class WriteRecipeViewState extends State<WriteRecipeView> {
           _stepsData[i].id -= 1;
         }
         _stepsData.removeAt(id - 1);
-        FocusScope.of(context)
-            .unfocus(); // Remove text focus, focus the wrong element otherwise
+        // Remove text focus, focus the wrong element otherwise
+        FocusScope.of(context).unfocus();
       });
 }
 
@@ -418,6 +430,7 @@ class DeleteIcon extends StatelessWidget {
                 child: Text('Yes'),
                 onPressed: () {
                   deleteRecipe();
+                  FocusScope.of(context).unfocus();
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 }),
           ],
@@ -437,6 +450,7 @@ class TimeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: ValueKey(recipeData.key.toString() + "TimeRow"),
       padding: EdgeInsets.only(left: 2.5),
       child: Row(
         children: [
@@ -477,6 +491,7 @@ class ServingsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: ValueKey(recipeData.key.toString() + "ServingsRow"),
       padding: EdgeInsets.only(left: 2.5),
       child: Row(
         children: [

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 // Struct class representing all the data of a single recipe
 class RecipeData {
+  // Unique key required for Flutter to manage deletion
+  // of recipes while writing a recipe in WriteRecipeView
+  final Key key = UniqueKey();
   // Document id of the recipe in Firebase Firestore
   String recipeId;
   // Document id of the author in Firebase Firestore
