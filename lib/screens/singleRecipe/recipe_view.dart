@@ -154,7 +154,10 @@ class ShareIcon extends StatelessWidget {
     return IconButton(
       icon: Icon(Icons.share),
       onPressed: () {
-        Share.share("Check out " + recipeTitle + " on CookingTime!");
+        Share.share("Check out " +
+            recipeTitle +
+            " on CookingTime!" +
+            "https://play.google.com/store/apps/details?id=com.courseproject.dima_project");
       },
     );
   }
